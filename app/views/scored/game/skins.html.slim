@@ -1,0 +1,82 @@
+- links = []
+- links << link_to( icon('fas fa-arrow-left', 'Cancel - List Games'),  games_path, class: 'pt-btn btn-warning mr-2')
+- links << link_to( icon('fas fa-arrow-left', 'Cancel - Show Game with Players'), @game.namespace_url,class: 'btn btn-warning mr-2')
+- if is_manager? && @game.state.present? && @game.state[:can_delete]
+  - links << destroyTag(game_path(@game),prompt: icon('fas fa-trash','Delete Incomplete Game'))
+/ = render partial:'shared/dashboard', locals:{name:"Score Birdies/Skins",links:links}
+
+/ = render partial:'games/shared/event'
+
+- skins = Skins.new(@game)
+- good = skins.good ||= Array.new(18,'.')
+- players = skins.rounds.pluck(:id,:player_name)
+
+
+div.m-2.p-2.w-3/4
+  #players= form_with(url:@game.namespace_url('update_skins'), method: :patch) do |f|
+    div[data-controller="sideSkins" data-sideSkins-defaultin-value="#{skins.default_in}"]
+      .annotate 
+        |Instructions: Click on any of the Side Games "In" header to toggle(add/remove) all Players. Click on Checkbox in "In" column to toggle individual player. Click on Hole# to set score for that hole. Each click will cycle form '.' to B to E to A and then back to '.'  Click "Update Skins Game" button to save.
+    
+      div 
+        button.submit= f.submit("Update Skins Game", class:'btn-submit m-2')
+      div.flex.gap-2.p-1.ml-36
+        div.font-bold Skins Hole Colors
+        div.px-1.cut Cut 
+        div.px-1.birdie Birdie
+        div.px-1.eagle Eagle
+        div.px-1.albatros Albatros
+
+      .row-box-18
+        .row-box[data-sideSkins-target='goodSkins']
+          span.title
+            | Skins
+          - 1.upto(18) do |i|
+            - if good[i-1] == '.'
+              = content_tag :span, i, class:"skin_hole", data:{sideSkins_target:"hole" }
+            - elsif good[i-1] == '0' || good[i-1] == '9'
+              = content_tag :span, i, class:"skin_hole cut", data:{sideSkins_target:"hole" }
+            - elsif good[i-1] == '1'
+              = content_tag :span, i, class:"skin_hole birdie", data:{sideSkins_target:"hole" }
+            - elsif good[i-1] == '2'
+              = content_tag :span, i, class:"skin_hole eagle", data:{sideSkins_target:"hole" }
+            - elsif good[i-1] == '3'
+              = content_tag :span, i, class:"skin_hole albatros", data:{sideSkins_target:"hole" }
+            - else
+              = content_tag :span, i, class:"skin_hole", data:{sideSkins_target:"hole" }
+          = hidden_field_tag 'skins[good]',good, data:{sideSkins_target:"good"}
+
+      div[class="#{Current.group.use_autoscroll ? "overflow-auto vh-75" : ""}"]
+
+        table.golfer
+          tr
+            th colspan="1" Players
+            th colspan="2" 
+              |Skins&nbsp;-&nbsp;
+              span[data-sideSkins-target='in'] = skins.in_skins.size
+          tr
+            th Team Name
+            = content_tag :th, icon("far fa-check-square","In"), class:' btn-success', data:{action:'click->sideSkins#toggleSkins'}
+            td.strong Good
+          - players.each_with_index do |(pid,name),idx|
+            -pids = pid.to_s
+            tr
+              td 
+                = name
+              - skins_in = skins.in_skins?(pids)
+              - if skins_in
+                - par = skins.skins_obj['player_par'][pids]
+              - else
+                - par ='..................'
+              td= check_box_tag "skins[in][#{pid}]",pid,skins_in, data:{sideSkins_target:"skinsPlayer",action:'sideSkins#toggleSkinsPlayer', who:pid,idx:idx}
+              td 
+                = content_tag(:section, id:"skins[player_par][#{pid}]",class:"#{skins_in ? 'w3-show' : 'w3-hide'}",\
+                  data:{sideSkins_target:"skinsHide"})
+                  = hidden_field_tag "skins[player_par][#{pid}]", par,data:{sideSkins_target:"par",action:"change->sideSkins#update"}
+                  = hidden_field_tag "skins[cards][#{pid}][in]", skins_in,disabled: :disabled,data:{sideSkins_target:"skinsin"}
+
+                  = render partial:"sidecard",locals:{par:par,idx:idx}
+                  code[id="cards_#{pid}_par_s" style="font-size:0.6rem"] 
+                    span[data-sideSkins-target='parString ' class="w3-hide"] = par
+
+      

@@ -1,0 +1,109 @@
+- teams = @game.teams
+- team_stats = @game.team_stats
+/ - links = []
+/ - links << link_to(icon('fas fa-arrow-left', 'Cancel - List Games'),  games_path, class:"btn-send")
+/ - if current_user.is_trustee? && @game.state[:can_delete]
+/   / - links << destroyTag(game_path(@game),prompt:icon('fas fa-trash',"Destroy Incomplete Game"))
+/   - links << button_to(icon("fas fa-trash","Destroy Incomplete Game"),game_path(@game),method: :delete,form: { data: { turbo_confirm: "Are You Sure?"}},form_class:"btn-danger inline-block py-0 "  )
+
+/ = render partial:'shared/dashboard', locals:{name:"Pending Game",links:links}
+
+/ .px-2.bg-lime-lighter
+/   = render partial: 'games/shared/event'
+
+- zero_team = @game.state[:has_zero_team]
+- if current_user.is_trustee?
+  -if zero_team
+    h4 = callout_alert("A Participant was either added or deleted after the teams were formed. You must either ReForm Teams or Adjust Teams before scoring.")
+/ -if @game.method == 'places' && @game.state[:teams].size >  2 
+/   div.mx-2.flex.gap-4
+/     / span.font-bold Teams/Seed:
+/     / span =  "#{@game.state[:teams].count}/#{@game.scoring['seed_method']}"
+
+/     - perc = Current.group.present? ? Current.group.score_place_perc : nil
+/     - dist = Current.group.present? ? Current.group.score_place_dist : nil
+/     - places = PgaPlaces.new(@game.state[:teams].size,@game.state[:dues],dist,perc).winners.reverse
+/     span.strong Suggested Places Payout (First..Last):
+/     span = places
+
+
+/ .bg-lime-lighter.border-bottom.p-2.-mx-2.flex.flex-wrap
+  / .text-sm.md:text-base
+/ div.flex.gap-2.bg-lime-light.-mx-2.p-1.border-2.border-lime-darker
+/   div.flex-shrink.font-bold Scheduled Game
+/   div.flex-grow.flex-wrap
+/     div.btn-cancel cancel
+/     div.btn-cancel cancel cancel
+/     div.btn-cancel = icon('fas fa-eye',"eye")
+/     div.btn-cancel cancel cancel cancel
+/     div.btn-sm-blue blue
+/     div.btn-sm-green green
+/     div.btn-sm-warn warn
+
+/   div.flex-shrink.text-green-800.p-0.font-bold.mr-3.hover:text-2xl = icon('fas fa-arrow-left')
+
+div.flex.gap-2.bg-lime-light.-mx-2.p-1.border-2.border-lime-darker
+  div.flex-shrink
+    - if current_user.is_trustee?
+      - unless zero_team
+        div.w-44 = link_to icon('fas fa-pencil-alt', 'Score Teams'),
+          score_teams_pending_game_path(@game),
+          class:"btn btn-submit py-2"
+
+
+  div.flex-grow.flex-wrap
+    = link_to( icon('fas fa-arrow-left', 'Cancel - List Games'),  games_path, class: "btn-cancel")
+    - if can?(:update,:game)
+      = link_to icon('fas fa-user-plus', 'Add Late Player'),  @game.scheduled_url(:set),
+        class: "btn-cancel",
+        title: "Pete showed up late at the tee box, there was a threesome teeing off. Put Pete in the threesome and when you get in use this button to add Pete. Then adjust teams to change the threesome to a foursome"
+      = link_to icon('fas fa-arrows-alt-h', 'Adjust Teams'), @game.namespace_url('adjust_teams'),
+        class: "btn-cancel",
+        title: "Joe would like to play with Pete! You can move Joe to another team and move another player from Pete's to Joe's team. Pick player in same point range if using seeded teams."
+      = link_to icon('fas fa-arrows-alt-h', 'Swap Teams'), @game.namespace_url('swap_teams'),
+        class: "btn-cancel",
+        title: "Joe needs to go off early, swap his team to first."
+      
+      = link_to icon('fas fa-users', 'Reform Teams'), @game.scheduled_url('form_teams'),
+        class: "btn-cancel"
+
+
+  div.flex-shrink.text-green-800.p-0.font-bold.mr-3.hover:text-2xl = link_to icon('fas fa-arrow-left'), 'javascript:history.back()'
+
+= render partial:"header"
+
+.flex.flex-wrap
+  - team_keys  = teams.keys.sort
+  - map = col_map_array(team_keys,2)
+  - map.each do |row|
+    .w-full.md:w-1/2.px-2
+      - row.each do |tm|
+        - team = teams[tm]
+        - stats = team_stats[tm]
+        - hole = (stats[:quota]/18.0).round(1)
+        - side_quota = stats[:side_quota]
+
+        table.golfer.w-full.mb-2
+          / caption.noprint = link_to "Score Team", score_teams_games_pending_path(@game,team:tm), class:'blue-link' if current_user.is_trustee? && !@game.state[:indiv_teams] && !zero_team
+          thead
+            tr
+              th[colspan="5" ] = "Team - #{tm} Q(T/S/H): #{stats[:quota]}/#{stats[:side_quota]}/#{hole}"
+            tr
+              th.w-56 Name
+              th.w-20 Tee
+              th Quota
+              th Side
+              th Scored
+            tbody
+              - team.each do |mate|
+                tr
+                  td= mate.player_name
+                  td= mate.tee
+                  td= mate.quota_limited 
+                  / ? stats.limits.quota_astrick(mate[:quota]) : mate[:quota].to_s 
+                  td= mate.quota / 2.0
+                  td
+                    = check_box_tag( '',nil, (!mate.total.nil?))  
+                    span = "(#{mate.front}/#{mate.back}/#{mate.total})" if !mate.total.nil?
+          / - team_numb = team_keys.shift
+

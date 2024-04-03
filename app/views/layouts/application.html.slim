@@ -1,0 +1,22 @@
+doctype html
+html
+  head
+    title
+      | Golfers
+    meta[name="viewport" content="width=device-width,initial-scale=1"]
+    = csrf_meta_tags
+    = csp_meta_tag
+    / link rel="stylesheet" href="https://ga.jspm.io/npm:flatpickr@4.6.9/dist/flatpickr.min.css"
+    = stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload"
+    = stylesheet_link_tag "application", "data-turbo-track": "reload"
+    script crossorigin="anonymous" src="https://kit.fontawesome.com/69f9b59efd.js"
+    / script src="https://unpkg.com/@themesberg/flowbite@latest/dist/flowbite.bundle.js"
+
+    = javascript_importmap_tags
+
+  body
+    header.noprint
+      = render 'layouts/header'
+    = render 'layouts/menubar'
+    main.mx-2
+      == yield

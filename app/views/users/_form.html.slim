@@ -1,0 +1,65 @@
+= form_with(model: @user) do |form|
+  - if @user.errors.any?
+    div style="color: red"
+      h2 = "#{pluralize(@user.errors.count, "error")} prohibited this user from being saved:"
+      ul
+        - @user.errors.each do |error|
+          li = error.full_message
+  .grid.grid-cols-3
+    div
+      - if current_user && current_user.is_admin?
+        = form.label :group_id, style: "display: block"
+        = form.number_field :group_id
+      - else
+        div
+          = form.label :group_id, style: "display: block"
+          = form.hidden_field :group_id
+          span.p-2 = @user.group_id
+
+      div
+        = form.label :fullname, style: "display: block"
+        = form.text_field :fullname
+
+      div
+        = form.label :username, style: "display: block"
+        = form.text_field :username
+
+      div
+        = form.label :email, style: "display: block"
+        = form.text_field :email
+
+    div
+      div
+        = form.label :password, style: "display: block"
+        = form.password_field :password
+
+      div
+        = form.label :password_confirmation, style: "display: block"
+        = form.password_field :password_confirmation
+
+      div
+        label Roles
+        div
+          - if true #current_user.is_super?
+            - roles = DefaultPermits.new.roles
+          - else
+            - roles = DefaultPermits.new.roles[1..-1]
+          - roles.each do |role|
+            div
+              = form.radio_button(:role, role, checked:@user.role.include?(role))
+              span.ml-2.font-bold= role.humanize
+    div
+      table.classic
+        tr
+          th Model
+          th Value
+        - if @user.permits.present?
+          - @user.permits.each do |k,v|
+            tr
+              td = k
+              td.w-12 = text_field_tag("user[permits][#{k}]",v,class:"w-24")
+        - else
+          tr
+            th Default Permit will be added
+  div[class="btn-submit"]
+    = form.submit

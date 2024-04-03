@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  group: one
+  date: 2023-11-15
+  status: MyString
+  method: MyString
+  scoring: MyText
+  par3: MyText
+  skins: MyText
+
+two:
+  group: two
+  date: 2023-11-15
+  status: MyString
+  method: MyString
+  scoring: MyText
+  par3: MyText
+  skins: MyText

@@ -1,0 +1,93 @@
+
+- if @group
+  - settings =  @group.settings
+  - keys = settings.keys
+  - len = settings.keys.length
+  - forth = (len / 4)
+  - third = (len / 3)
+div id="#{dom_id group}"
+  p
+    strong.w-40.inline-block.text-right Name:
+    =< "Id: #{group.id} #{group.name}"
+  p
+    strong.w-40.inline-block.text-right Tees:
+    =< group.tees
+  p
+    strong.w-40.inline-block.text-right Courses:
+    =< group.courses
+
+
+  - if !@group
+    p
+      strong.w-40.inline-block.text-right Settings:
+      =< group.settings
+  - else
+    .font-bold Limits/Scoring Settings/Options
+
+    - if @group
+
+      div.grid.grid-cols-2.md:grid-cols-4.gap-8
+        table.golfer
+          thead
+            tr
+              th Setting
+              th  Value
+            tbody
+              - 0.upto(forth) do |i|
+                tr
+                  td.font-bold
+                    span.float-right= keys[i]
+                  td = settings[keys[i]]
+        table.golfer
+          thead
+            tr
+              th Setting
+              th  Value
+            tbody
+              - (forth + 1).upto(forth*2) do |i|
+                tr
+                  td.font-bold
+                    span.float-right= keys[i]
+                  td = settings[keys[i]]
+        table.golfer
+          thead
+            tr
+              th Setting
+              th  Value
+            tbody
+              - (forth *2 + 1).upto(forth*3) do |i|
+                tr
+                  td.font-bold
+                    span.float-right= keys[i]
+                  td = settings[keys[i]]
+        table.golfer
+          thead
+            tr
+              th Setting
+              th Value
+            tbody
+              - (forth * 3 + 1).upto(len - 1) do |i|
+                tr
+                  td.font-bold
+                    span.float-right= keys[i]
+                  td = settings[keys[i]]
+
+
+
+          /   div.w-72.pr-3
+          / - 0.upto(third) do |i|
+          /   div.font-bold  = keys[i]
+          /   .ml-4 = settings[keys[i]]
+      
+        / div.w-72.pr-3
+        /   - (third + 1).upto(third * 2) do |i|
+        /     div.font-bold  = keys[i]
+        /     .ml-4 = settings[keys[i]]
+        / div.w-72.pr-3
+        /   - (third * 2 + 1).upto(len -1) do |i|
+        /     div.font-bold  = keys[i]
+        /     .ml-4 = settings[keys[i]]
+        / div.w-72.pr-3
+        /   - (forth * 3 + 1).upto(len - 1) do |i|
+        /     div.font-bold  = keys[i]
+        /     .ml-4 = settings[keys[i]]

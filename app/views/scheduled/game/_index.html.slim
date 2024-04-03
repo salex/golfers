@@ -1,0 +1,45 @@
+div[class="-mx-2"]
+  div.flex.gap-2.border-bottom.bg-lime.p-1
+    div.ml-2.flex-shrink
+      .text-lg.font-bold = "Scheduled Game"
+    div.flex-grow.flex
+      div = links = link_to( icon('fas fa-arrow-left', 'Cancel - List Games'),  
+        games_path, class: "btn-cancel")
+      div = link_to icon('fas fa-arrows-alt-h', 'Set Players and Form Teams'),
+        @game.scheduled_url(:set), class: 'block btn-cancel font-bold w-80' if can?(:update,:game)
+      / div = links = link_to( icon('fas fa-arrow-left', 'Cancel - List Games'),  games_path, class: "btn-cancel")
+
+    div.flex-shrink
+      = link_to icon('fas fa-arrow-left', 'Back'), 'javascript:history.back()', class: 'btn btn-secondary float-right'
+
+
+
+- @show = true
+= render partial:"header"  
+
+table.golfer
+  thead
+    tr
+      th Id
+      th Player
+      th Team
+      th Tee
+      th Quota
+      th Front
+      th Back
+      th Total
+      th Quality
+      th Limited
+  tbody
+    - @game.current_players_name.each do |round|
+      tr
+        td =< round.id
+        td =< round.name
+        td =< round.team
+        td =< round.tee
+        td =< round.quota
+        td =< round.front
+        td =< round.back
+        td =< round.total
+        td =< round.quality
+        td =< round.limited

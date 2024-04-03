@@ -1,0 +1,27 @@
+table.border[data-controller="toggler"]
+  tr
+    th.w-44 Player
+    th In
+    th Par3's
+
+  - 0.upto(4) do |pidx| # pidx in index into the player for the demo
+    - pid = pidx+1
+
+    tr.border[data-skins-target="player" ]
+      td.p-3.w-28 = "Player #{pidx}"
+      td= check_box_tag "skins[in][#{pidx}]",pidx,checked=true, data:{action:'click->toggler#toggle', who:pidx,pidx:pidx}
+      td.ml-4[class="flex flex-wrap gap-4" data-skins-target="in" data-toggler-target='toggleme' data-who="#{pidx} " ]
+        table
+          tr
+            td.p-2.px-4 = radio_button_tag "par3[good][#{1}]",pid
+            td.p-2.px-4 = radio_button_tag "par3[good][#{2}]",pid
+            td.p-2.px-4 = radio_button_tag "par3[good][#{3}]",pid
+            td.p-2.px-4 = radio_button_tag "par3[good][#{4}]",pid
+
+div.border[data-controller="toggler"]
+  div.text-blue-700.font-bold.hover:text-green-700[data-action="click->toggler#toggle"] = "Instructions"
+  div[class="hidden" data-toggler-target='toggleme']
+    div.m-3 Lorem ipsum dolor sit amet. Non impedit quisquam aut quae beatae ut laborum perferendis. Ea culpa error ut aperiam facere aut quia aspernatur. Est amet maxime sit voluptatem possimus aut repellendus itaque et dolores quia qui consequatur nemo et voluptas dolor.
+
+    div.m-3 Vel assumenda tempore qui aliquid inventore et commodi porro. Eum deserunt alias non quia suscipit sit dignissimos obcaecati. Non quis accusamus ab suscipit porro eum optio deserunt et fugiat animi ex voluptas corrupti ea libero similique eum quam nesciunt. Aut numquam quidem et molestiae iure sit fugit voluptatibus et ullam similique 33 molestiae illum aut voluptatem consectetur est error dolorum.
+
