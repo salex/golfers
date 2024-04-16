@@ -26,6 +26,13 @@ module PlayersHelper
     end
     mapping
   end
+
+  def number_to_col_array(numb,cols)
+    numb_array = (1..numb).to_a
+    arr = []
+    1.upto((numb / cols) + 1){ arr << numb_array.shift(cols) unless numb_array.blank? } 
+    arr
+  end
   
   # def get_col_size(cnt,columns)
   #   return 1 if cnt.zero?

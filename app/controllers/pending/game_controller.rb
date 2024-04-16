@@ -2,30 +2,58 @@ class Pending::GameController < ApplicationController
   before_action :set_game
 
   def show
-    # @game = GamePending.find(params[:id])
-    # @game.set_state
   end
 
-  # def edit
-  # end
-
-  # def update
-  # end
-
   def adjust_teams
-    # @game = GamePending.find(params[:id])
-    # @game.set_state
-
   end
 
   def swap_teams
-    # @game = GamePending.find(params[:id])
-    # @game.set_state
+  end
+
+  def print_score_card
+    @teams = @game.scorecard_teams
+  end
+
+  # def print_sc_p
+  #   @teams = @game.scorecard_teams
+  # end
+
+
+  def score_card
+    if @game.stats[:makeup] == "individuals" || @game.stats[:seed_method] == 'blind_draw'
+      pdf =  Pdf::IndvScoreCard.new(@game)
+    else
+      pdf =  Pdf::ScoreCard.new(@game)
+    end
+    send_data pdf.render, filename: "score_card",
+      type: "application/pdf",
+      disposition: "inline"
   end
 
 
+  def score_cardp
+    if @game.stats[:makeup] == "individuals" || @game.stats[:seed_method] == 'blind_draw'
+      pdf =  Pdf::ScoreCardi.new(@game)
+    else
+      pdf =  Pdf::ScoreCardp.new(@game)
+    end
+
+    # pdf =  Pdf::ScoreCardp.new(@game)
+    send_data pdf.render, filename: "score_card",
+      type: "application/pdf",
+      disposition: "inline"
+  end
+
+  def indv_score_card
+    pdf =  Pdf::IndvScoreCard.new(@game)
+    send_data pdf.render, filename: "score_card",
+      type: "application/pdf",
+      disposition: "inline"
+  end
+
+
+
   def update_teams
-    # @game = GamePending.find(params[:id])
 
     respond_to do |format|
       if @game.adjust_teams(params)
@@ -39,12 +67,9 @@ class Pending::GameController < ApplicationController
   end
 
   def score_teams
-    # @game = GamePending.find(params[:id])
-    # @game.set_state
   end
 
   def update_scores
-    # @game = current_group.games.find_by(id:params[:id], status:['Pending','Scored'])
     respond_to do |format|
       if ScoreRounds.new(@game,participant_params)
         flash.now[:notice] = 'Scoring Game Teams was successfull.'
@@ -63,8 +88,6 @@ class Pending::GameController < ApplicationController
     @game = current_group && GamePending.find_by(id:params[:id])
     if @game.blank?
       cant_do_that(' - Pending game not found') 
-    # elsif !current_user.can?(:update,:game)
-    #   cant_do_that(' - Not Permitted') 
     else
       @game.set_state
     end

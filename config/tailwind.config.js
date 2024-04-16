@@ -19,7 +19,8 @@ module.exports = {
         'malt': '#991A1E',
         'gold': '#A79055',
         'dark-blue': '#0F3E61',
-        'pt-blue': '#273862',
+        'pt-blue-d': '#273862',
+        'pt-blue-l':'#4766b2',
         'white': '#ffffff',
         lime: {
           lightest: '#f1fff1',

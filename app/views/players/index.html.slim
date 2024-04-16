@@ -19,23 +19,29 @@ section.dashboard
               button[class="absolute -top-3 -right-3 bg-red-500 hover:bg-red-600 text-2xl w-10 h-10 rounded-full focus:outline-none text-white" data-action="click->playerSearch#closeModal"]  &cross;
                       
               h4.mt-1.font-bold Player Search
-              p.mb-3.border-bottom Enter Players Name in the search box and it will list any group player who's first, last or nickname starts with the characters entered
+              p.mb-3.border-bottom Enter Players Name in the search box and it will list any group player who's first, last or nickname contains the characters entered
 
             div
+              div[class="max-w-xs mx auto bg-white"]
+                div [data-controller="autocomplete" 
+                  data-autocomplete-url-value="/players/player_search" data-autocomplete-min-length-value="2"]
+                  input[type="text" class="w-full" data-autocomplete-target="input" placeholder="Type to search..."]
+                  ul.z-2.text-left[data-autocomplete-target="results"]
 
-              div[
-                data-autopickr-url-value="/players/player_search"
-                data-autopickr-min-len-value="1"
-                data-autopickr-select-url-value="/players/SELECTED"
-                data-controller="autopickr"
-                ]
-                div
-                  = text_field_tag(:input,nil,
-                    data:{autopickr_target:"input", action:"autopickr#search"},
-                    placeholder:"Search...",class:"w-48",autofocus:true)
-                  span.w-24 &nbsp;
-                  button = link_to('Pick',nil,data:{autopickr_target:"button"}, class:"bg-blue-500 hover:bg-blue-700 text-white font-bold mx-2 py px-2 rounded inline-block hidden")
-                ul.z-2.text-left.text-black.bg-green-200.max-h-52.divide-y.divide-blue-500.overflow-scroll[data-autopickr-target="results"] 
+
+                  / div[
+                  /   data-autopickr-url-value="/players/player_search"
+                  /   data-autopickr-min-len-value="1"
+                  /   data-autopickr-select-url-value="/players/SELECTED"
+                  /   data-controller="autopickr"
+                  /   ]
+                  /   div
+                  /     = text_field_tag(:input,nil,
+                  /       data:{autopickr_target:"input", action:"autopickr#search"},
+                  /       placeholder:"Search...",class:"w-48",autofocus:true)
+                  /     span.w-24 &nbsp;
+                  /     button = link_to('Pick',nil,data:{autopickr_target:"button"}, class:"bg-blue-500 hover:bg-blue-700 text-white font-bold mx-2 py px-2 rounded inline-block hidden")
+                  / ul.z-2.text-left.text-black.bg-green-200.max-h-52.divide-y.divide-blue-500.overflow-scroll[data-autopickr-target="results"] 
 
             footer.lite-lime.mt-4
               p.mb-3 Click on the Players name in the list and it will display the players information or click the &times; charcter to cancel the search
@@ -67,7 +73,7 @@ section.dashboard
                     div.strong Targets Players
                     = select_tag 'mates[]', options_for_select(Current.group.active_players(180).pluck(:name,:id)), multiple: true, size: 8, data: {pairingSearch_target:'mates'}
 
-            footer.m-2.bg-lime-lighter.border
+            footer.m-2
               = turbo_frame_tag "pairings"
 
       - if @players.present? 
@@ -84,8 +90,14 @@ section.dashboard
             dd.p-1.border-bottom = link_to 'Expired', players_path(filter:'expired',table:1) , class:"blue-link link-btn" 
 
 
-    div.mr-2.hidden.md:flex.float-right
-      = link_to icon('fas fa-arrow-left', 'Back'), 'javascript:history.back()', class: 'btn btn-secondary'
+    / div.mr-2.hidden.md:flex.float-right
+    /   = link_to icon('fas fa-arrow-left', 'Back'), 'javascript:history.back()', class: 'btn btn-secondary'
+    div.flex-shrink.text-green-800.p-0.font-bold.mr-3.hover:text-2xl.float-right = link_to icon('fas fa-arrow-left'), 'javascript:history.back()'
+
+
+/ - puts "PLAY #{@players.present?}"
+/ - puts "PLAY #{@players.blank?}"
+/ - puts "PLAY #{@players.size}"
 
 
 - if @players.present?

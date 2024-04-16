@@ -1,55 +1,18 @@
 - teams = @game.teams
 - team_stats = @game.team_stats
-/ - links = []
-/ - links << link_to(icon('fas fa-arrow-left', 'Cancel - List Games'),  games_path, class:"btn-send")
-/ - if current_user.is_trustee? && @game.state[:can_delete]
-/   / - links << destroyTag(game_path(@game),prompt:icon('fas fa-trash',"Destroy Incomplete Game"))
-/   - links << button_to(icon("fas fa-trash","Destroy Incomplete Game"),game_path(@game),method: :delete,form: { data: { turbo_confirm: "Are You Sure?"}},form_class:"btn-danger inline-block py-0 "  )
-
-/ = render partial:'shared/dashboard', locals:{name:"Pending Game",links:links}
-
-/ .px-2.bg-lime-lighter
-/   = render partial: 'games/shared/event'
 
 - zero_team = @game.state[:has_zero_team]
-- if current_user.is_trustee?
+- if current_user && current_user.is_trustee?
   -if zero_team
     h4 = callout_alert("A Participant was either added or deleted after the teams were formed. You must either ReForm Teams or Adjust Teams before scoring.")
-/ -if @game.method == 'places' && @game.state[:teams].size >  2 
-/   div.mx-2.flex.gap-4
-/     / span.font-bold Teams/Seed:
-/     / span =  "#{@game.state[:teams].count}/#{@game.scoring['seed_method']}"
-
-/     - perc = Current.group.present? ? Current.group.score_place_perc : nil
-/     - dist = Current.group.present? ? Current.group.score_place_dist : nil
-/     - places = PgaPlaces.new(@game.state[:teams].size,@game.state[:dues],dist,perc).winners.reverse
-/     span.strong Suggested Places Payout (First..Last):
-/     span = places
-
-
-/ .bg-lime-lighter.border-bottom.p-2.-mx-2.flex.flex-wrap
-  / .text-sm.md:text-base
-/ div.flex.gap-2.bg-lime-light.-mx-2.p-1.border-2.border-lime-darker
-/   div.flex-shrink.font-bold Scheduled Game
-/   div.flex-grow.flex-wrap
-/     div.btn-cancel cancel
-/     div.btn-cancel cancel cancel
-/     div.btn-cancel = icon('fas fa-eye',"eye")
-/     div.btn-cancel cancel cancel cancel
-/     div.btn-sm-blue blue
-/     div.btn-sm-green green
-/     div.btn-sm-warn warn
-
-/   div.flex-shrink.text-green-800.p-0.font-bold.mr-3.hover:text-2xl = icon('fas fa-arrow-left')
 
 div.flex.gap-2.bg-lime-light.-mx-2.p-1.border-2.border-lime-darker
   div.flex-shrink
-    - if current_user.is_trustee?
+    - if current_user && current_user.is_trustee?
       - unless zero_team
         div.w-44 = link_to icon('fas fa-pencil-alt', 'Score Teams'),
           score_teams_pending_game_path(@game),
           class:"btn btn-submit py-2"
-
 
   div.flex-grow.flex-wrap
     = link_to( icon('fas fa-arrow-left', 'Cancel - List Games'),  games_path, class: "btn-cancel")
@@ -64,13 +27,29 @@ div.flex.gap-2.bg-lime-light.-mx-2.p-1.border-2.border-lime-darker
         class: "btn-cancel",
         title: "Joe needs to go off early, swap his team to first."
       
-      = link_to icon('fas fa-users', 'Reform Teams'), @game.scheduled_url('form_teams'),
-        class: "btn-cancel"
+      = link_to icon('fas fa-users', 'Reform Teams'), @game.scheduled_url('form_teams'),class: "btn-cancel"
+ 
+      div.w3-dropdown-hover.mr-2.w-48
+
+        div[class="btn-gray"] 
+          = icon('fas fa-print'," Print Options")
+          i.fa.fa-caret-down
+
+        .w3-dropdown-content.w3-card-4.w-56
+          = link_to "Print Landscape", @game.pending_url('print_score_card'), class:"block btn-sqr-blue mb-1 p-1 " 
+          = link_to "Print Portrait", @game.pending_url('print_score_card')+"?cols=3", class:"block btn-sqr-blue mb-1 p-1 " 
+
+          = link_to "ScoreCard Landscape",@game.pending_url('score_card') , class:"block btn-sqr-blue mb-1 p-1", target:"_blank"
+          = link_to "ScoreCard Portrait", @game.pending_url('score_cardp'), class:"block btn-sqr-blue mb-1 p-1", target:"_blank"
+
 
 
   div.flex-shrink.text-green-800.p-0.font-bold.mr-3.hover:text-2xl = link_to icon('fas fa-arrow-left'), 'javascript:history.back()'
+- if @game.state[:can_delete.to_s]
+  = button_to(icon("fas fa-trash","Destroy Incomplete Game"),game_path(@game),method: :delete,form: { data: { turbo_confirm: "Are You Sure?"}},class:"btn-warn display:fl mt-1 "  )
 
-= render partial:"header"
+
+= render partial:"shared/gheader"
 
 .flex.flex-wrap
   - team_keys  = teams.keys.sort

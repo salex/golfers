@@ -13,6 +13,21 @@ class ProfilesController < ApplicationController
     end
   end
 
+  def player_search
+    @search_results = Current.group.auto_search(params)
+    # puts "IN PLAYER SEARCH"
+    if @search_results
+      render template:'shared/pickr_search', layout:false
+    end
+  end
+
+  def pairings_search
+    @interactions = Player.pairing_search(params)
+    render turbo_stream: turbo_stream.replace(
+      'pairings',partial: 'pairings')
+  end
+
+
   private
     def user_params
       params.require(:user).permit( 

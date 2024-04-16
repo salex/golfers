@@ -2,20 +2,21 @@ class GroupsController < ApplicationController
   before_action :require_group, except: %i[visit]
 
   before_action :require_super, only: %i[index new create]
-  before_action :require_admin, only: %i[edit update]
-  before_action :require_member, except: %i[show visit]
+  before_action :require_admin, only: %i[edit update expired_players]
+  before_action :require_member, except: %i[show visit leave ]
 
-  before_action :set_group, only: %i[ show edit update destroy visit]
+  before_action :set_group, only: %i[ show edit update destroy visit expired_players]
 
   # GET /groups or /groups.json
   def index
-      @groups = Group.all
+      @groups = Group.all.order(:id)
   end
 
   # GET /groups/1 or /groups/1.json
   def show
     if current_user && current_user.is_super?
-      @group = Group.find(params[:id])
+      @group = Group.find_by(id:params[:id])
+      cant_do_that(' - Group  not found') unless @group.present? 
     else
       @group = current_group
     end
@@ -75,37 +76,42 @@ class GroupsController < ApplicationController
     Current.group = Current.user.group
   end
 
+  def leave
+    reset_session
+    redirect_to root_path, notice:"Exit Group"
+  end
+  
   def visit
     if current_user && current_user.is_super?
       session[:group_id] = @group.id
       Current.group = @group
       @who = current_user.fullname
+      puts "#{@who}VISIT GROUP #{@group.id}"
+
       # render layout: "application"
-      # redirect_to root_path, notice:"Click home button to visit"
+      redirect_to root_path, notice:"Welcome to group #{@group.name}"
       # redirect_back(fallback_location: root_path,now:"message")
-
-
     else
-      Current.group = @group
-      user = @group.users.find_by(fullname:'Visitor')
-      @who="Visitor"
-      unless user.present?
-        redirect_to(root_path,alert:"Group does not allow Visitors",data:{turbo:false})
-      else
-        reset_session
-        session[:group_id] = user.group_id
-        session[:user_id] = user.id
-        session[:fullname] = user.fullname
-        session[:expires] = Time.now + 60.minutes
-        # redirect_to root_path, notice:"Click home button to visit"
-        # render template: 'home/visit'
-        # render turbo_stream: turbo_stream.replace('home', template: '/home/visit')
-        # render layout: "application"
-        # redirect_back(fallback_location: root_path,notice:"message")
-
-
-
+      if params[:id].present? && current_group.blank?
+        @group = Group.find_by(id:params[:id])
+        redirect_to root_path, alert: cant_do_that if @group.blank?
       end
+      # user = @group.users.find_by(fullname:'Visitor')
+      @who="Visitor"
+      # unless user.present?
+      #   redirect_to(root_path,alert:"Group does not allow Visitors",data:{turbo:false})
+      # else
+      reset_session
+      session[:group_id] = @group.id
+      # session[:user_id] = user.id
+      session[:fullname] = @who
+      session[:expires] = Time.now + 15.minutes
+      # redirect_to root_path, notice:"Click home button to visit"
+      # render template: 'home/visit'
+      # render turbo_stream: turbo_stream.replace('home', template: '/home/visit')
+      # render layout: "application"
+      # redirect_back(fallback_location: root_path,notice:"message")
+      redirect_to root_path, notice:"Welcome to group #{@group.name}"
     end
   end
 
@@ -117,6 +123,43 @@ class GroupsController < ApplicationController
       format.html { redirect_to groups_url, notice: "Group was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def stats
+    Current.group = current_group
+    @group=Current.group
+    @groupStats = GroupStats.new
+  end
+
+  def stats_refresh
+    @groupStats = GroupStats.new(params[:stats])
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.replace('refresh', partial: 'groups/stats_refresh')}
+      format.html { render :template => 'groups/stats'}
+    end
+  end
+
+  def expired_players
+    @expired = @group.expired_players
+  end
+
+  def trim_expired
+    set_group
+    players = @group.players.find(params[:deleted]).pluck(:name)
+    @group.players.find(params[:deleted]).each{|p| p.delete}
+    redirect_to expired_players_group_path(@group), notice: "Player(s) #{players} have been deleted!"
+  end
+
+  def recompute_quotas
+    set_group
+    @group.recompute_group_quotas
+    redirect_to root_url, notice: "Group Quotas have be recomputed!"
+  end
+
+  def trim_rounds
+    set_group
+    @group.trim_rounds
+    redirect_to root_url, notice: "Group Events/Rounds over #{@group.trim_months} months old have be deleted and quotas recomputed"
   end
 
   private
@@ -137,7 +180,7 @@ class GroupsController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_group
-      @group = Group.find(params[:id])
+      @group = current_group
     end
 
     # Only allow a list of trusted parameters through.

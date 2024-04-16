@@ -1,0 +1,28 @@
+
+@media print {
+  .page-break {
+     page-break-after: always !important;
+  }
+  .top, .header {
+    display: none;
+  }
+  fieldset {
+    border: none;
+  }
+  body {
+    font-size: 8pt !important;
+    background-color: #fff;
+  }
+  th{
+    -webkit-print-color-adjust:exact !important;
+    print-color-adjust:exact !important;
+    background-color: #ddd;
+  }
+  a[href]:after {
+    content: none !important;
+  }
+  .noprint, .no-print {
+    display: none !important;
+  }
+}
+

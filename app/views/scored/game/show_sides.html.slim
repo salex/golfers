@@ -9,14 +9,17 @@
   - if can?(:update,:game)
     = link_to icon('fas fa-pencil-alt', 'ReScore Teams'), @game.pending_url('score_teams'),
       class: "btn-warn"
-    = link_to icon('fas fa-pencil-alt', 'Score Skins/Birdies'), @game.scheduled_url('skins'),
+    = link_to icon('fas fa-pencil-alt', 'Score Skins/Birdies'), @game.scored_url('skins'),
       class: "btn-cancel"
-    = link_to icon('fas fa-pencil-alt', 'Score Par3s'), @game.scheduled_url('par3'),
+    = link_to icon('fas fa-pencil-alt', 'Score Par3s'), @game.scored_url('par3s'),
       class: "btn-cancel"
     / - if is_manager? && @game.state.present? && @game.state[:can_delete]
     /   - links << destroyTag(game_path(@game),prompt: icon('fas fa-trash','Delete Incomplete Game'))
 
-  = link_to icon('fas fa-arrow-left', 'Back'), 'javascript:history.back()', class: 'btn btn-secondary float-right'
+  / = link_to icon('fas fa-arrow-left', 'Back'), 'javascript:history.back()', class: 'btn btn-secondary float-right'
+  div.flex-shrink.text-green-800.p-0.font-bold.mr-3.hover:text-2xl.float-right = link_to icon('fas fa-arrow-left'), 'javascript:history.back()'
+
+= render partial:"shared/gheader"
 
 
 .flex.flex-wrap
@@ -67,15 +70,16 @@
 
 hr.underline
 .w3-row-padding 
-  strong.annotate Team Winners
-  table.small-table.w100
-    tr
+  strong.annotate.font-bold.text-xl Team Winners
+  table.golfer
+    tr.flex.flex-wrap.gap-4
 
       th = "Front Teams #{scoring.winners[:front].to_s}  &#177; #{game_scores[scoring.winners[:front].first][:front_pm]} Pot $#{scoring.game.state[:side]} Share $#{to_quarters(scoring.game.state[:side]/scoring.winners[:front_size])}".html_safe
       th = "Back Teams #{scoring.winners[:back].to_s}  &#177; #{game_scores[scoring.winners[:back].first][:back_pm]} Pot $#{scoring.game.state[:side]} Share $#{to_quarters(scoring.game.state[:side]/scoring.winners[:back_size])}".html_safe
       th = "Total Teams #{scoring.winners[:total].to_s}  &#177; #{game_scores[scoring.winners[:total].first][:total_pm]} Pot $#{scoring.game.state[:side]} Share $#{to_quarters(scoring.game.state[:side]/scoring.winners[:total_size])}".html_safe
-/ .w3-row-padding 
-/   = render partial:'games/scored/best_sides',locals:{scoring:scoring}
 
-/ = render partial:'games/scored/game_stats'
+div.my-4
+  = render partial:'scored/game/best_sides',locals:{scoring:scoring}
+div.mb-4
+  = render partial:'scored/game/game_stats'
 

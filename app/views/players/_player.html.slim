@@ -1,7 +1,7 @@
-div.mt-1.flex.flex-wrap.bg-green-50
+div.mt-1.flex.flex-wrap.bg-green-0
   div.px-1.w-full.lg:w-5/12.flex.gap-2
     
-    table.golfer.stripped.w-1/2
+    table.golfer.w-1/2
       tr
         th Name
         td = @player.name
@@ -22,7 +22,7 @@ div.mt-1.flex.flex-wrap.bg-green-50
         td = @player.pin
 
     / .px-1.w-full.lg:w-1/-grow6
-    table.golfer.stripped.w-1/2
+    table.golfer.w-1/2
       tr
         th Frozen
         td = @player.is_frozen
@@ -43,6 +43,9 @@ div.mt-1.flex.flex-wrap.bg-green-50
         td = time_ago_in_words(@player.last_played)
 
   .px-1.w-full.lg:w-7/12
+
+    / -@pagy = @player.scored_rounds.order(:date).reverse_order.each do |r|
+
     table.golfer.w-full
       caption.bg-lime-darker.font-bold = "Quotas Use #{Current.group.rounds_used} Rounds, Use Hi/Low: #{Current.group.use_hi_lo_rule}" 
       thead
@@ -86,6 +89,10 @@ div.mt-1.flex.flex-wrap.bg-green-50
 div.my-2
   / h6.annotate = "Totals-> Rounds: #{rounds}, Dues: #{dues}, Won: #{quality}, Balance: #{(quality - dues).round(2)}"
   table.golfer.w-full
+    caption
+      div.text-lg.font-bold Player Rounds
+      div == pagy_nav(@pagy)
+
     thead
       tr
         th Date
@@ -101,24 +108,24 @@ div.my-2
         th P$
         / th O
     tbody
-    -@player.scored_rounds.order(:date).reverse_order.each do |r|
-      tr
-        td
-          = r.game_id.present? ? link_to( r.date, scored_game_path(r.game_id),class:'green-link') : r.date
-          |&nbsp;
-          - if @current_user.present? && @current_user.is_manager?
-            = link_to "Show", round_path(r),class:'blue-link'
-        td= r.team
-        td= r.tee[0..0]
-        td= "#{r.quota} #{r.limited} "
-        td= r.front
-        td= r.back
-        td= r.total
-        td.text-right= r.total - r.quota
-        td.text-right= to_nickels(r.quality,1) if r.quality.present? && !r.quality.zero?
-        td.text-right= to_nickels(r.skins,1) if r.skins.present? && !r.skins.zero?
-        td.text-right= to_nickels(r.par3,1) if r.par3.present? && !r.par3.zero?
-        / td.text-right= to_nickels(r.other,1) if r.other.present? && !r.other.zero?
+      - @rounds.each do |r|
+        tr
+          td
+            = r.game_id.present? ? link_to( r.date, scored_game_path(r.game_id),class:'text-blue-700 hover:text-green-500') : r.date
+            |&nbsp;
+            - if @current_user.present? && @current_user.is_manager?
+              = link_to "Show", round_path(r),class:'blue-link'
+          td= r.team
+          td= r.tee[0..0]
+          td= "#{r.quota} #{r.limited} "
+          td= r.front
+          td= r.back
+          td= r.total
+          td.text-right= r.total - r.quota
+          td.text-right= to_nickels(r.quality,1) if r.quality.present? && !r.quality.zero?
+          td.text-right= to_nickels(r.skins,1) if r.skins.present? && !r.skins.zero?
+          td.text-right= to_nickels(r.par3,1) if r.par3.present? && !r.par3.zero?
+          / td.text-right= to_nickels(r.other,1) if r.other.present? && !r.other.zero?
 
 
 

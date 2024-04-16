@@ -1,0 +1,27 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  stashable_type: MyString
+  stashable_id: 
+  type: 
+  ref_id: 
+  title: MyString
+  content: MyString
+  slim: MyString
+  hash_data: MyText
+  text_data: MyText
+  date: 2024-04-10
+  status: MyString
+
+two:
+  stashable_type: MyString
+  stashable_id: 
+  type: 
+  ref_id: 
+  title: MyString
+  content: MyString
+  slim: MyString
+  hash_data: MyText
+  text_data: MyText
+  date: 2024-04-10
+  status: MyString

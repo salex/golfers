@@ -20,7 +20,7 @@ div.m-1
         / th Phone
         th LPlayed
         th frozen
-        - if current_user.is_trustee?
+        - if current_user && current_user.is_trustee?
           th Actions
 
     tbody
@@ -39,7 +39,7 @@ div.m-1
           / td = player.phone
           td = player.last_played
           td = player.is_frozen
-          - if current_user.is_trustee?
+          - if current_user && current_user.is_trustee?
             td 
               span.icon-show = link_to(icon('fas fa-eye'),player)
               span.icon-edit = link_to(icon('fas fa-edit'),edit_player_path(player))

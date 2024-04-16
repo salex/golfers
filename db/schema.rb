@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_24_161452) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_10_205306) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -25,6 +25,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_24_161452) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["group_id"], name: "index_games_on_group_id"
+  end
+
+  create_table "golfers", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "groups", force: :cascade do |t|
@@ -76,6 +82,24 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_24_161452) do
     t.datetime "updated_at", null: false
     t.index ["game_id"], name: "index_rounds_on_game_id"
     t.index ["player_id"], name: "index_rounds_on_player_id"
+  end
+
+  create_table "stashes", force: :cascade do |t|
+    t.string "stashable_type"
+    t.bigint "stashable_id"
+    t.string "type"
+    t.bigint "ref_id"
+    t.string "title"
+    t.string "content"
+    t.string "slim"
+    t.text "hash_data"
+    t.text "text_data"
+    t.date "date"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.date "due_date"
+    t.string "remarks"
   end
 
   create_table "users", force: :cascade do |t|

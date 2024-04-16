@@ -1,9 +1,11 @@
 class Group < ApplicationRecord
 
-  has_many :users
-  has_many :games
+  has_many :players, :dependent => :destroy
+  has_many :games, :dependent => :destroy
   has_many :rounds, through: :games
-  has_many :players
+  has_many :users, :dependent => :destroy
+  # has_many :posts, :dependent => :destroy
+  # validates :name, presence: true, :uniqueness => {:scope => [:club_id, :name]}
 
   serialize :settings, coder: JSON
 
@@ -75,7 +77,7 @@ class Group < ApplicationRecord
       # set attributes to settings
       self.send("#{k.to_sym}=", v)
     end
-    self.parse_courses
+    # self.parse_courses
 
   end
 
@@ -177,6 +179,40 @@ class Group < ApplicationRecord
     self.players.where(last_played:Date.today).where_assoc_not_exists(:rounds)
   end
 
+  def home_events
+    self.games.where(status:%w(Scheduled Pending)).order(:date).reverse_order
+  end
 
+  def group_color
+    c = %w{green red blue amber purple}[self.id % 4]
+    "bg-#{c}-500"
+  end
+
+  def auto_search(params)
+    # for stimulus-autocomple used in playerSearch controller
+    puts "AUTOSEARCH #{params}"
+    k = params.keys.first
+    n = params[k]
+    t = Player.arel_table
+    player_ids = self.players.where(t[:first_name].matches("%#{n}%"))
+    .or(self.players.where(t[:last_name].matches("%#{n}%")))
+    .or(self.players.where(t[:nickname].matches("%#{n}%"))).order(:name).pluck(:name,:id)
+  end
+
+  def trim_rounds
+    # lets get rid of all rounds and events that are over options[:trim_months] months old
+    exp_date = Date.today - self.trim_months.months
+    games = self.games.where(Game.arel_table[:date].lt(exp_date)).includes(:rounds)
+    if games.present?
+      games.destroy_all
+      recompute_group_quotas
+    end
+  end
+
+  def recompute_group_quotas
+    self.players.each do |player|
+      player.recompute_quota
+    end
+  end
 
 end

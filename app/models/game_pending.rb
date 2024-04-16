@@ -9,7 +9,7 @@ class GamePending < Game
 
 
   def set_attributes
-    self.set_state if self.state.blank?
+    self.set_state if self.state.blank? #NOTUSED
     set_game_rounds
     set_teams
     set_team_stats

@@ -6,19 +6,38 @@ class PlayersController < ApplicationController
   def index
 
     if params[:table].present?
+      if params[:filter].present?
+        case params[:filter]
+        when "active"
+          @players = current_group.active_players.order(:name)
+          flash.alert = "There were no records for #{params[:filter]}. Default to all" if @players.blank?
 
-      @players = current_group.players.order(:name)
+        when "inactive"
+          @players = current_group.inactive_players.order(:name)
+          flash.now.alert = "There were no records for #{params[:filter]}. Default to all" if @players.blank?
+
+        when "expired"
+          @players = current_group.expired_players.order(:name)
+          flash.alert = "There were no records for #{params[:filter]}. Default to all" if @players.blank?
+        end
+      end
+
+      if @players.blank?
+        @players = current_group.players.order(:name)
+      end
     else
-      @status = [current_group.active_players.to_a,
-        current_group.inactive_players.to_a,
-        current_group.expired_players.to_a
-      ]
+      @active = current_group.active_players.to_a
+      @inactive =  current_group.inactive_players.to_a
+      @expired = current_group.expired_players.to_a
     end
   end
 
   # GET /players/1 or /players/1.json
   def show
     @quota_summary =  PlayerObjects::Quota.get(@player)
+    @pagy, @rounds = pagy(@player.scored_rounds.order(:date).reverse_order, items: 10)
+    # @pagy, @players = pagy(current_group.games.order(:date).reverse_order, items: 12)
+
   end
 
   # GET /players/new
@@ -68,6 +87,23 @@ class PlayersController < ApplicationController
     end
   end
 
+  def player_search
+    @search_results = Current.group.auto_search(params)
+    puts "IN PLAYER SEARCH #{params}"
+    if @search_results
+      render template:'shared/pickr_search', layout:false
+    end
+  end
+
+  def pairings_search
+    @interactions = Player.pairing_search(params)
+    render turbo_stream: turbo_stream.replace(
+      'pairings',partial: 'pairings')
+  end
+
+
+
+
   private
     def require_group
       cant_do_that(' - Not Authorized') unless current_group.present? 
@@ -75,7 +111,8 @@ class PlayersController < ApplicationController
     
     # Use callbacks to share common setup or constraints between actions.
     def set_player
-      @player = Player.find(params[:id])
+      @player = current_group.players.find_by(id:params[:id])
+      cant_do_that(' - Group Player not found') unless @player.present? 
     end
 
     # Only allow a list of trusted parameters through.

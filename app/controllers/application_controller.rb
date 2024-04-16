@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  include Pagy::Backend
 
   before_action :session_expired
 
@@ -8,7 +9,7 @@ class ApplicationController < ActionController::Base
       session_time_left = (expire_time - Time.now).to_i
       unless session_time_left > 0
         logout(current_user)
-        flash.alert  = 'Your session has timed out. Please log back in.'
+        # flash.alert  = 'Your session has timed out. Please log back in.'
       else
         session[:expires] = Time.now + 60.minutes
         # because I have code that checks Current.user/group and visit
@@ -16,6 +17,15 @@ class ApplicationController < ActionController::Base
         Current.group = Group.find_by(id:session[:group_id])
         # check = "Current User #{Current.user.present?} Group #{Current.group.present?}"
         # flash.notice = check
+      end
+    elsif current_group.present? && session[:expires].present?
+      expire_time = Time.parse(session[:expires]) || Time.now
+      session_time_left = (expire_time - Time.now).to_i
+      unless session_time_left > 0
+        # flash.alert  = 'Your session has timed out. Please log back in.'
+        logout(nil)
+      else
+        session[:expires] = Time.now + 10.minutes
       end
     end
   end
@@ -94,7 +104,6 @@ class ApplicationController < ActionController::Base
     Current.user = nil 
     reset_session
     redirect_to root_path, notice: "You have been logged out."
-
   end
 
 end

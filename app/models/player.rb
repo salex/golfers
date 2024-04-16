@@ -6,6 +6,24 @@ class Player < ApplicationRecord
   has_many :rounds, dependent: :destroy
   has_many :games, through: :rounds
 
+  def self.pairing_search(params,numb=30)
+    subject = Player.find_by(id:params[:subject])
+    return false if subject.blank?
+    sname = subject.name
+    mname = []
+    marray = []
+    subject_rounds = subject.scored_rounds.order(date: :desc).limit(numb).pluck(:game_id,:team,:date)
+    results = {subject:sname,mates:[],mname:[]}.with_indifferent_access
+    params[:mates].each do |m|
+      mate = Player.find(m)
+      results[:mname] << mate.name
+      m_rounds = mate.scored_rounds.order(date: :desc).limit(numb).pluck(:game_id,:team,:date)
+      intersection = subject_rounds & m_rounds
+      results[:mates] << intersection
+    end
+    return results
+  end
+
 
   def quota_limited
     if limited?

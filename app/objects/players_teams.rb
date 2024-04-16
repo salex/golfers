@@ -3,7 +3,7 @@ class PlayersTeams
 
   def initialize(game)
     @game = game
-    game.set_state if game.state.blank?
+    # game.set_state if game.state.blank?  #NOTUSED
     set_rounds
     set_teams
     @scored = @is_scored = rounds.size == rounds.map(&:type).count('ScoredRound')

@@ -73,7 +73,6 @@ class PlayerObjects::Quota < ApplicationService
     results = {}
     # get results for each tee on record
     tees = @scored_rounds.select(:tee).distinct.pluck(:tee).sort
-
     tees.each do |t|
       player_tee_quota(t)
       unless player_quota.blank?
@@ -90,6 +89,7 @@ class PlayerObjects::Quota < ApplicationService
   end
 
   def player_tee_quota(tee = nil)
+
     set_attr
     tee = player.tee if tee.blank?
     rounds = player_rounds(tee)
@@ -103,6 +103,7 @@ class PlayerObjects::Quota < ApplicationService
   end
 
   def player_rounds(tee = nil)
+
     if tee.present?
       rounds = @scored_rounds.where(tee: tee).order(:date).reverse_order.limit(group.rounds_used + 1)
     else
@@ -111,14 +112,20 @@ class PlayerObjects::Quota < ApplicationService
         # rounds = ScoredRound.where(player_id: pins).order(:date).reverse_order.limit(group.rounds_used + 1)
       rounds = @scored_rounds.order(:date).reverse_order.limit(group.rounds_used + 1)
     end
+
     return nil if rounds.blank? # a player with no rounds, assume its stored quota
+
     # reinstitute sanitize_first_round setting - lost in some update
     @first_round = rounds[0] if rounds.size == 1 && group.sanitize_first_round
     @totals = rounds.pluck(:total)
+
     @dropped = @totals.length > group.rounds_used ? @totals.pop : nil
     # dropped pop the (rounds_used + 1), remaining used used to compute quota
+
     @limited = PlayerObjects::LimitStatus.get(player, tee)
+
     @last_played = rounds.maximum(:date)
+
   end
 
   def compute_quota

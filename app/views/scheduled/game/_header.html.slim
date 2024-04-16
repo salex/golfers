@@ -1,6 +1,6 @@
 = turbo_frame_tag "toggle_pays"
   div.flex.flex-wrap.border.border-slate-400.p-1.my-1
-    -  unless @show.present?
+    -  if @show.present?
       - toggle = @game.method == 'sides' ? "Places" : "Sides"
       div 
         - ln =  raw("#{icon('fas fa-exchange-alt')} Toggle Pays to #{toggle} ") 

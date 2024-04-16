@@ -23,6 +23,10 @@ module TailwindHelper
     text ? tag.span(icon_tag + text_tag) : icon_tag
   end
 
+  def sidebar_menu
+    "btn-sqr-blue text-center font-bold border border-zinc-100 py-1"
+  end
+
   # def btn_lg
   #   "mr-2 rounded-xl py-3 px-3 inline-block font-bold text-lg "
   # end

@@ -4,7 +4,6 @@ class Scored::GameController < ApplicationController
   before_action :set_game #, only: %i[ show par3s skins]
 
   def show
-    # render template:'scored/game/show_sides'
 
     @game.method = current_group.pays if @game.method.blank?
     valid =  true #@game.rounds.length == @game.stats[:round][:players]
@@ -28,15 +27,9 @@ class Scored::GameController < ApplicationController
   end
 
   def par3s
-    # @players = current_group.players.order(:name)
-    # @game = current_group.games.find(params[:id])
-    # @game.set_state if @game.present?
   end
 
   def skins
-    # @players = current_group.players.order(:name)
-    # @game = current_group.games.find(params[:id])
-    # @game.set_state if @game.present?
   end
 
   def rescore_teams
@@ -65,8 +58,6 @@ class Scored::GameController < ApplicationController
     @game = current_group && current_group.games.find_by(id:params[:id], status:'Scored')
     if @game.blank?
       cant_do_that(' - Scored game not found') 
-    # elsif !current_user.can?(:update,:game)
-    #   cant_do_that(' - Not Permitted') 
     else
       @game.set_state
     end

@@ -1,8 +1,7 @@
 
 .sticky-menu
-  / script crossorigin="anonymous" src="https://kit.fontawesome.com/69f9b59efd.js" 
-
-  .grid.grid-cols-12.bg-black.text-white.text-lg.font-bold.noprint[data-controller="toggleSidebar"]
+ 
+  .grid.grid-cols-12.bg-black.text-white.text-lg.font-bold[data-controller="toggleSidebar"]
     
     div.hidden.lg:block.bg-green-600.col-span-1
       .w3-button.w3-left[data-action="click->toggleSidebar#toggle"]  ☰ Menu
@@ -15,17 +14,15 @@
         = link_to "Group", current_group, class:"w3-button" 
         = link_to "Games", games_path, class:"w3-button" 
         = link_to "Players", players_path, class:"w3-button" 
-        / = link_to "Users", users_path, class:"w3-button" if current_user.is_admin?
-        / = link_to "Groups", groups_path, class:"w3-button" if current_user.is_super?
-        - if current_user.is_admin?
-          div.w3-dropdown-hover.mr-2.w-48.z-10
+        - if current_user.present? && current_user.is_admin?
+          div.w3-dropdown-hover.mr-2.w-36.z-10
             div[class="btn-gray py-0"] 
               span.text-white.text-lg Admin
               i.fa.fa-caret-down.text-white.ml-2
             .w3-dropdown-content.w3-card-4.w-48
               = link_to "Users", users_path, class:"block p-1 m-1 border-2 hover:bg-green-lighter"
               = link_to "Groups", groups_path, class:"block p-1 m-1 border-2 hover:bg-green-lighter" if current_user.is_super?
-
+              = link_to "Notices", notices_path, class:"block p-1 m-1 border-2 hover:bg-green-lighter" if current_user.is_super?
 
 
     div.col-span-5

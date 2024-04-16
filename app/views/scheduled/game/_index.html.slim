@@ -7,15 +7,13 @@ div[class="-mx-2"]
         games_path, class: "btn-cancel")
       div = link_to icon('fas fa-arrows-alt-h', 'Set Players and Form Teams'),
         @game.scheduled_url(:set), class: 'block btn-cancel font-bold w-80' if can?(:update,:game)
-      / div = links = link_to( icon('fas fa-arrow-left', 'Cancel - List Games'),  games_path, class: "btn-cancel")
+      = if @game.state[:can_delete.to_s]
+        - button_to(icon("fas fa-trash","Destroy Incomplete Game"),game_path(@game),method: :delete,form: { data: { turbo_confirm: "Are You Sure?"}},class:"btn-warn inline-block mt-1 "  )
 
-    div.flex-shrink
-      = link_to icon('fas fa-arrow-left', 'Back'), 'javascript:history.back()', class: 'btn btn-secondary float-right'
-
-
+    div.flex-shrink.text-green-800.p-0.font-bold.mr-3.hover:text-2xl = link_to icon('fas fa-arrow-left'), 'javascript:history.back()'
 
 - @show = true
-= render partial:"header"  
+= render partial:"/shared/theader"  
 
 table.golfer
   thead

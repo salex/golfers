@@ -1,3 +1,31 @@
+=begin
+ Attempt to get state/stats straight
+ state should be save an constant/not changed unless:
+  game rounds changed by
+    adding players/rounds in schedule included adding late players
+    forming teams
+    scoring teams
+  stat was renamed scoing and want to rename to state
+  want state to containe all info needed in schedeling, forming and scoring
+  showing should not reload anything, should be there
+
+  add method get_state which just gets the state hash
+  if anything changed in rounds or game call:
+    set_state which rebuilds the hash
+  game.scoring is really useless
+    change a calls to scoring to get it from state
+    temporally set attribute :state to :game_state
+  new approch
+    get rid of scoring by adding colums
+      method is either places or sides. already in table
+        change to scoring_method
+      add players =  number of rounds
+      add teams =  number of teams
+      add makeup to team forming indiv, 2 somes, 4somes, mixed
+
+
+=end
+
 class Game < ApplicationRecord
   belongs_to :group
   has_many :scored_rounds
@@ -6,6 +34,8 @@ class Game < ApplicationRecord
   serialize :scoring, coder: JSON
   serialize :par3, coder: JSON
   serialize :skins, coder: JSON
+
+  before_save :set_player_teams
 
   attribute :state 
 
@@ -29,8 +59,38 @@ class Game < ApplicationRecord
     "/pending/game/#{self.id}/#{action if action.present?}"
   end
 
+  def scored_url(action = nil)
+    "/scored/game/#{self.id}/#{action if action.present?}"
+  end
+
+  def stats
+    self.scoring
+  end
+
+  def set_scoring
+    self.scoring = {
+      round: {}
+    }.with_indifferent_access
+  end
+
   # {status}_players used mainly in picking players for game
   # 90% of players showing up will be in active
+
+  def set_player_teams
+    set_scoring if scoring.blank?
+    scoring['round'] = {} if scoring['round'].blank?
+    rnds = self.rounds
+    if rnds.size.positive?
+      arr = rnds.pluck(:id, :team)
+      teams = arr.pluck(1).sort.uniq
+      scoring['round']['players'] = arr.size
+      scoring['round']['teams'] = teams.size
+    else
+      scoring['round']['players'] = 0
+      scoring['round']['teams'] = 0
+    end
+  end
+
 
   def active_players
     group.active_players.where.not(id: players.pluck(:id))
@@ -74,7 +134,7 @@ class Game < ApplicationRecord
       state[:has_scored_round] = rnds.where(type: 'ScoredRound').size.positive?
       state[:can_form] = (state[:teams] == [0]) || status == 'Scheduled'
       state[:can_reform] = !state[:can_form] && state[:has_zero_team]
-      state[:can_delete] = (status != 'Scored') && ((Date.today - date) >= 2)
+      state[:can_delete] = (status != 'Scored') && ((Date.today - date) > 2)
       state[:dues] = game_group.dues
       state[:pot] = game_group.dues * state[:players]
       state[:side] = (state[:pot] / 3).round(2)
@@ -139,6 +199,24 @@ class Game < ApplicationRecord
     end
     results
   end
+
+  def scorecard_teams
+    teams = {}
+    self.game_teams.each_pair do |team,gplayers|
+      teams[team] = {players:[],header:""}.with_indifferent_access
+      tquota = 0
+      gplayers.each do |gp|
+        tquota += gp.quota
+        fl = gp.full_name.split
+        initial = fl.size > 1 ? fl[0][0..0] + fl[1][0..0] : fl[0][0..1]
+        quota = "#{gp.tee[0..0]}#{gp.limited.present? ? (gp.quota.to_s+'*') : gp.quota}"
+        teams[team][:players] << {name: gp.name,quota:quota,initial:initial }
+      end
+      teams[team][:header] = "Team #{team} - Quota #{tquota} Side #{tquota/2.0} Hole #{(tquota / 18.0).round(1)}"
+    end
+    teams
+  end
+
 
   def adjust_teams(params)
     # THIS NEEDS REFACTORED (I did)
@@ -208,6 +286,14 @@ class Game < ApplicationRecord
     side = Skins.new(self)
     side.pay_winners
     save
+  end
+
+  def has_skins?
+    skins.present? && skins['good'].present?
+  end
+
+  def has_par3?
+    par3.present? && par3['good'].present?
   end
 
 

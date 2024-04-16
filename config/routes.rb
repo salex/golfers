@@ -1,6 +1,31 @@
 Rails.application.routes.draw do
-  resources :rounds
+  resources :rounds, only:[:show,:destroy,:edit,:update] 
   resource :course, only:[:show,:edit,:update] 
+  resources :notices do
+    member do
+      get :display
+    end
+  end
+
+  namespace :apps do 
+    get :score_sheet
+    get :places_sheet
+    get :payouts
+    # get 'payouts', to: '#payouts'
+    # patch 'payouts/reset', to: '#reset'
+    # get 'payouts/about', to: '#about'
+    # get 'payouts/about/deals', to: '#deals'
+    # get 'payouts/about/pga', to: '#pga'
+    # get 'payouts/about/rate', to: '#rate'
+    # get 'payouts/about/scoring', to: '#scoring'
+
+  end
+
+  # namespace :admin do
+  #   root to: "admin#index"
+  # end  
+
+
 
   namespace :scheduled do
       resources :game, only:[:show,:edit,:update] do 
@@ -24,6 +49,11 @@ Rails.application.routes.draw do
           get :swap_teams
           patch :update_teams
           get :set
+          get :print_score_card
+          # get :print_sc_p
+          get :score_cardp
+          get :score_card
+
 
         end
 
@@ -56,7 +86,12 @@ Rails.application.routes.draw do
   #     end
   # end
   resources :users
-  resources :games 
+  resources :games do
+    collection do
+      get :new_today
+    end
+
+  end
   resources :players do
     member do
       get :recompute_quota
@@ -73,6 +108,18 @@ Rails.application.routes.draw do
   resources :groups do
     member do 
       patch :visit
+      patch :leave
+      get :stats
+      patch :stats_refresh
+      patch :trim_rounds
+      get :expired_players
+      patch :trim_expired
+      patch :recompute_quotas
+
+
+
+      # patch :trim_rounds
+
     end
   end
   resource :session 
@@ -94,7 +141,19 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
-  get 'visit', to: 'home#visit'
+  get 'visit', to: 'home#groups'
+  get 'test', to: 'home#test'
+  get 'golfer', to: 'golfer#index'
+
+  get 'payouts', to: 'apps#payouts'
+  patch 'payouts/reset', to: 'apps#reset'
+  get 'payouts/about', to: 'apps#about'
+  get 'payouts/about/deals', to: 'apps#deals'
+  get 'payouts/about/pga', to: 'apps#pga'
+  get 'payouts/about/rate', to: 'apps#rate'
+  get 'payouts/about/scoring', to: 'apps#scoring'
+
+
 
   root "home#index"
   get '*path', to: 'home#redirect'

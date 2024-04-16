@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby "3.0.1"
+ruby "3.1.0"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.1"
@@ -69,6 +69,12 @@ end
 
 gem 'slim-rails'
 gem 'activerecord_where_assoc', '~> 1.0'
+gem 'pagy', '~> 8.0' # omit patch digit
+gem 'prawn'
+gem 'prawn-table'
+gem 'exonio'
+
+
 
 
 # gem 'font-awesome-sass', '~> 5.12.0'

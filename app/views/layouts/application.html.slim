@@ -15,8 +15,14 @@ html
     = javascript_importmap_tags
 
   body
-    header.noprint
+    header.no-print
       = render 'layouts/header'
-    = render 'layouts/menubar'
-    main.mx-2
-      == yield
+      = render 'layouts/menubar'
+
+    #mySidebar.w3-sidebar.w3-bar-block.w3-card-4.w3-animate-left[style="display:none"] 
+      = render 'home/sidebar'
+    #myMain.mx-2 = yield
+
+    
+    / main.mx-2
+    /   == yield
