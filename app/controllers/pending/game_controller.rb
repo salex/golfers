@@ -20,7 +20,7 @@ class Pending::GameController < ApplicationController
 
 
   def score_card
-    if @game.stats[:makeup] == "individuals" || @game.stats[:seed_method] == 'blind_draw'
+    if @game.scoring['makeup'] == "individuals" || @game.scoring['seed_method'] == 'blind_draw'
       pdf =  Pdf::IndvScoreCard.new(@game)
     else
       pdf =  Pdf::ScoreCard.new(@game)
@@ -32,7 +32,7 @@ class Pending::GameController < ApplicationController
 
 
   def score_cardp
-    if @game.stats[:makeup] == "individuals" || @game.stats[:seed_method] == 'blind_draw'
+    if @game.scoring['makeup'] == "individuals" || @game.scoring['seed_method'] == 'blind_draw'
       pdf =  Pdf::ScoreCardi.new(@game)
     else
       pdf =  Pdf::ScoreCardp.new(@game)

@@ -40,7 +40,8 @@
             th.w-10 &nbsp;7 
             th.w-10 &nbsp;8 
             th.w-10 &nbsp;9 
-            th.w-10 in
+            th.w-10 In
+            th.w-10 i
             th.w-10 10
             th.w-10 11  
             th.w-10 12 
@@ -50,20 +51,21 @@
             th.w-10 16 
             th.w-10 17 
             th.w-10 18 
-            th.w-10 out
-            th.w-10 tot
+            th.w-10 Ou
+            th.w-10 T
             th.w-10 +- 
 
         tbody
           - 4.times do |i|
             - n = q =  w = '.' # need something other than space
             - if players[i].present?
+              
               - n = players[i][:name]
               - q = players[i][:quota]
               - w = players[i][:initial]
 
             tr
-              td = n
+              td.elem7p = n
               td = q
               td  
               td  
@@ -73,8 +75,9 @@
               td  
               td  
               td  
+              td
               td  
-              td = w
+              td.elem7p = w
               td 
               td   
               td  
@@ -89,11 +92,12 @@
               td
           tr
             th.text-left Par
+            th
             - 0.upto(8) do |i|
               th = par_in[i]
 
             th  
-            th 
+            th
             - 0.upto(8) do |i|
               th = par_out[i]
             th 
@@ -119,7 +123,8 @@
               td 
               td   
               td  
-              td  
+              td
+              td 
               td  
               td  
               td  
@@ -138,7 +143,7 @@
         - if cols == 2
           hr.my-20.border.border-black
         - else 
-          hr.my-10.border.border-black
+          hr.my-8.border.border-black
 
 
 

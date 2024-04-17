@@ -31,7 +31,7 @@ class Pdf::IndvScoreCard < Prawn::Document
   def set_places_teams
     teams = []
     players = @game.current_players_name.shuffle
-    opt = GameObjects::ScheduledGame::TeamOptions.new(players.size).options
+    opt = ScheduledGame::TeamOptions.new(players.size).options
     if opt['mixed34'].present?
       opt['mixed34']['threesome'].times{|i| teams << players.shift(3)}
       opt['mixed34']['foursome'].times{|i| teams << players.shift(4)}

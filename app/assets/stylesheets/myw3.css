@@ -175,6 +175,15 @@ select:disabled {
 /*  background-color: var(--disabled);*/
 }
 
+p {
+  margin:0.3rem 0;
+  line-height: 1.2rem;
+}
+
+p.slim {
+ text-indent:1rem;
+}
+
 /*.gbtn {
     background-color: #a79055;
     color: #fff;

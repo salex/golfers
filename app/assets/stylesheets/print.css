@@ -24,5 +24,8 @@
   .noprint, .no-print {
     display: none !important;
   }
+  .elem7p{
+    font-size: 7pt !important;
+  }
 }
 
