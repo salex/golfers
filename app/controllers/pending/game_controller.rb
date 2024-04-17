@@ -85,7 +85,7 @@ class Pending::GameController < ApplicationController
   private
 
   def set_game
-    @game = current_group && GamePending.find_by(id:params[:id])
+    @game = current_group && current_group.games.find_by(id:params[:id])
     if @game.blank?
       cant_do_that(' - Pending game not found') 
     else

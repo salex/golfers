@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
         # flash.alert  = 'Your session has timed out. Please log back in.'
         logout(nil)
       else
-        session[:expires] = Time.now + 10.minutes
+        session[:expires] = Time.now + 15.minutes
       end
     end
   end

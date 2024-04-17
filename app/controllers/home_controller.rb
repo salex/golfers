@@ -16,7 +16,20 @@ class HomeController < ApplicationController
     render template: "home/test"
   end
 
+  def score_sheet
+    pdf =  Pdf::ScoreSheet.new
+    send_data pdf.render, filename: "score_sheet",
+      type: "application/pdf",
+      disposition: "inline"
+  end
 
+  def places_sheet
+    if params[:col].present?
+      render template: 'home/places_sheet'
+    else
+      render template: 'home/places_sheet1'
+    end
+  end
 
   def redirect
     redirect_group(params[:path])
@@ -26,8 +39,8 @@ class HomeController < ApplicationController
       Current.group = @group
       session[:group_id] = @group.id
       session[:fullname] = "Visitor"
-      session[:expires] = Time.now + 5.minutes
-      cookies[:group_id] = {value: @group.id, expires: Time.now + 10.minutes}
+      session[:expires] = Time.now + 15.minutes
+      cookies[:group_id] = {value: @group.id, expires: Time.now + 15.minutes}
       params[:format] = 'html'
       redirect_to root_path
     else
@@ -39,7 +52,7 @@ class HomeController < ApplicationController
 
   def redirect_group(path)
     @group = Group.find_by(Group.arel_table[:name].matches("%#{path}"))
-    # puts "inRedirect #{@group}"
+    puts "inRedirect #{@group.name}"
     return @group
   end
 

@@ -34,25 +34,6 @@ module PlayersHelper
     arr
   end
   
-  # def get_col_size(cnt,columns)
-  #   return 1 if cnt.zero?
-  #   col_size = cnt / columns
-  #   col_size += 1 unless cnt % columns == 0
-  #   return col_size
-  # end
-
-  # def col_mapping(cnt,columns)
-  #   dm_arr = cnt.divmod(columns)
-  #   idxs = (0..(cnt-1)).to_a
-  #   col_map = []
-  #   columns.times do |i| 
-  #     extr = dm_arr[1] > 0 ? 1 : 0
-  #     col_map << idxs.shift(dm_arr[0] + extr)
-  #     dm_arr[1] -= 1 if dm_arr[1] > 0
-  #   end
-  #   col_map
-  # end
-
   def col_map_array(ary,columns)
     col_size,mod_size = ary.size.divmod(columns)
     map = []

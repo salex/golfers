@@ -83,10 +83,11 @@ class GroupsController < ApplicationController
   
   def visit
     if current_user && current_user.is_super?
+      @group = Group.find(params[:id])
       session[:group_id] = @group.id
       Current.group = @group
       @who = current_user.fullname
-      puts "#{@who}VISIT GROUP #{@group.id}"
+      puts "#{@who} VISIT GROUP #{@group.id}"
 
       # render layout: "application"
       redirect_to root_path, notice:"Welcome to group #{@group.name}"
