@@ -145,7 +145,7 @@ table.golfer th {
 }
 
 .lime-btn {
-  background-color: #b8ffb8;
+  background-color: #4CCF70 ;
   padding: 2px 6px;
   text-decoration: none;
   border: none;
@@ -155,30 +155,21 @@ table.golfer th {
   height: 100%;
 }
 .lime-btn:hover {
-  background-color: #4CCF70 !important;
+  background-color: #b8ffb8 !important;
 }
 
- .w08p {
+.w08p {
    width: 10%;
 }
- .w04p {
+.w04p {
    width: 3.4%;
 }
-/*.lime-btn.round {
-  border-radius: 6px;
-}
-*//*.lime-btn.link-btn {
-  display: inline-block;
-  width: 100%;
-  height: 100%;
-}
-*/
+
 input:disabled,
 textarea:disabled,
 select:disabled {
   cursor: not-allowed;
   opacity: 0.5;
-/*  background-color: var(--disabled);*/
 }
 
 p {
@@ -204,14 +195,13 @@ dl.indent-dd dt {
    font-weight: bold;
    line-height: 1.2rem;
    margin-bottom: 0.3rem;
-
 }
 
 dl.indent-dd.strong-dt dt {
    font-weight: bold;
 }
 
- ul, ul.slim, ul.classic {
+ul, ul.slim, ul.classic {
    list-style-type: disc;
    padding-left: 1rem;
    margin-left:  1rem;

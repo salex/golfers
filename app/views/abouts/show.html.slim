@@ -14,34 +14,34 @@ div
       div
         dl.about-menu
           dd
-            button.lime-btn = link_to "About Home",about_path
+            div = button_to "About Home",about_path, method:'get',class:"lime-btn"
           dd 
-            button.lime-btn = link_to "PTGOLF.EXE Structure",origin_about_path, class: ""
-            button.lime-btn.w3-green = link_to "PtGolf.us Structure",structure_about_path, class: "link-btn"
+            div = button_to "PTGOLF.EXE Structure",origin_about_path, method:'get',class:"lime-btn"
+            div  = button_to "PtGolf.us Structure",structure_about_path, method:'get',class:"lime-btn"
 
-            button.lime-btn.w3-green= link_to "Terminology",terminology_about_path, class: "link-btn"
-            button.lime-btn.w3-green= link_to "Notices/Changes",notices_about_path, class: "link-btn"
+            div = button_to "Terminology",terminology_about_path, method:'get',class:"lime-btn"
+            div = button_to "Notices/Changes",notices_about_path, method:'get',class:"lime-btn"
           dt.strong Database Tables
           dd
-            button.lime-btn.w3-green= link_to "Clubs",club_about_path, class: "link-btn"
-            button.lime-btn.w3-green= link_to "Groups",group_about_path, class: "link-btn"
-            button.lime-btn.w3-green= link_to "Players",player_about_path, class: "link-btn"
-            button.lime-btn.w3-green= link_to "Games",game_about_path, class: "link-btn"
-            button.lime-btn.w3-green= link_to "Rounds",round_about_path, class: "link-btn"
-            / button.lime-btn.w3-green= link_to "Users",user_about_path, class: "link-btn"
+            div = button_to "Clubs",club_about_path, method:'get',class:"lime-btn"
+            div = button_to "Groups",group_about_path, method:'get',class:"lime-btn"
+            div = button_to "Players",player_about_path, method:'get',class:"lime-btn"
+            div = button_to "Games",game_about_path, method:'get',class:"lime-btn"
+            div = button_to "Rounds",round_about_path, method:'get',class:"lime-btn"
+            / div = button_to "Users",user_about_path, method:'get',class:"lime-btn"
 
           dt.strong Processes and Methods
           dd
-            button.lime-btn.w3-green= link_to "Group Management",gmanage_about_path, class: "link-btn"
-            button.lime-btn.w3-green= link_to "The Game Process",eprocess_about_path, class: "link-btn"
-            button.lime-btn.w3-green= link_to "Forming Methods",forming_about_path, class: "link-btn"
-            button.lime-btn.w3-green= link_to "Scoring",scoring_about_path, class: "link-btn"
-            button.lime-btn.w3-green= link_to "Limiting",limiting_about_path, class: "link-btn"
-            button.lime-btn.w3-green= link_to "Features",features_about_path, class: "link-btn"
+            div = button_to "Group Management",gmanage_about_path, method:'get',class:"lime-btn"
+            div = button_to "The Game Process",eprocess_about_path, method:'get',class:"lime-btn"
+            div = button_to "Forming Methods",forming_about_path, method:'get',class:"lime-btn"
+            div = button_to "Scoring",scoring_about_path, method:'get',class:"lime-btn"
+            div = button_to "Limiting",limiting_about_path, method:'get',class:"lime-btn"
+            div = button_to "Features",features_about_path, method:'get',class:"lime-btn"
 
           dt.strong Development
           dd
-            button.lime-btn.w3-green= link_to "Recent Changes",changes_about_path, class: "link-btn"
+            div = button_to "Recent Changes",changes_about_path, method:'get',class:"lime-btn"
 
 
         br

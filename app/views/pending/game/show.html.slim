@@ -45,7 +45,7 @@ div.flex.gap-2.bg-lime-light.-mx-2.p-1.border-2.border-lime-darker
 
 
   div.flex-shrink.text-green-800.p-0.font-bold.mr-3.hover:text-2xl = link_to icon('fas fa-arrow-left'), 'javascript:history.back()'
-- if @game.state[:can_delete.to_s]
+- if can?(:destroy,:game) && @game.state[:can_delete.to_s]  
   = button_to(icon("fas fa-trash","Destroy Incomplete Game"),game_path(@game),method: :delete,form: { data: { turbo_confirm: "Are You Sure?"}},class:"btn-warn display:fl mt-1 "  )
 
 

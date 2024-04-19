@@ -6,15 +6,16 @@
     .small-6.cell
       p.slim Games are the smallest table but the controlling model.
       pre
-        code
-          |
-            class Game < ActiveRecord::Base
-             belongs_to :group
-             has_many :scored_rounds
-             has_many :event_rounds
-             has_many :rounds, :dependent => :destroy
-             has_many :players, through: :rounds
-            end
+        code.ml-4
+          | class Game < ApplicationRecord
+              belongs_to :group
+              has_many :scored_rounds
+              has_many :rounds, dependent: :destroy
+              has_many :players, through: :rounds
+              serialize :scoring, coder: JSON
+              serialize :par3, coder: JSON
+              serialize :skins, coder: JSON
+              ...
       .strong Purpose
       ul.classic.ml-4
         li To define information on games played on a date.
