@@ -14,5 +14,23 @@ module ApplicationHelper
     page.render.html_safe
   end
 
+  def destroyTag(model_path,meth:"",confirm_msg:"",klass:"",prompt:"")
+    klass= "btn-warn py-0 inline-block mr-1" if klass.blank?
+    confirm_msg = "Are You Sure?" if confirm_msg.blank?
+    meth = "delete" if meth.blank?
+    if prompt.blank?
+      url_type = model_path.class
+      if url_type == String
+        prompt = "Delete"
+      else
+        prompt = "Delete #{model_path.class.name}"
+      end
+    end
+    # puts "KLASS #{klass}"
+    return button_to prompt, model_path, method: meth,form_class:klass,
+      form: { data: { turbo_confirm: confirm_msg }}
+  end
+
+
 
 end

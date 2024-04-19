@@ -8,7 +8,7 @@
 
     div.col-span-7.lg:col-span-6
       = link_to "Home", root_path, class: "w3-button"
-      = link_to "About", "", class: "w3-button" unless Current.group
+      = link_to "About", '/about', class: "w3-button" unless Current.group
 
       - if current_group
         = link_to "Group", current_group, class:"w3-button" 

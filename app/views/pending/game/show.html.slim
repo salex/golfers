@@ -37,7 +37,7 @@ div.flex.gap-2.bg-lime-light.-mx-2.p-1.border-2.border-lime-darker
 
         .w3-dropdown-content.w3-card-4.w-56
           = link_to "Print Landscape", @game.pending_url('print_score_card'), class:"block btn-sqr-blue mb-1 p-1 " 
-          = link_to "Print Portrait", @game.pending_url('print_score_card')+"?cols=3", class:"block btn-sqr-blue mb-1 p-1 " 
+          = link_to "Print Portrait", @game.pending_url('print_score_card')+"?rows=3", class:"block btn-sqr-blue mb-1 p-1 " 
 
           = link_to "ScoreCard Landscape",@game.pending_url('score_card') , class:"block btn-sqr-blue mb-1 p-1", target:"_blank"
           = link_to "ScoreCard Portrait", @game.pending_url('score_cardp'), class:"block btn-sqr-blue mb-1 p-1", target:"_blank"
@@ -49,7 +49,7 @@ div.flex.gap-2.bg-lime-light.-mx-2.p-1.border-2.border-lime-darker
   = button_to(icon("fas fa-trash","Destroy Incomplete Game"),game_path(@game),method: :delete,form: { data: { turbo_confirm: "Are You Sure?"}},class:"btn-warn display:fl mt-1 "  )
 
 
-= render partial:"shared/gheader"
+= render partial:"shared/theader"
 
 .flex.flex-wrap
   - team_keys  = teams.keys.sort

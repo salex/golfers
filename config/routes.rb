@@ -122,6 +122,33 @@ Rails.application.routes.draw do
 
     end
   end
+
+  resource :about, only: :show do
+    collection do
+      get :forming
+      get :scoring
+      get :teams
+      get :eprocess
+      get :gmanage
+      get :preferences
+      get :origin
+      get :structure
+      get :terminology
+      get :club
+      get :group
+      get :player
+      get :round
+      get :game
+      get :user
+      get :changes
+      get :limiting
+      get :help
+      get :features
+      get :notices
+      get :slim
+    end
+  end
+
   resource :session 
   resource :password, only:[:edit,:update]
   resource :profile, only:[:edit,:update,:show]
@@ -154,6 +181,7 @@ Rails.application.routes.draw do
   get 'payouts/about/rate', to: 'apps#rate'
   get 'payouts/about/scoring', to: 'apps#scoring'
 
+  get 'help', to: 'abouts#help'
 
 
   root "home#index"

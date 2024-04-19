@@ -29,8 +29,9 @@ class Scheduled::GameController < ApplicationController
     @game = current_group.games.find(params[:id])
     @game.method = params[:method].downcase
     @game.save
+    @show = true
 
-    render turbo_stream: turbo_stream.replace('toggle_pays', partial: '/scheduled/game/header')
+    render turbo_stream: turbo_stream.replace('toggle_pays', partial: '/shared/theader')
     # redirect_to @game.namespace_url, notice: 'Game pay method changed'
   end
 

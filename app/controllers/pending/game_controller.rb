@@ -14,11 +14,6 @@ class Pending::GameController < ApplicationController
     @teams = @game.scorecard_teams
   end
 
-  # def print_sc_p
-  #   @teams = @game.scorecard_teams
-  # end
-
-
   def score_card
     if @game.scoring['makeup'] == "individuals" || @game.scoring['seed_method'] == 'blind_draw'
       pdf =  Pdf::IndvScoreCard.new(@game)
@@ -50,7 +45,6 @@ class Pending::GameController < ApplicationController
       type: "application/pdf",
       disposition: "inline"
   end
-
 
 
   def update_teams
@@ -85,7 +79,7 @@ class Pending::GameController < ApplicationController
   private
 
   def set_game
-    @game = current_group && current_group.games.find_by(id:params[:id])
+    @game = current_group && GamePending.find_by(id:params[:id],group_id:current_group.id)
     if @game.blank?
       cant_do_that(' - Pending game not found') 
     else
@@ -93,7 +87,6 @@ class Pending::GameController < ApplicationController
     end
 
   end
-
 
   def participant_params
     params.permit!.to_h

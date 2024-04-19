@@ -1,12 +1,12 @@
 / each score card has a fixed height. We'll fit 2 in a landscape page and 3 in
 /  a portriat page
-/ We'll adjust top margin(slightly) and hr/cutline margin depending on cols 2
-/  or cols 3
+/ We'll adjust top margin(slightly) and hr/cutline margin depending on rows 2
+/  or rows 3
 / Each page will have either 2 or 3 scorecards
-- params[:cols].present? ? cols = 3 : cols = 2 
-  / its either 2 or 3  based on presence of cols parameter
+- params[:rows].present? ? rows = 3 : rows = 2 
+  / its either 2 or 3  based on presence of rows parameter
 - tms = @teams.keys
-- map = number_to_col_array(tms.size,cols) # returns cards in each col
+- map = number_to_col_array(tms.size,rows) # returns cards in each col
 
 - par_in = current_group.par_in
 - par_out = current_group.par_out
@@ -20,7 +20,7 @@
     - pg.each do |team|
       - players = @teams[team]['players']
       / slight adjustment on top margin
-      - if cols == 2
+      - if rows == 2
         div.mt-12.font-bold = @teams[team]['header']
       - else 
         div.mt-10.font-bold = @teams[team]['header']
@@ -29,31 +29,31 @@
         / thead tries to set constant widths at least for holes 1..18
         thead 
           tr
-            th.w-48 Name
-            th.w-10 TQ
-            th.w-10 &nbsp;1 
-            th.w-10 &nbsp;2 
-            th.w-10 &nbsp;3 
-            th.w-10 &nbsp;4 
-            th.w-10 &nbsp;5 
-            th.w-10 &nbsp;6 
-            th.w-10 &nbsp;7 
-            th.w-10 &nbsp;8 
-            th.w-10 &nbsp;9 
-            th.w-10 In
-            th.w-10 i
-            th.w-10 10
-            th.w-10 11  
-            th.w-10 12 
-            th.w-10 13 
-            th.w-10 14 
-            th.w-10 15 
-            th.w-10 16 
-            th.w-10 17 
-            th.w-10 18 
-            th.w-10 Ou
-            th.w-10 T
-            th.w-10 +- 
+            th Name
+            th.w04p TQ
+            th.w04p &nbsp;1 
+            th.w04p &nbsp;2 
+            th.w04p &nbsp;3 
+            th.w04p &nbsp;4 
+            th.w04p &nbsp;5 
+            th.w04p &nbsp;6 
+            th.w04p &nbsp;7 
+            th.w04p &nbsp;8 
+            th.w04p &nbsp;9 
+            th.w04p In
+            th.w04p i
+            th.w04p 10
+            th.w04p 11  
+            th.w04p 12 
+            th.w04p 13 
+            th.w04p 14 
+            th.w04p 15 
+            th.w04p 16 
+            th.w04p 17 
+            th.w04p 18 
+            th.w04p Ou
+            th.w04p T
+            th.w04p +- 
 
         tbody
           - 4.times do |i|
@@ -65,7 +65,10 @@
               - w = players[i][:initial]
 
             tr
-              td.elem7p = n
+              - if rows == 2
+                td = n
+              - else 
+                td.elem7p  = n[0..18]
               td = q
               td  
               td  
@@ -77,7 +80,7 @@
               td  
               td
               td  
-              td.elem7p = w
+              td.elem7p  = w
               td 
               td   
               td  
@@ -133,14 +136,14 @@
               td 
               td 
               td
-      - if ((team) % cols).zero?  # default to 2 columns 
+      - if ((team) % rows).zero?  # default to 2 columns 
         div.font-bold = @teams[team]['header']
       - else
         div.font-bold = @teams[team]['header']
         / set margin on hr baseed on col. 
         / bigger spaceing for 2 col
-        / smaller spacing for 3 cols
-        - if cols == 2
+        / smaller spacing for 3 rows
+        - if rows == 2
           hr.my-20.border.border-black
         - else 
           hr.my-8.border.border-black

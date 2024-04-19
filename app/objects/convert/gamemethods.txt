@@ -1,0 +1,57 @@
+def active_players
+def add_players(add_players)
+def adjust_teams(params)
+def check_tee_change(tees)
+def current_players
+def current_players_name
+def current_team_players
+def delete_players(deleted_player)
+def expired_players
+def game_group
+def game_teams(team = nil)
+def has_par3?
+def has_skins?
+def inactive_players
+def namespace_url(action = nil)
+def participants
+def pay_methods xxx
+def pay_par3s=(params)
+def pay_skins=(params)
+def pending_url(action = nil)
+def scheduled_url(action = nil)
+def scorecard_teams
+def scored_url(action = nil)
+def set_player_teams
+def set_scoring
+def set_state
+def stats
+def swap_team_order(team1, team2)
+def update_participants(params)
+
+def active_players
+def add_players(add_players)
+def adjust_teams(params)
+def check_tee_change(tees)
+def current_players
+def current_players_name
+def current_team_players
+def delete_players(deleted_player)
+def event_teams(team = nil)
+def expired_players
+def game_group
+def game_teams(team = nil)
+def has_par3?
+def has_skins?
+def inactive_players
+def namespace_url(action = nil)
+def participants
+def pay_par3s=(params)
+def pay_skins=(params)
+def set_player_teams
+def set_state
+def set_stats
+def swap_team_order(team1, team2)
+def update_participants(params)
+def xactive_players
+
+

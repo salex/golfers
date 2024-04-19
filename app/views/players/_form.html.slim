@@ -7,6 +7,8 @@
           li = error.full_message
   div.flex.flex-wrap.gap-8
     div
+      span.btn-submit = form.submit
+    div
       div
         = form.label :group_id, style: "display: block"
         = form.text_field :group_id
@@ -63,5 +65,3 @@
         = form.label :limited, style: "display: block"
         = form.text_field :limited
 
-  div[class="btn-submit"]
-    = form.submit

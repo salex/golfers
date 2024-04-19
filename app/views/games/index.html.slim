@@ -1,23 +1,9 @@
 div.w-full
   p style="color: green" = notice
-  div.flex.bg-lime-light.-mx-2.mb-1.px-2
+  div.flex.-mx-2.mb-1.px-2
     h1.font-bold.text-2xl Games
-    / = link_to link_to icon('fas fa-plus-square', "New Game"), new_game_path,class:"btn-sm-blue"
     = render partial:"home/home_events"
-  / .flex.justify-center
-  /   .card-4.my-3.p-2.rounded.bg-lime-lighter.w-11/12.text-center
-  /     / div[class="my-3 bg-lime-lighter text-center p-2 rounded w-11/12 shadow-xl"]
-  /     div.font-bold.small-caps 
-  /       |Scheduled, Pending or New Games &nbsp;
-  /     div.annotate 
-  /       |Scheduled games may have players but no teams. Pending games have not been scored. Old events that were entered in error or incomplete should be deleted/destroyed!
-  /     .flex.flex-wrap.justify-center
-  /       - current_group.home_events.each do |e|
-  /         = link_to "#{e.status} #{e.date} Players: #{e.scoring['round']['players']} Teams: #{e.scoring['round']['teams']}", e.namespace_url, class:"btn-sqr-blue m-px px-1 border-zinc-100 border-2 rounded"
-  /     - if current_user && current_user.is_trustee? && !current_group.games.find_by(date:Date.today).present?
-  /       hr.underline
-  /       div.flex-none= link_to("Create New Game for Today", new_today_games_path, class:"btn-sm-green")
-
+ 
   #games.flex.gap-2
     table.golfer.w-3/4
       caption
@@ -41,7 +27,7 @@ div.w-full
         - @games.each do |game|
           tr
             td = link_to game.status.capitalize,
-              game.namespace_url,class:"btn-xsm w-full"
+              game.namespace_url,class:"btn-xsm bg-amber-400 w-full"
             td = game.date
             td = game.method
             td = game.scoring['round']["players"] if game.scoring.present?

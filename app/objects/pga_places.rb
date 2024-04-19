@@ -12,7 +12,8 @@ class PgaPlaces
       winners[i] = percents[i] * @pot
     end
     @winners = @winners.reverse
-    dollarize(@winners,@pot)
+    # puts "WINNVER #{winners}" NEED A COUPLE PLAYERS
+    dollarize(@winners,@pot) unless @winners.blank?
 
   end
 

@@ -1,15 +1,23 @@
-section[class="flex flex-wrap bg-lime-light border-bottom p-2"]
-  .w-full.md:w-1/6.lg:w-1/6
-    h5.strong Assign/Adjust Teams
-  .w-full.md:w-2/3 
-     = link_to icon('fas fa-arrow-left', 'Cancel - List Games'),  games_path,
-       class: 'btn-warn'
-     = link_to icon('fas fa-arrow-left', 'Cancel - Show Game'),  @game.namespace_url,
-       class: 'btn-warn'
+section[class="flex flex-wrap gap-2 card-4 bg-lime-light border-bottom p-2 -mx-2"]
+  h5.strong.flex-shrink Assign/Adjust Teams
+  div.flex-grow
+    = link_to icon('fas fa-arrow-left', 'Cancel - List Games'),  games_path,
+       class: 'btn-cancel'
+    = link_to icon('fas fa-arrow-left', 'Cancel - Show Game'),  @game.namespace_url, class: 'btn-cancel'
   / .w-full.md:w-1/6.lg:w-1/6
-  /   .lg:float-right = link_to icon('fas fa-arrow-left', 'Back'), 'javascript:history.back()', class: 'pt-btn btn-secondary '
+  div.flex-shrink.text-green-800.p-0.font-bold.mr-3.hover:text-2xl = link_to icon('fas fa-arrow-left'), 'javascript:history.back()'
 
 div
+  p Use this form if:
+  ul.classic
+    li 1. Someone drops out of the game before finishing. Just check the Del checkbox. Do this before scoring.
+    li 2. Someone decides to play from a different tee. Just change their Tee.
+    li 
+      span 3. Someone needs to go off first and you can't use 
+      span = link_to icon('fas fa-arrows-alt-h', 'Swap Teams'), @game.namespace_url('swap_teams'),class: "btn-cancel py-0 m-0"
+
+      span , you can just  mover player(s) to different Teams.
+  p.annotate You should do 2 or 3 before printing scorecards!
   / = render partial:'games/shared/event'
   - participants = @game.participants.order(:team).order('players.name')
   - p_count = participants.size
