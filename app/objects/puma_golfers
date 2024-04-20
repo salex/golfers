@@ -1,0 +1,19 @@
+[Unit]
+Description=Puma golfers Rails Server
+After=network.target
+
+[Service]
+Type=simple
+User=developer
+WorkingDirectory=/home/developer/apps/golfers/current
+ExecStart=/home/developer/.rbenv/bin/rbenv exec bundle exec puma -C /home/developer/apps/golfers/shared/puma.rb --daemon
+ExecStop=/home/developer/.rbenv/bin/rbenv exec bundle exec pumactl -S /home/developer/apps/golfers/shared/tmp/pids/puma.state stop
+PIDFile=/home/developer/apps/golfers/shared/tmp/pids/puma.pid
+
+TimeoutSec=30
+Restart=no
+RemainAfterExit=yes
+
+
+[Install]
+WantedBy=multi-user.target
