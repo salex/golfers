@@ -14,6 +14,22 @@ module ApplicationHelper
     page.render.html_safe
   end
 
+  def markdown_text(text)
+    if text.include?(".slim")
+      render inline:text, type: :slim
+    else
+      options = {
+        :autolink => true,
+        :space_after_headers => true,
+        :fenced_code_blocks => true,
+        :no_intra_emphasis => true
+      }
+      markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, options)
+      markdown.render(text).html_safe
+    end
+  end
+
+
   def destroyTag(model_path,meth:"",confirm_msg:"",klass:"",prompt:"")
     klass= "btn-warn py-0 inline-block mr-1" if klass.blank?
     confirm_msg = "Are You Sure?" if confirm_msg.blank?

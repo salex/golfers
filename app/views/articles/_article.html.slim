@@ -1,0 +1,16 @@
+div[class="w-full"]
+ 
+  div.font-medium.font-bold
+    span.font-bold Title:
+    span = link_to article.title, article,class:"m-1 text-green-700 hover:text-blue-700"
+
+  div.ml-4.mb-2
+    .flex.flex-wrap.gap-4
+      div
+        span.font-medium.font-bold.m-1 Date:
+        span = article.date
+      
+      div
+        span.font-medium.font-bold.m-1 Leadin:
+        span = article.content .split[0..14].join(' ').gsub(/\.[^\s]+/,'').gsub('#','')
+        span &#8230;

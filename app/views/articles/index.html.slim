@@ -1,0 +1,13 @@
+.w-full[style="min-height: 90%;"]
+  - if notice.present?
+    p#notice.py-2.px-3.bg-green-50.mb-5.text-green-500.font-medium.rounded-lg.inline-block= notice
+    / .flex.justify-between.items-center
+  - if params[:category].present?  
+    h4.font-bold.text-4xl = "Articles " + "(#{params[:category]})"
+  - else
+    h4.font-bold.text-4xl = "Articles " 
+
+  
+  - @articles.each do |article|
+      = render article
+

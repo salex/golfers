@@ -18,7 +18,7 @@ class User < ApplicationRecord
 
   def downcase_login
    self.email.downcase!
-   self.username.downcase!
+   # self.username.downcase!
   end
 
   def can?(meth,model)

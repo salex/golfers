@@ -1,0 +1,32 @@
+
+.mx-auto.w-full.z-0.no-print
+  / .flex class="md:w-2/3" 
+  .mx-auto
+    / - if notice.present?
+    /   div#notice.py-2.px-3.bg-green-50.m-1.text-green-500.font-medium.rounded-lg= notice
+
+
+    / = render @article
+    - if Current.user
+      = link_to 'Edit this article', edit_article_path(@article), class: "mt-1 rounded-lg py-2 px-5 bg-green-100 inline-block font-medium"
+      .inline-block.ml-2 
+        = button_to 'Destroy this article', article_path(@article), method: :delete, class: "mt-1 rounded-lg py-2 px-5 bg-red-100 font-medium" 
+    = link_to 'Back to articles', articles_path, class: "ml-2 rounded-lg py-2 px-5 bg-blue-100 inline-block font-medium"
+    = link_to icon('fas fa-print',"Print"), '#', title: 'Print it', class: 'btn-cancel py-0 bg-blue-800 text-white no-print', onclick: "window.print();"
+.mx-auto.w-full.z-0
+  h3.text-xl.font-bold = @article.title
+  i = @article.created_at.to_fs(:long)
+  div.marked = markdown_text(@article.content)
+
+  / - if @article.content.include?('.slim')
+  /   h3.text-xl.font-bold = @article.title
+  /   i = @article.created_at.to_fs(:long)
+  /   div.marked = markdown_text(@article.content)
+  /   / = render inline: @article.content, type: :slim
+  / - else
+  /   h3.text-xl.font-bold = @article.title
+  /   i = @article.created_at.to_fs(:long)
+  /   div.marked = markdown_text(@article.content)
+      <!-- [data-display-marked-target='viewer'] -->
+
+

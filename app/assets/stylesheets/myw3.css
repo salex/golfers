@@ -177,10 +177,18 @@ p {
   line-height: 1.2rem;
 }
 
-p.slim {
- text-indent:1rem;
+dd{
+  margin:0.3rem 0;
+  line-height: 1.0rem;
 }
 
+
+/*p.slim {
+ text-indent:1rem;
+ line-height: 1.0rem;
+
+}
+*/
 .strong{
   font-weight: bold;
 }

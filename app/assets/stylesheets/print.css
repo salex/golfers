@@ -13,6 +13,10 @@
     font-size: 8pt !important;
     background-color: #fff;
   }
+  ul, li {
+    font-size: 8pt !important;
+  }
+
   th{
     -webkit-print-color-adjust:exact !important;
     print-color-adjust:exact !important;
@@ -24,8 +28,17 @@
   .noprint, .no-print {
     display: none !important;
   }
-  .elem7p{
-    font-size: 7pt !important;
+ 
+  p {
+    font-size: 9pt !important;
+    margin:0.2rem 0 !important;
+    line-height: 0.9rem !important;
   }
+
+  dd {
+    margin:0.3rem 0 !important;
+    line-height: 0.8rem !important;
+  }
+
 }
 
