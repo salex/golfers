@@ -3,7 +3,7 @@ class GroupsController < ApplicationController
 
   before_action :require_super, only: %i[index new create]
   before_action :require_admin, only: %i[edit update expired_players]
-  before_action :require_member, except: %i[show visit leave ]
+  before_action :require_member, except: %i[show visit leave stats stats_refresh]
 
   before_action :set_group, only: %i[ show edit update destroy visit expired_players]
 
@@ -86,32 +86,15 @@ class GroupsController < ApplicationController
       @group = Group.find(params[:id])
       session[:group_id] = @group.id
       Current.group = @group
-      @who = current_user.fullname
-      puts "#{@who} VISIT GROUP #{@group.id}"
-
-      # render layout: "application"
+      # puts "#{@who} VISIT GROUP #{@group.id}"
       redirect_to root_path, notice:"Welcome to group #{@group.name}"
-      # redirect_back(fallback_location: root_path,now:"message")
     else
-      if params[:id].present? && current_group.blank?
-        @group = Group.find_by(id:params[:id])
-        redirect_to root_path, alert: cant_do_that if @group.blank?
-      end
-      # user = @group.users.find_by(fullname:'Visitor')
+      @group = Group.find(params[:id])
       @who="Visitor"
-      # unless user.present?
-      #   redirect_to(root_path,alert:"Group does not allow Visitors",data:{turbo:false})
-      # else
       reset_session
       session[:group_id] = @group.id
-      # session[:user_id] = user.id
       session[:fullname] = @who
       session[:expires] = Time.now + 15.minutes
-      # redirect_to root_path, notice:"Click home button to visit"
-      # render template: 'home/visit'
-      # render turbo_stream: turbo_stream.replace('home', template: '/home/visit')
-      # render layout: "application"
-      # redirect_back(fallback_location: root_path,notice:"message")
       redirect_to root_path, notice:"Welcome to group #{@group.name}"
     end
   end
@@ -167,7 +150,6 @@ class GroupsController < ApplicationController
     def require_group
       cant_do_that(' - Not Authorized') unless current_group.present?
     end
-
     def require_super
       cant_do_that(' - Not Authorized') unless current_user && current_user.is_super?
     end
@@ -177,8 +159,6 @@ class GroupsController < ApplicationController
     def require_member
       cant_do_that(' - Not Authorized') unless current_user && current_user.is_member?
     end
-
-
     # Use callbacks to share common setup or constraints between actions.
     def set_group
       @group = current_group

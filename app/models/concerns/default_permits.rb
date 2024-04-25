@@ -19,7 +19,7 @@ class DefaultPermits
       player:'1111',
       game:'1111',
       round:'1111',
-      blog:'1111',
+      article:'1111',
       comment:'1111'
     },
     admin:{
@@ -28,7 +28,7 @@ class DefaultPermits
       player:'1111',
       game:'1111',
       round:'1111',
-      blog:'1111',
+      article:'0100',
       comment:'1111'
     },
     trustee:{
@@ -37,16 +37,16 @@ class DefaultPermits
       player:'1111',
       game:'1111',
       round:'1111',
-      blog:'1111',
+      article:'0100',
       comment:'1111'
     },
     member:{
       group:'0100',
       user:'0000',
-      player:'1111',
-      game:'1111',
-      round:'1111',
-      blog:'1111',
+      player:'0110',
+      game:'1110',
+      round:'1110',
+      article:'0100',
       comment:'1111'
     },
     guest:{
@@ -55,10 +55,40 @@ class DefaultPermits
       player:'0100',
       game:'0100',
       round:'0100',
-      blog:'0100',
+      article:'0100',
       comment:'0100'
     }
   }
+
+  # def self.permit(role,model,crud)
+  #   permits = [:create,:read,:update,:destroy]
+  #   urole = CRUD[role.to_sym]
+  #   return false unless urole.present?
+  #   # puts "ROLE good"
+  #   umodel = urole[model.to_sym]
+  #   return false unless model.present?
+  #   # puts "MODEL good"
+  #   ucrud= crud.to_sym
+  #   return false unless permits.include?(ucrud)
+  #   # puts "CRUD good"
+  #   idx = permits.index(ucrud)
+  #   # puts "IDX #{idx} #{umodel} "
+  #   return false if idx.nil?
+  #   return umodel[idx] == '1'
+  #   # puts upermit
+  #   # return ucrud[val]
+  #   # if crud[val] == '1' ? return true : return false
+  # end
+
+  def self.permit(role,model)
+    urole = CRUD[role.downcase.to_sym]
+    return false unless urole.present?
+    umodel = urole[model.downcase.to_sym]
+    return false unless umodel.present?
+    return umodel
+  end
+
+
 
   def crud
     return CRUD

@@ -6,32 +6,13 @@ Rails.application.routes.draw do
       get :display
     end
   end
-  resources :articles do
-    member do 
-      get :display
-      get :print
-    end
-  end
+  resources :articles 
 
   namespace :apps do 
     get :score_sheet
     get :places_sheet
     get :payouts
-    # get 'payouts', to: '#payouts'
-    # patch 'payouts/reset', to: '#reset'
-    # get 'payouts/about', to: '#about'
-    # get 'payouts/about/deals', to: '#deals'
-    # get 'payouts/about/pga', to: '#pga'
-    # get 'payouts/about/rate', to: '#rate'
-    # get 'payouts/about/scoring', to: '#scoring'
-
   end
-
-  # namespace :admin do
-  #   root to: "admin#index"
-  # end  
-
-
 
   namespace :scheduled do
       resources :game, only:[:show,:edit,:update] do 
@@ -83,14 +64,15 @@ Rails.application.routes.draw do
       end
       resources :par3, only:[:show,:edit,:update]
       resources :skins, only:[:show,:edit,:update]
-      resource :about, only:[:show]
+      resource :about do
+        member do 
+          get :show
+          get :shit
+          get :crap
+        end
+      end
   end
 
-  # resources :schedules ,only:[:show,:update] do
-  #     member do
-  #       get :form_teams
-  #     end
-  # end
   resources :users
   resources :games do
     collection do
@@ -106,8 +88,6 @@ Rails.application.routes.draw do
       patch :search
       get :player_search
       post :pairings_search
-      # get :quota_correction
-      # get :add_correction
     end
 
   end
@@ -121,10 +101,6 @@ Rails.application.routes.draw do
       get :expired_players
       patch :trim_expired
       patch :recompute_quotas
-
-
-
-      # patch :trim_rounds
 
     end
   end
@@ -166,13 +142,7 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Defines the root path route ("/")
-  # root "posts#index"
-  # resources :players
-  # resources :users
-  # resources :groups
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
+ 
   # Defines the root path route ("/")
   get 'visit', to: 'home#groups'
   get 'test', to: 'home#test'

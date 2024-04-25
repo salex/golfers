@@ -1,7 +1,7 @@
 div 
   / = turbo_frame_tag "home"
   div.w-full
-    p style="color: green" = notice
+    / p style="color: green" = notice
     h1.font-bold.text-2xl Visiting Group
     div.italic
       | until i figure out how to fix this. Click the button below the click the home button in the index page

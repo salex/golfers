@@ -1,13 +1,13 @@
 class ArticlesController < ApplicationController
-  before_action :require_super
-  before_action :set_notice, only: [:show, :edit, :update, :destroy, :display]
+  before_action :require_super, only: [:create, :edit, :update, :destroy]
+  before_action :set_article, only: [:show, :edit, :update, :destroy]
 
 
   # GET /inquiries
   # GET /inquiries.json
 
   def index
-    @articles = Article.all
+    @articles = Article.all.order(:date).reverse_order
   end
 
   # GET /inquiries/1
@@ -70,19 +70,13 @@ class ArticlesController < ApplicationController
     end
   end
 
-  def display
-    puts "Should dispay notice #{params[:id]}"
-    @article = Article.find(params[:id])
-  end
-
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def require_super
       cant_do_that(' - Not Authorized') unless current_user && current_user.is_super?
     end
 
-    def set_notice
+    def set_article
       @article = Article.find(params[:id])
     end
 

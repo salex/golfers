@@ -16,6 +16,8 @@ class User < ApplicationRecord
   before_save :downcase_login
   serialize :permits, coder: JSON
 
+  # ROLES = %w(super admin trustee member)
+
   def downcase_login
    self.email.downcase!
    # self.username.downcase!
@@ -29,17 +31,20 @@ class User < ApplicationRecord
     # puts "CRUD ROLE #{meth} #{model} #{role}"
     return false unless [:create,:read,:update,:destroy].include?(meth.to_sym)
     # puts "CRUD METH #{meth} #{model} #{permits.keys} #{permits.keys.include?(model)}"
-    return false unless permits.keys.include?(model)
+    # return false unless permits.keys.include?(model)
+    permit = DefaultPermits.permit(self.role,model)
+    # puts "CRUD PERMIT #{permit}"
+    return false if permit == false 
 
     case meth 
     when 'create'
-      return permits[model][0] == '1'
+      return permit[0] == '1'
     when 'read' 
-      return permits[model][1] == '1'
+      return permit[1] == '1'
     when 'update' 
-      return permits[model][2] == '1'
+      return permit[2] == '1'
     when 'destroy' 
-      return permits[model][3] == '1'
+      return permit[3] == '1'
     end
     return false #crud boolean not '1'
     

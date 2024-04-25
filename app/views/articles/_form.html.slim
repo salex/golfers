@@ -46,6 +46,5 @@
           - slim = markdown_text(@article.content)
           = tag.div(slim,style:"padding:6px;border:solid black 1px;z-index:0;height:50vh;overflow:scroll;",class:'markdown-body marked bg-white')
 
-
         - else
           = tag.div('',data:{marked_target:'viewer'},style:"padding:6px;border:solid black 1px;z-index:0;height:50vh;overflow:scroll;",class:'markdown-body marked bg-white')

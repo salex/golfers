@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     if current_user.is_super?
       @users = User.all
     else
-      @users = current_group.users
+      @users = current_group.users.where.not(role:'super')
     end
   end
 
@@ -43,11 +43,10 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1 or /users/1.json
   def update
     curr_role = @user.role
-    puts "CURR ROLE #{curr_role}"
+    # puts "CURR ROLE #{curr_role}"
     respond_to do |format|
       if @user.update(user_params)
-        puts "CURR ROLE #{curr_role} NEW ROLE #{@user.role} #{@user.role != curr_role}"
-
+        # puts "CURR ROLE #{curr_role} NEW ROLE #{@user.role} #{@user.role != curr_role}"
         if @user.role.nil? || @user.permits.blank? || (@user.role != curr_role) # role changed - may be a better way
           @user.permits = DefaultPermits::CRUD[@user.role.to_sym]
           @user.save
@@ -64,7 +63,6 @@ class UsersController < ApplicationController
   # DELETE /users/1 or /users/1.json
   def destroy
     @user.destroy!
-
     respond_to do |format|
       format.html { redirect_to users_url, notice: "User was successfully destroyed." }
       format.json { head :no_content }

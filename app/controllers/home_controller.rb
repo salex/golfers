@@ -25,9 +25,9 @@ class HomeController < ApplicationController
 
   def places_sheet
     if params[:col].present?
-      render template: 'home/places_sheet'
+      render template: 'apps/places_sheet'
     else
-      render template: 'home/places_sheet1'
+      render template: 'apps/places_sheet1'
     end
   end
 
@@ -44,7 +44,7 @@ class HomeController < ApplicationController
       params[:format] = 'html'
       redirect_to root_path
     else
-      cant_do_that(params[:path])
+      cant_do_that(" -> #{params[:path]}")
     end
   end
 
@@ -52,8 +52,8 @@ class HomeController < ApplicationController
 
   def redirect_group(path)
     @group = Group.find_by(Group.arel_table[:name].matches("%#{path}"))
-    puts "inRedirect #{@group.name}"
-    return @group
+    # puts "inRedirect #{if @group.present? ? @group.name : "none"}"
+    # return @group
   end
 
 end
