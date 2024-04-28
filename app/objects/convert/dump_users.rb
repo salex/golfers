@@ -31,14 +31,15 @@ module Convert
     def get_role
       old_roles = %w(super coordinator manager scorer scheduler)
       new_roles = %w(super admin trustee member visitor)
+      # old roles are an array with a single role, changed to include?
       old_roles.each_with_index do |old,i|
-        if old == 'super'
+        if old.include? 'super'
           return new_roles[i]  
-        elsif old == 'coordinator'
+        elsif old.include? 'coordinator'
           return new_roles[i] 
-        elsif old == 'manager'
+        elsif old.include? 'manager'
           return new_roles[i] 
-        elsif old == 'scorer'
+        elsif old.include? 'scorer'
           return new_roles[i] 
         else
           return "visitor"

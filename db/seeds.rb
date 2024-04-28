@@ -7,3 +7,20 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+
+# The current conversion process
+
+# Get pt_golfer_production db from backups stored on macmini, unzip it
+
+# cd to pt_golfer 
+# bin/rails db:drop  --probably have to set env vairable
+# bin/rails db:create
+
+# psql -d pt_golfer_development < pt_golfer_production.sql
+
+# ActiveRecord::Base.connection.tables.each do |t|
+#   ActiveRecord::Base.connection.reset_pk_sequence!(t)
+# end
+
+# last import all roles were set of super - fixed old roles were an array
