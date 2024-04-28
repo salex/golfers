@@ -6,15 +6,12 @@ div
       |PtGolf
       span style="font-size:.5rem;" .us
 
-  / = render partial:'home/sidebar' if current_club.present?         
-  / .medium-9.columns
   .grid.grid-cols-12.gap-4.px-4
     .col-span-3
-      / .sticky-col[data-sticky data-sticky-on="large" data-margin-top="7.5" ]
       div
         dl.about-menu
           dd
-            div = button_to "About Home",about_path, method:'get',class:"lime-btn"
+            div = button_to "About Home",about_path, method:'get',class:"lime-btn py-8" 
           dd 
             div = button_to "PTGOLF.EXE Structure",origin_about_path, method:'get',class:"lime-btn"
             div  = button_to "PtGolf.us Structure",structure_about_path, method:'get',class:"lime-btn"

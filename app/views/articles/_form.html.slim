@@ -42,7 +42,8 @@
         = form.text_area(:content, data:{action:"input->marked#convertToMarkdown change->marked#convertToMarkdown",marked_target:"markup"},style:'width:100%;height:50vh;')
       div
         strong Rendered Markdown
-        - if @article.content.include?('.slim')
+        / trap new article, won't have content and slim undefined
+        - if @article.content && @article.content.include?('.slim')
           - slim = markdown_text(@article.content)
           = tag.div(slim,style:"padding:6px;border:solid black 1px;z-index:0;height:50vh;overflow:scroll;",class:'markdown-body marked bg-white')
 

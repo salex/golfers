@@ -71,7 +71,7 @@ class UsersController < ApplicationController
 
   private
     def require_super
-      cant_do_that(' - Not Authorized') unless current_user && current_user.is_super?
+      cant_do_that(' - Not Authorized') unless is_super?
     end
     def require_admin
       cant_do_that(' - Not Authorized') unless current_user && current_user.is_admin?
@@ -79,7 +79,7 @@ class UsersController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      if current_user && current_user.is_super?
+      if is_super?
         @user = User.find(params[:id])
       else
         @user = current_group.users.find(params[:id])

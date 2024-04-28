@@ -7,14 +7,14 @@ div.border-gold.bg-malt.border-4.noprint
     div
       dl.about-menu
         dd
-          button.lime-btn.w3-green = link_to "Show Payouts",apps_payouts_path, class: "link-btn"
-          button.lime-btn.w3-green = link_to "About Payouts", payouts_about_path
+          button.lime-btn = link_to "Show Payouts",apps_payouts_path
+          button.lime-btn = link_to "About Payouts", payouts_about_path
         dt.strong Methods
         dd
-          button.lime-btn.w3-green = link_to "Deal Methods",'/payouts/about/deals', class: "link-btn"
-          button.lime-btn.w3-green = link_to "PGA Method",'/payouts/about/pga', class: "link-btn"
-          button.lime-btn.w3-green = link_to "Rate Method",'/payouts/about/rate', class: "link-btn"
-          button.lime-btn.w3-green = link_to "Scoring",'/payouts/about/scoring', class: "link-btn"
+          button.lime-btn = link_to "Deal Methods",'/payouts/about/deals', class: ""
+          button.lime-btn = link_to "PGA Method",'/payouts/about/pga', class: ""
+          button.lime-btn = link_to "Rate Method",'/payouts/about/rate', class: ""
+          button.lime-btn= link_to "Scoring",'/payouts/about/scoring', class: ""   
 
 
           / button.lime-btn.w3-green= link_to "Notices/Changes",notices_about_path, class: "link-btn"

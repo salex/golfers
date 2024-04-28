@@ -7,7 +7,7 @@ div[class="-mx-2"]
         games_path, class: "btn-cancel")
       div = link_to icon('fas fa-arrows-alt-h', 'Set Players and Form Teams'),
         @game.scheduled_url(:set), class: 'block btn-cancel font-bold w-80' if can?(:update,:game)
-      - if current_user.can?(:destroy,:game) && @game.state[:can_delete]  
+      - if current_user && can?(:destroy,:game) && @game.state[:can_delete]  
         = button_to(icon("fas fa-trash","Destroy Incomplete Game"),game_path(@game),method: :delete,form: { data: { turbo_confirm: "Are You Sure?"}},class:"btn-warn inline-block mt-1 "  )
 
     div.flex-shrink.text-green-800.p-0.font-bold.mr-3.hover:text-2xl = link_to icon('fas fa-arrow-left'), 'javascript:history.back()'

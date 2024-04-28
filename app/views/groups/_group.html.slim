@@ -14,7 +14,7 @@ div id="#{dom_id group}"
     =< group.tees
   p
     strong.w-40.inline-block.text-right Courses:
-    =< group.courses
+    = group.courses.split
 
 
   - if !@group

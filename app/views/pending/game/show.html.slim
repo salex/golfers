@@ -8,16 +8,11 @@
 
 div.flex.gap-2.bg-lime-light.-mx-2.p-1.border-2.border-lime-darker
   div.flex-shrink
-    - if current_user && current_user.is_trustee?
-      - unless zero_team
-        div.w-44 = link_to icon('fas fa-pencil-alt', 'Score Teams'),
-          score_teams_pending_game_path(@game),
-          class:"btn btn-submit py-2"
-
+ 
   div.flex-grow.flex-wrap
-    = link_to( icon('fas fa-arrow-left', 'Cancel - List Games'),  games_path, class: "btn-cancel")
+    = link_to( icon('fas fa-arrow-left', 'List Games'),  games_path, class: "btn-cancel")
     - if can?(:update,:game)
-      = link_to icon('fas fa-user-plus', 'Add Late Player'),  @game.scheduled_url(:set),
+      = link_to icon('fas fa-user-plus', 'Add Player'),  @game.scheduled_url(:set),
         class: "btn-cancel",
         title: "Pete showed up late at the tee box, there was a threesome teeing off. Put Pete in the threesome and when you get in use this button to add Pete. Then adjust teams to change the threesome to a foursome"
       = link_to icon('fas fa-arrows-alt-h', 'Adjust Teams'), @game.namespace_url('adjust_teams'),
@@ -31,7 +26,7 @@ div.flex.gap-2.bg-lime-light.-mx-2.p-1.border-2.border-lime-darker
  
       div.w3-dropdown-hover.mr-2.w-48
 
-        div[class="btn-gray"] 
+        div[class="btn-gray py-0"] 
           = icon('fas fa-print'," Print Options")
           i.fa.fa-caret-down
 
@@ -45,8 +40,15 @@ div.flex.gap-2.bg-lime-light.-mx-2.p-1.border-2.border-lime-darker
 
 
   div.flex-shrink.text-green-800.p-0.font-bold.mr-3.hover:text-2xl = link_to icon('fas fa-arrow-left'), 'javascript:history.back()'
-- if can?(:destroy,:game) && @game.state[:can_delete.to_s]  
-  = button_to(icon("fas fa-trash","Destroy Incomplete Game"),game_path(@game),method: :delete,form: { data: { turbo_confirm: "Are You Sure?"}},class:"btn-warn display:fl mt-1 "  )
+div.flex
+  - if current_user && current_user.is_trustee?
+    - unless zero_team
+      div.w-44 = link_to icon('fas fa-pencil-alt', 'Score Teams'),
+        score_teams_pending_game_path(@game),
+        class:"btn btn-submit py-2"
+
+  - if can?(:destroy,:game) && @game.state[:can_delete.to_s]  
+    = button_to(icon("fas fa-trash","Destroy Incomplete Game"),game_path(@game),method: :delete,form: { data: { turbo_confirm: "Are You Sure?"}},class:"btn-warn display:fl p-1 mt-1 "  )
 
 
 = render partial:"shared/theader"
@@ -84,5 +86,4 @@ div.flex.gap-2.bg-lime-light.-mx-2.p-1.border-2.border-lime-darker
                   td
                     = check_box_tag( '',nil, (!mate.total.nil?))  
                     span = "(#{mate.front}/#{mate.back}/#{mate.total})" if !mate.total.nil?
-          / - team_numb = team_keys.shift
 

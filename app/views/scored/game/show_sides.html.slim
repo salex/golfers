@@ -7,12 +7,13 @@
   = links = link_to( icon('fas fa-arrow-left', 'Cancel - List Games'),  games_path, class: "btn-cancel")
 
   - if can?(:update,:game)
-    = link_to icon('fas fa-pencil-alt', 'ReScore Teams'), @game.pending_url('score_teams'),
-      class: "btn-warn"
     = link_to icon('fas fa-pencil-alt', 'Score Skins/Birdies'), @game.scored_url('skins'),
       class: "btn-cancel"
     = link_to icon('fas fa-pencil-alt', 'Score Par3s'), @game.scored_url('par3s'),
       class: "btn-cancel"
+    = link_to icon('fas fa-pencil-alt', 'ReScore Teams'), @game.pending_url('score_teams'),
+      class: "btn-warn"
+
     / - if is_manager? && @game.state.present? && @game.state[:can_delete]
     /   - links << destroyTag(game_path(@game),prompt: icon('fas fa-trash','Delete Incomplete Game'))
 

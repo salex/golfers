@@ -21,7 +21,7 @@ div.md:grid.md:grid-cols-12.mx-1.p-1.gap-4
 
  
     div 
-      - if Current.user&.is_super?
+      / - if Current.user.is_super?
         / - @inquiries = Inquiry.get_new
         / - if @inquiries.present?
         /   h6 New Inquiries

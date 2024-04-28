@@ -184,7 +184,7 @@ class Group < ApplicationRecord
   end
 
   def group_color
-    c = %w{green red blue amber purple}[self.id % 4]
+    c = %w{green red blue orange purple}[self.id % 4]
     "bg-#{c}-500"
   end
 

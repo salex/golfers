@@ -89,7 +89,7 @@ class PlayersController < ApplicationController
 
   def player_search
     @search_results = Current.group.auto_search(params)
-    puts "IN PLAYER SEARCH #{params}"
+    # puts "IN PLAYER SEARCH #{params}"
     if @search_results
       render template:'shared/pickr_search', layout:false
     end

@@ -14,7 +14,7 @@ class GroupsController < ApplicationController
 
   # GET /groups/1 or /groups/1.json
   def show
-    if current_user && current_user.is_super?
+    if is_super?
       @group = Group.find_by(id:params[:id])
       cant_do_that(' - Group  not found') unless @group.present? 
     else
@@ -82,7 +82,7 @@ class GroupsController < ApplicationController
   end
   
   def visit
-    if current_user && current_user.is_super?
+    if is_super?
       @group = Group.find(params[:id])
       session[:group_id] = @group.id
       Current.group = @group
@@ -151,7 +151,7 @@ class GroupsController < ApplicationController
       cant_do_that(' - Not Authorized') unless current_group.present?
     end
     def require_super
-      cant_do_that(' - Not Authorized') unless current_user && current_user.is_super?
+      cant_do_that(' - Not Authorized') unless is_super?
     end
     def require_admin
       cant_do_that(' - Not Authorized') unless current_user && current_user.is_admin?

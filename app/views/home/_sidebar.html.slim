@@ -12,8 +12,8 @@
   -if current_group.present?
     div[class="#{sidebar_menu}"] = link_to "Group Information", group_path(current_group), class: "link-btn"
     div[class="#{sidebar_menu}"] = link_to 'Group Players Stat$', stats_group_path(Current.group), class: "link-btn"
-  /   div[class="#{sidebar_menu}"] = link_to 'Print Quotas', print_quotas_group_path(Current.group), class: "link-btn"
-  /   div[class="#{sidebar_menu}"] = link_to 'Discussions', posts_path, class: "link-btn"
+    /   div[class="#{sidebar_menu}"] = link_to 'Print Quotas', print_quotas_group_path(Current.group), class: "link-btn"
+    div[class="#{sidebar_menu}"] = link_to 'Blog/Articles', articles_path, class: "link-btn"
 
   hr.underline
 
@@ -21,7 +21,7 @@
   /   div[class="#{sidebar_menu}"] = link_to "User Management", users_path, class: "link-btn"
   /   hr.underline
 
-  - if current_user && current_user.is_super?
+  - if is_super?
     div[class="#{sidebar_menu}"] = link_to 'Notice', notices_path, class: "link-btn"
   /   div[class="#{sidebar_menu}"] = link_to 'Clubs', clubs_path, class: "link-btn"
   /   div[class="#{sidebar_menu}"] = link_to 'inquiries', inquiries_path, class: "link-btn "

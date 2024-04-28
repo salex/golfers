@@ -1,8 +1,14 @@
 div[class="w-full"]
  
-  div.font-medium.font-bold
+  div.font-medium.font-bold.flex.gap-2
+
     span.font-bold Title:
-    span = link_to article.title, article,class:"m-1 text-green-700 hover:text-blue-700"
+    span = link_to article.title, article,class:"m-1 text-xl text-green-700 hover:text-blue-700"
+    span = link_to icon('fas fa-eye'), article,class:"icon-show"
+
+    - if can?(:update,:article)
+      = link_to icon('fas fa-edit'),  edit_article_path(article),class:"icon-edit"
+      = button_to(icon('fas fa-trash'),article, method: :delete, form:{data: { turbo_confirm: 'Are you sure?', turbo_method:'delete' }}, form_class:"icon-destroy")
 
   div.ml-4.mb-2
     .flex.flex-wrap.gap-4
@@ -11,6 +17,6 @@ div[class="w-full"]
         span = article.date
       
       div
-        span.font-medium.font-bold.m-1 Leadin:
+        span.font-medium.font-bold.m-1 Lead In:
         span = article.content .split[0..14].join(' ').gsub(/\.[^\s]+/,'').gsub('#','')
         span &#8230;

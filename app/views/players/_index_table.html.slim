@@ -9,7 +9,6 @@ div.m-1
         th.hidden.md:table-cell First
         th.hidden.md:table-cell Last
         th.hidden.md:table-cell Nick
-        / th Use NN
         th Tee
         th.numeric[data-action="click->sortTable#sortBy"] 
           i.fas.fa-sort.noprint.nopointer
@@ -17,7 +16,6 @@ div.m-1
         th.numeric[data-action="click->sortTable#sortBy"] 
           i.fas.fa-sort.noprint.nopointer
           | Rquota
-        / th Phone
         th LPlayed
         th frozen
         - if current_user && current_user.is_trustee?
@@ -27,16 +25,13 @@ div.m-1
       - @players.each do |player|
         tr
           td 
-            = link_to player.name,player, class:'blue-link '
-            / = link_to icon('fas fa-eye'),  player, title: 'Show it', class: 'btn btn-icon mr-2'
+            = link_to player.name,player, class:'text-blue-800 hover:text-green-600 font-bold'
           td.hidden.md:table-cell= player.first_name
           td.hidden.md:table-cell= player.last_name
-          / td = player.nickname
           td.hidden.md:table-cell = player.use_nickname
           td = player.tee
           td = player.quota
           td = player.rquota
-          / td = player.phone
           td = player.last_played
           td = player.is_frozen
           - if current_user && current_user.is_trustee?
@@ -45,6 +40,4 @@ div.m-1
               span.icon-edit = link_to(icon('fas fa-edit'),edit_player_path(player))
               span = button_to(icon('fas fa-trash'),player, method: :delete, form:{data: { turbo_confirm: 'Are you sure?', turbo_method:'delete' }}, form_class:"icon-destroy")
 
-              / = destroyIcon(player)
-
- 
+  

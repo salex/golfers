@@ -51,9 +51,9 @@ class Scored::GameController < ApplicationController
 
   private
 
-  def permit
-    cant_do_that(' - Not Authorized') unless current_user && can?(:update,:game)
-  end
+  # def permit
+  #   cant_do_that(' - Not Authorized') unless current_user && can?(:update,:game)
+  # end
 
   def set_game
     @game = current_group && current_group.games.find_by(id:params[:id], status:'Scored')

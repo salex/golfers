@@ -9,20 +9,16 @@ class ApplicationController < ActionController::Base
       session_time_left = (expire_time - Time.now).to_i
       unless session_time_left > 0
         logout(current_user)
-        # flash.alert  = 'Your session has timed out. Please log back in.'
       else
         session[:expires] = Time.now + 60.minutes
         # because I have code that checks Current.user/group and visit
         Current.user = current_user
         Current.group = Group.find_by(id:session[:group_id])
-        # check = "Current User #{Current.user.present?} Group #{Current.group.present?}"
-        # flash.notice = check
       end
     elsif current_group.present? && session[:expires].present?
       expire_time = Time.parse(session[:expires]) || Time.now
       session_time_left = (expire_time - Time.now).to_i
       unless session_time_left > 0
-        # flash.alert  = 'Your session has timed out. Please log back in.'
         logout(nil)
       else
         session[:expires] = Time.now + 15.minutes
@@ -39,6 +35,11 @@ class ApplicationController < ActionController::Base
     current_user && current_user.is_trustee? # && current_user.group_id == current_group.id
   end
   helper_method :is_manager?
+
+  def is_super?
+    current_user && current_user.is_super?
+  end
+  helper_method :is_super?
 
 
   private
