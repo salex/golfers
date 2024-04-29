@@ -123,7 +123,7 @@ class Group < ApplicationRecord
      "use_autoscroll"=>true,
      "score_place_dist"=>"mid",
      "score_place_perc"=>50,
-     "default_course"=>"TwinBridges"
+     "default_course"=>"Home"
     }
   end
 
@@ -139,9 +139,9 @@ class Group < ApplicationRecord
 
   def parse_courses
     if self.courses.blank?
-      self.courses = "New::par_in=444444444:par_out=444444444:tees=Blue White Red "
+      self.courses = "Home::par_in=#{self.par_in}:par_out=#{self.par_out}:tees=#{self.tees}"
       # flash.now[:alert] = "Default course set"
-      self.save
+      # self.save
     end
     chash = {}
 

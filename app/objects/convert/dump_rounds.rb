@@ -2,8 +2,9 @@ module Convert
   class DumpRounds
     attr_accessor :rounds, :json
     def initialize
-      @rounds = Round.all.order(:id).as_json(except: [:updated_at, :created_at,:front_net, :back_net, :total_net, :player_name])
+      @rounds = Round.all.order(:id).as_json(methods: :type, except: [:updated_at, :created_at,:front_net, :back_net, :total_net, :player_name])
       # for some reason round.type was not included1!!
+      # CAME up again, set methods: :type in as_json options
       # rounds are the same
       # @json = []
       # @players.each do |g|
