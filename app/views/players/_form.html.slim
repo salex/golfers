@@ -35,7 +35,9 @@
 
       div
         = form.label :tee, style: "display: block"
-        = form.text_field :tee
+        / = form.text_field :tee
+        = form.select :tee,tee_select_options(Current.group.tees.split,@player.tee),{},class: ''
+
     div
       div
         = form.label :quota, style: "display: block"

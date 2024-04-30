@@ -30,8 +30,8 @@ div.w-full
               game.namespace_url,class:"btn-xsm bg-amber-400 w-full"
             td = game.date
             td = game.method
-            td = game.scoring['round']["players"] if game.scoring.present?
-            td = game.scoring['round']["teams"] if game.scoring.present?
+            td = game.scoring["players"] if game.scoring.present?
+            td = game.scoring["teams"] if game.scoring.present?
             td = game.scoring['makeup'] if game.scoring.present?
             td = game.scoring["seed_method"] if game.scoring.present?
 

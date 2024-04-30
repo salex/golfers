@@ -5,6 +5,7 @@ module Convert
       @games = Game.all.order(:id).as_json(except: [:updated_at, :created_at, :state])
       @json = []
       @games.each do |g|
+        puts "STATS #{g["stats"]}"
         j = {}
         j['id'] = g["id"]
         j['group_id'] = g["group_id"]

@@ -76,7 +76,7 @@ Rails.application.routes.draw do
   resources :users
   resources :games do
     collection do
-      get :new_today
+      post :new_today
     end
 
   end

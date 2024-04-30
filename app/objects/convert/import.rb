@@ -1,4 +1,17 @@
 module Convert
+  # copy set_{model}.json files from ptgolf7 to app/objects/convert directory
+  # process for stage
+  # RAILS_EVN=stage db:drop
+  # RAILS_EVN=stage db:create
+  # RAILS_EVN=stage db:migrate
+  # from app/objects/convert directory
+  # Convert::Import.new
+  # reset postgres
+  # ActiveRecord::Base.connection.tables.each do |t|
+  #   ActiveRecord::Base.connection.reset_pk_sequence!(t)
+  # end
+
+
   class Import
     attr_accessor :groups, :players, :users, :games, :rounds
 

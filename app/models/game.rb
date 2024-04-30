@@ -63,8 +63,8 @@ class Game < ApplicationRecord
     "/scored/game/#{self.id}/#{action if action.present?}"
   end
 
-  def stats
-    self.scoring
+  def formed
+    return scoring
   end
 
   def set_scoring
@@ -78,16 +78,16 @@ class Game < ApplicationRecord
 
   def set_player_teams
     set_scoring if scoring.blank?
-    scoring['round'] = {} if scoring['round'].blank?
+    scoring = {} if scoring.blank?
     rnds = self.rounds
     if rnds.size.positive?
       arr = rnds.pluck(:id, :team)
       teams = arr.pluck(1).sort.uniq
-      scoring['round']['players'] = arr.size
-      scoring['round']['teams'] = teams.size
+      scoring['players'] = arr.size
+      scoring['teams'] = teams.size
     else
-      scoring['round']['players'] = 0
-      scoring['round']['teams'] = 0
+      scoring['players'] = 0
+      scoring['teams'] = 0
     end
   end
 

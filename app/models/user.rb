@@ -9,8 +9,8 @@ class User < ApplicationRecord
 
   normalizes :email, with: -> email { email.strip.downcase }
   validates_presence_of :email
-  validates_uniqueness_of :username, :allow_blank => true
-  validates_uniqueness_of :email, :case_sensitive => false
+  validates_uniqueness_of :username, :allow_blank => true, scope: :group_id
+  validates_uniqueness_of :email, :case_sensitive => false, scope: :group_id
 
   validates_format_of :username, :with => /[-\w\._@]+/i, :allow_blank => true, :message => "should only contain letters, numbers, or .-_@"
   before_save :downcase_login

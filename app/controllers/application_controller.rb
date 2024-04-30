@@ -96,7 +96,7 @@ class ApplicationController < ActionController::Base
     reset_session
     session[:group_id] = user.group_id
     session[:user_id] = user.id
-    session[:fullname] = user.fullname
+    session[:fullname] = user.fullname == "Unknown" ? user.username : user.fullname
     session[:expires] = Time.now + 60.minutes
     Current.group = Current.user.group
   end
