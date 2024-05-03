@@ -15,7 +15,7 @@ class Pending::GameController < ApplicationController
   end
 
   def score_card
-    if @game.scoring['makeup'] == "individuals" || @game.scoring['seed_method'] == 'blind_draw'
+    if @game.formed['makeup'] == "individuals" || @game.formed['seed_method'] == 'blind_draw'
       pdf =  Pdf::IndvScoreCard.new(@game)
     else
       pdf =  Pdf::ScoreCard.new(@game)
@@ -27,7 +27,7 @@ class Pending::GameController < ApplicationController
 
 
   def score_cardp
-    if @game.scoring['makeup'] == "individuals" || @game.scoring['seed_method'] == 'blind_draw'
+    if @game.formed['makeup'] == "individuals" || @game.formed['seed_method'] == 'blind_draw'
       pdf =  Pdf::ScoreCardi.new(@game)
     else
       pdf =  Pdf::ScoreCardp.new(@game)

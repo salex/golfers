@@ -2,15 +2,20 @@ div[class="-mx-2"]
   div.flex.gap-2.border-bottom.bg-lime.p-1
     div.ml-2.flex-shrink
       .text-lg.font-bold = "Scheduled Game"
-    div.flex-grow.flex
-      div = links = link_to( icon('fas fa-arrow-left', 'Cancel - List Games'),  
-        games_path, class: "btn-cancel")
-      div = link_to icon('fas fa-arrows-alt-h', 'Set Players and Form Teams'),
-        @game.scheduled_url(:set), class: 'block btn-cancel font-bold w-80' if can?(:update,:game)
-      - if current_user && can?(:destroy,:game) && @game.state[:can_delete]  
+    div.flex-grow.flex.flex-wrap
+      div = links = link_to( icon('fas fa-arrow-left', 'Cancel - List Games'), games_path, class: "btn-cancel")
+      - if current_user && can?(:destroy,:game) && @game.state[:can_delete] 
         = button_to(icon("fas fa-trash","Destroy Incomplete Game"),game_path(@game),method: :delete,form: { data: { turbo_confirm: "Are You Sure?"}},class:"btn-warn inline-block mt-1 "  )
 
     div.flex-shrink.text-green-800.p-0.font-bold.mr-3.hover:text-2xl = link_to icon('fas fa-arrow-left'), 'javascript:history.back()'
+div 
+  - if @game.state[:can_form] || @game.state[:can_reform]
+    = link_to('Form Teams',form_teams_scheduled_game_path(@game),
+      data: {scheduler_target:"formbtn", turbo_frame: "_top" }, 
+      class:"btn btn-submit inline-block text-center ")
+  = link_to icon('fas fa-arrows-alt-h', 'Add Players and Form Teams'),@game.scheduled_url(:set), class: 'inline-block btn-cancel font-bold w-80' if can?(:update,:game)
+  span There are no new players scheduled.
+
 
 = render partial:"/shared/theader"  
 

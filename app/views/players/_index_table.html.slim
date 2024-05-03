@@ -16,7 +16,9 @@ div.m-1
         th.numeric[data-action="click->sortTable#sortBy"] 
           i.fas.fa-sort.noprint.nopointer
           | Rquota
-        th LPlayed
+        th.numeric[data-action="click->sortTable#sortBy"] 
+          i.fas.fa-sort.noprint.nopointer 
+          | LPlayed
         th frozen
         - if current_user && current_user.is_trustee?
           th Actions
@@ -24,8 +26,10 @@ div.m-1
     tbody
       - @players.each do |player|
         tr
-          td 
-            = link_to player.name,player, class:'text-blue-800 hover:text-green-600 font-bold'
+          td
+            => player.name
+            =link_to(icon('fas fa-eye'),player,class:'text-blue-800 hover:text-green-600 font-bold float-right')
+            / = link_to "show",player, class:'text-blue-800 hover:text-green-600 font-bold'
           td.hidden.md:table-cell= player.first_name
           td.hidden.md:table-cell= player.last_name
           td.hidden.md:table-cell = player.use_nickname

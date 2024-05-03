@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :rounds, only:[:show,:destroy,:edit,:update] 
+  resources :rounds, only:[:show,:destroy,:edit,:update] #index disabled
   resource :course, only:[:show,:edit,:update] 
   resources :notices do
     member do
@@ -40,14 +40,10 @@ Rails.application.routes.draw do
           # get :print_sc_p
           get :score_cardp
           get :score_card
-
-
         end
-
       end
 
-
-      resources :score, only:[:show,:edit,:update]
+      # resources :score, only:[:show,:edit,:update]
       resource :about, only:[:show]
 
   end
@@ -58,9 +54,7 @@ Rails.application.routes.draw do
           patch :update_skins
           get :par3s
           patch :update_par3s
-
         end
-
       end
       resources :par3, only:[:show,:edit,:update]
       resources :skins, only:[:show,:edit,:update]

@@ -165,12 +165,12 @@ class Group < ApplicationRecord
     self.players.where_assoc_not_exists(:rounds).order(:name)
   end
 
-  def active_players(ago=60)
+  def active_players(ago=75)
     active_date = Date.today - ago.days
     active = self.players.where_assoc_exists(:rounds).where(Player.arel_table[:last_played].gteq(active_date)).or(new_players).order(:name)
   end
 
-  def inactive_players(ago=120)
+  def inactive_players(ago=75)
     active_date = Date.today - ago.days
     inactive = self.players.where_assoc_exists(:rounds).where(Player.arel_table[:last_played].lt(active_date)).order(:name)
   end
@@ -184,7 +184,7 @@ class Group < ApplicationRecord
   end
 
   def group_color
-    c = %w{green red blue orange purple}[self.id % 4]
+    c = %w{green red blue orange purple}[self.id % 5]
     "bg-#{c}-500"
   end
 

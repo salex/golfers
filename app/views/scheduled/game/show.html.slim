@@ -1,3 +1,7 @@
+/ - puts "PKAYERS #{@game.players}"
+/ - if @game.players.blank?
+/   = render "set" 
+/ -else
 = render partial:"index"
 
 

@@ -30,11 +30,12 @@ export default class extends Controller {
     dir = "asc"; 
     /* Make a loop that will continue until
     no switching has been done: */
+    rows = table.rows;
 
     while (switching) {
       // Start by saying: no switching is done:
       switching = false;
-      rows = table.rows;
+      // rows = table.rows;
       /* Loop through all table rows (except the
       first, which contains table headers): */
 

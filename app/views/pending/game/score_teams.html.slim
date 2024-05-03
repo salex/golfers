@@ -47,7 +47,7 @@
 
             tr.bg-lime-lighter
               th.w-1/2 colspan="4" 
-                - if @game.scoring['makeup'] == "individuals"
+                - if @game.formed['makeup'] == "individuals"
                   = "Tee Time #{team}"
                 - else
                   = "Team - #{team} Quota:#{tq} Side: #{sq} Hole: #{hq}"

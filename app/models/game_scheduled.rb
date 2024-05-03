@@ -23,9 +23,9 @@ class GameScheduled < Game
           scheduled_rounds[m-1].save
         end
       end
-      self.scoring = {} #if self.scoring.nil?
-      self.scoring['makeup'] = makeup
-      self.scoring['seed_method'] = form_method
+      self.formed = {} #if self.formed.nil?
+      self.formed['makeup'] = makeup
+      self.formed['seed_method'] = form_method
       self.status = 'Pending'
       self.save
     else

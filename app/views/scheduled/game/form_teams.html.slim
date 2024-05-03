@@ -10,7 +10,8 @@ div[class="-mx-2"]
     div.ml-2
       .text-lg.font-bold Form Teams
     div.flex-grow
-      p hi
+      div = links = link_to( icon('fas fa-arrow-left', 'Cancel - Show Game'), scheduled_game_path, class: "btn-cancel")
+
 
 = render partial:"shared/gheader"
 

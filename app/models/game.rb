@@ -1,37 +1,10 @@
-=begin
- Attempt to get state/stats straight
- state should be save an constant/not changed unless:
-  game rounds changed by
-    adding players/rounds in schedule included adding late players
-    forming teams
-    scoring teams
-  stat was renamed scoing and want to rename to state
-  want state to containe all info needed in schedeling, forming and scoring
-  showing should not reload anything, should be there
-
-  add method get_state which just gets the state hash
-  if anything changed in rounds or game call:
-    set_state which rebuilds the hash
-  game.scoring is really useless
-    change a calls to scoring to get it from state
-    temporally set attribute :state to :game_state
-  new approch
-    get rid of scoring by adding colums
-      method is either places or sides. already in table
-        change to scoring_method
-      add players =  number of rounds
-      add teams =  number of teams
-      add makeup to team forming indiv, 2 somes, 4somes, mixed
-
-
-=end
 
 class Game < ApplicationRecord
   belongs_to :group
   has_many :scored_rounds
   has_many :rounds, dependent: :destroy
   has_many :players, through: :rounds
-  serialize :scoring, coder: JSON
+  serialize :formed, coder: JSON
   serialize :par3, coder: JSON
   serialize :skins, coder: JSON
 
@@ -63,31 +36,17 @@ class Game < ApplicationRecord
     "/scored/game/#{self.id}/#{action if action.present?}"
   end
 
-  def formed
-    return scoring
-  end
-
-  def set_scoring
-    self.scoring = {
-      round: {}
-    }.with_indifferent_access
-  end
-
-  # {status}_players used mainly in picking players for game
-  # 90% of players showing up will be in active
-
   def set_player_teams
-    set_scoring if scoring.blank?
-    scoring = {} if scoring.blank?
+    self.formed = {} if self.formed.blank?
     rnds = self.rounds
     if rnds.size.positive?
       arr = rnds.pluck(:id, :team)
       teams = arr.pluck(1).sort.uniq
-      scoring['players'] = arr.size
-      scoring['teams'] = teams.size
+      formed['players'] = arr.size
+      formed['teams'] = teams.size
     else
-      scoring['players'] = 0
-      scoring['teams'] = 0
+      formed['players'] = 0
+      formed['teams'] = 0
     end
   end
 

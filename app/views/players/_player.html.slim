@@ -67,11 +67,12 @@ div.mt-1.flex.flex-wrap.bg-green-0
           td= get_trend(s[:totals])
 
     h5.strong Round History
-    div.grid.grid-cols-3.gap-6
-      - qs = @player.quality_stats
+    - qs = @player.quality_stats
+    div.grid.grid-cols-3.gap-3
       - qs.each do |k,a|
         div
           - unless a[1].zero?
+            
             table.golfer.w-full
               tr
                 td.w-1/4 = k == :quality ? 'Rnds' : k.capitalize
@@ -83,7 +84,6 @@ div.mt-1.flex.flex-wrap.bg-green-0
                 td = a[2].round(2)
                 td = a[3]
                 td = a[4].round(2)
-                div &nbsp;
 div.my-2
   table.golfer.w-full
     caption

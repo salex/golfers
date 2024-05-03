@@ -26,14 +26,22 @@ div.w-full
             
         - @games.each do |game|
           tr
-            td = link_to game.status.capitalize,
+            - if game.status == 'Scheduled'
+              td = link_to game.status.capitalize,
               game.namespace_url,class:"btn-xsm bg-amber-400 w-full"
+            - elsif game.status == 'Pending'
+              td = link_to game.status.capitalize,
+              game.namespace_url,class:"btn-xsm bg-blue-400 w-full"
+            - else
+              td = link_to game.status.capitalize,
+              game.namespace_url,class:"btn-xsm bg-green-400 w-full"
+
             td = game.date
             td = game.method
-            td = game.scoring["players"] if game.scoring.present?
-            td = game.scoring["teams"] if game.scoring.present?
-            td = game.scoring['makeup'] if game.scoring.present?
-            td = game.scoring["seed_method"] if game.scoring.present?
+            td = game.formed["players"] if game.formed.present?
+            td = game.formed["teams"] if game.formed.present?
+            td = game.formed['makeup'] if game.formed.present?
+            td = game.formed["seed_method"] if game.formed.present?
 
             td 
 
