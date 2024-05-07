@@ -20,12 +20,13 @@ class AppsController < ApplicationController
   end
 
   def reset
-    puts "PARAMS RESET #{params}"
     respond_to do |format|
       format.turbo_stream { render turbo_stream: turbo_stream.replace('refresh', 
           partial: 'apps/payouts/stats_refresh',
           locals:{dues:params[:stats][:dues],
-          meth:params[:stats][:game],perc:params[:stats][:perc]})}
+          meth:params[:stats][:game],
+          doll:params[:stats][:doll],
+          perc:params[:stats][:perc]})}
       format.html { render :template => 'apps/payouts/payouts'}
     end
 

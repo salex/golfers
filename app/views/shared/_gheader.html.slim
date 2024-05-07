@@ -33,6 +33,6 @@ div.flex.flex-wrap.border.border-slate-400.p-1.my-1
   - else
     div
       strong.ml-3 Pot Places:
-      - winners = PgaPlaces.new(teams,pot/teams,nil,50).winners.reverse
+      - winners = PgaPlaces.new(teams,pot/teams,nil,current_group.score_place_perc ||= 50).winners.reverse
       =< " #{winners}"
 

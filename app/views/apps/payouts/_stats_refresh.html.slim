@@ -2,7 +2,7 @@
   - dues = dues.to_i
   .mx-1.overflow-x-auto
     table.golfer.w75
-      caption = "Params: #{params["stats"]} "
+      caption = "Params: #{params["stats"]}"
       thead
         tr
           th #P
@@ -15,28 +15,24 @@
             td = p 
             td = "$#{ p*dues}"
             - if meth == 'dealh'
-              - places = Things::DealTokens.new(p,dues,'high',perc).winners.reverse
+              - places = Things::DealTokens.new(p,dues,'high',perc,doll).winners.reverse
             - elsif meth == 'dealm'
-              - places = Things::DealTokens.new(p,dues,'mid',perc).winners.reverse
+              - places = Things::DealTokens.new(p,dues,'mid',perc,doll).winners.reverse
             - elsif meth == 'deall'
-              - places = Things::DealTokens.new(p,dues,'low',perc).winners.reverse
+              - places = Things::DealTokens.new(p,dues,'low',perc,doll).winners.reverse
             - elsif meth == 'rate'
-              - places = Things::RatePlaces.new(p,dues).winners.reverse
+              - places = Things::RatePlaces.new(p,dues,doll).winners.reverse
             - elsif meth == 'pgah'
-              - places = Things::PgaPlaces.new(p,dues,'high',perc).winners.reverse
+              - places = Things::PgaPlaces.new(p,dues,'high',perc,doll).winners.reverse
             - elsif meth == 'pgam'
-              - places = Things::PgaPlaces.new(p,dues,'mid',perc).winners.reverse
+              - places = Things::PgaPlaces.new(p,dues,'mid',perc,doll).winners.reverse
             - elsif meth == 'pgal'
-              - places = Things::PgaPlaces.new(p,dues,'low',perc).winners.reverse
+              - places = Things::PgaPlaces.new(p,dues,'low',perc,doll).winners.reverse
             - elsif meth == 'pgae'
-              - places = Things::PgaPlaces.new(p,dues,'even',perc).winners.reverse
+              - places = Things::PgaPlaces.new(p,dues,'even',perc,doll).winners.reverse
             - elsif meth == 'even'
               - places = Things::EvenPlaces.new(p,dues).winners.reverse
-            - elsif meth == 'b6040'
-              - places = Things::Base6040.new(p,dues).winners
-
             -else
-              - places = Things::DealTokens.new(p,dues,'mid',perc).winners.reverse
-              / - puts "PARAMS #{meth}"
+              - places = Things::DealTokens.new(p,dues,'mid',perc,doll).winners.reverse
             - places.each do |i|
               td.text-right = number_to_currency i

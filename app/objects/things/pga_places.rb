@@ -3,7 +3,7 @@ module Things
     attr_accessor :winners, :pot, :perc
     include PlacesHelper
 
-    def initialize(numb_players,dues,dist=nil,perc=nil)
+    def initialize(numb_players,dues,dist=nil,perc=nil,doll=nil)
       dues = dues.to_f
       @pot = numb_players * dues 
    
@@ -13,7 +13,11 @@ module Things
         winners[i] = percents[i] * @pot
       end
       @winners = @winners.reverse
-      dollarize(@winners,@pot)
+      if doll.present?
+        dollarize(@winners,@pot)
+      else
+        quarterize(@winners,@pot)
+      end
 
     end
 
