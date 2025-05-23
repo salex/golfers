@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  Roles = %w(super manager admin trustee member)
   has_secure_password
 
   belongs_to :group
@@ -15,8 +16,6 @@ class User < ApplicationRecord
   validates_format_of :username, :with => /[-\w\._@]+/i, :allow_blank => true, :message => "should only contain letters, numbers, or .-_@"
   before_save :downcase_login
   serialize :permits, coder: JSON
-
-  # ROLES = %w(super admin trustee member)
 
   def downcase_login
    self.email.downcase!
@@ -56,16 +55,21 @@ class User < ApplicationRecord
     return has_role?(['super']) || self.username == 'salex'
   end
 
+  def is_manager?
+    return has_role?(%w(super manager))
+  end
+
+
   def is_admin?
-  return has_role?(%w(super admin))
+    return has_role?(%w(super manager admin))
   end
 
   def is_trustee?
-  return has_role?(%w(trustee super admin))
+    return has_role?(%w(super manager admin trustee))
   end
 
   def is_member?
-  return has_role?(%w(member super admin trustee))
+    return has_role?(%w(super manager admin trustee member))
   end
 
   def is_guest?

@@ -3,7 +3,7 @@
 div.flex.flex-wrap.gap-8
   div.border.p-1
     - if @game.has_skins?
-      div.font-bold.text-lg.text-center Birdies/Skins
+      div.font-bold.text-lg.bg-lime-300.text-center.mb-1 Birdies/Skins
  
       - skins = Skins.new(@game)
       / - puts "SKINS #{skins.inspect}"
@@ -71,7 +71,7 @@ div.flex.flex-wrap.gap-8
   div.border.p-1
     - if @game.has_par3?
       - par3 = Par3.new(@game)
-      div.font-bold.text-lg.text-center Par3s
+      div.font-bold.text-lg.text-center.bg-lime-300 Par3s
 
 
       div.flex.gap-4

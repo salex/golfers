@@ -1,5 +1,5 @@
 / each score card has a fixed height. We'll fit 2 in a landscape page and 3 in
-/  a portrait page
+/  a portriat page
 / We'll adjust top margin(slightly) and hr/cutline margin depending on rows 2
 /  or rows 3
 / Each page will have either 2 or 3 scorecards
@@ -12,7 +12,7 @@
 / - par_out = current_group.par_out
 / - par_in = @game.game_course["par_in"]
 / - par_out = @game.game_course["par_out"]
-- course = current_group.group_courses['Home']
+- course = @game.group.group_courses['Home']
 - par_in = course["par_in"]
 - par_out = course["par_out"]
 
@@ -32,39 +32,38 @@
       - else 
         div.mt-10.font-bold = @teams[team]['header']
 
-      table.classic.w-full
+      table.classic
         / thead tries to set constant widths at least for holes 1..18
         thead 
           tr
-            th Name
-            th[style="width: 3.5%;"] TQ
-            th[style="width: 3.5%;"] 1 
-            th[style="width: 3.5%;"] 2 
-            th[style="width: 3.5%;"] 3 
-            th[style="width: 3.5%;"] 4 
-            th[style="width: 3.5%;"] 5 
-            th[style="width: 3.5%;"] 6 
-            th[style="width: 3.5%;"] 7 
-            th[style="width: 3.5%;"] 8 
-            th[style="width: 3.5%;"] 9 
-            th[style="width: 3.5%;"] In
-            th[style="width: 3.5%;"] i&nbsp;
-            th[style="width: 3.5%;"] 10
-            th[style="width: 3.5%;"] 11  
-            th[style="width: 3.5%;"] 12 
-            th[style="width: 3.5%;"] 13 
-            th[style="width: 3.5%;"] 14 
-            th[style="width: 3.5%;"] 15 
-            th[style="width: 3.5%;"] 16 
-            th[style="width: 3.5%;"] 17 
-            th[style="width: 3.5%;"] 18 
-            th[style="width: 3.5%;"] Out
-            th[style="width: 3.5%;"] Tot
-            th[style="width: 3.5%;"] +- 
-
+          th Name
+          th[style="width: 3.25%;"] TQ
+          th[style="width: 3.25%;"] 1 
+          th[style="width: 3.25%;"] 2 
+          th[style="width: 3.25%;"] 3 
+          th[style="width: 3.25%;"] 4 
+          th[style="width: 3.25%;"] 5 
+          th[style="width: 3.25%;"] 6 
+          th[style="width: 3.25%;"] 7 
+          th[style="width: 3.25%;"] 8 
+          th[style="width: 3.25%;"] 9 
+          th[style="width: 3.25%;"] In
+          th[style="width: 3.25%;"] i&nbsp;
+          th[style="width: 3.25%;"] 10
+          th[style="width: 3.25%;"] 11  
+          th[style="width: 3.25%;"] 12 
+          th[style="width: 3.25%;"] 13 
+          th[style="width: 3.25%;"] 14 
+          th[style="width: 3.25%;"] 15 
+          th[style="width: 3.25%;"] 16 
+          th[style="width: 3.25%;"] 17 
+          th[style="width: 3.25%;"] 18 
+          th[style="width: 3.25%;"] Out
+          th[style="width: 3.25%;"] Tot
+          th[style="width: 3.25%;"] +- 
         tbody
           - 4.times do |i|
-            - n = q =  w = '.' # need something other than space
+            - n = q =  w = "." # need something other than space
             - if players[i].present?
               
               - n = players[i][:name]
@@ -153,7 +152,7 @@
         - if rows == 2
           hr.my-20.border.border-black
         - else 
-          hr.my-6.border.border-black
+          hr.my-8.border.border-black
 
 
 

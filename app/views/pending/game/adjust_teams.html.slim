@@ -10,10 +10,11 @@ section[class="flex flex-wrap gap-2 card-4 bg-lime-light border-bottom p-2 -mx-2
 div
   p Use this form if:
   ul.classic
-    li 1. Someone drops out of the game before finishing. Just check the Del checkbox. Do this before scoring.
-    li 2. Someone decides to play from a different tee. Just change their Tee.
+    li 1. You used <strong>Assign Teams</strong> when Forming Teams
+    li 2. Someone drops out of the game before finishing. Just check the Del checkbox and <strong>Update</strong>. Do this before scoring.
+    li 3. Someone decides to play from a different tee. Just change their Tee.
     li 
-      span 3. Someone needs to go off first and you can't use 
+      span 4. Someone needs to go off first and you can't use 
       span = link_to icon('fas fa-arrows-alt-h', 'Swap Teams'), @game.namespace_url('swap_teams'),class: "btn-cancel py-0 m-0"
 
       span , you can just  mover player(s) to different Teams.
@@ -23,7 +24,7 @@ div
   - p_count = participants.size
   .form.p-1
     = form_with(url:@game.namespace_url('update_teams'), method: :patch )do |f|
-      button.btn.btn-submit.btn-green = f.submit("Assign/Adjust Teams",class:'strong')
+      button.btn.btn-submit.btn-green = f.submit("Update:Assign/Adjust Teams",class:'strong')
       table.golfer id="current_members"
         tr
           th Name

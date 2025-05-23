@@ -26,10 +26,10 @@
             - useKeys = false
         - if useKeys
           - link_params[:keys] = '0'
-          button.btn-sm-green.w-full.mx-0 =  link_to("Use Mouse Entry", score_teams_pending_game_path(@game,link_params),class:' ')
+          button.btn-link.w-full.mx-0 =  link_to("Use Mouse Entry", score_teams_pending_game_path(@game,link_params),class:' ')
         -else
           - link_params[:keys] = '1'
-          button.btn-sm-green.w-full.mx-0 = link_to("Use Keyboard Entry", score_teams_pending_game_path(@game,link_params),class:'')
+          button.btn-link.w-full.mx-0 = link_to("Use Keyboard Entry", score_teams_pending_game_path(@game,link_params),class:'')
         hr.underline.w-full
     - select_points = !useKeys
     div.md:col-span-9

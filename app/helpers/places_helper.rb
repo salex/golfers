@@ -17,6 +17,7 @@ module PlacesHelper
       0.625,0.595,0.570,0.545,0.520,0.495,0.475,0.455,0.435]
 
     if perc.present?
+      # puts "PP #{perc.to_f/100} #{players.to_i}"
       pay_places = (perc.to_f/100 * players.to_i).to_i 
     else
       pay_places = players.to_i / 2
@@ -43,6 +44,8 @@ module PlacesHelper
     end
     # offset selects a range from the pga_perc array
     percents = pga_perc[offset..(pay_places + (offset - 1))]
+    # puts "HELP #{players} #{dist} #{perc} #{pay_places} #{percents}"
+
     sum = percents.sum
     percents.each_with_index do |v,i|
       percents[i] = (v/sum).round(4) 

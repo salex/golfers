@@ -20,6 +20,10 @@ class Game < ApplicationRecord
     Current.group || group
   end
 
+  def game_course
+    game_group.group_courses[self.course]
+  end
+
   def namespace_url(action = nil)
     "/#{status.downcase}/game/#{self.id}/#{action if action.present?}"
   end

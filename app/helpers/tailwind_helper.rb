@@ -1,21 +1,21 @@
 module TailwindHelper
-  def to_tw(class_str)
-    component = class_str.gsub('.',' ') # allow slim . classes
-    arr = class_str.split(' ') # convert to array
-    klasses = []
-    arr.each do |cls|
-      #see if the cls is defined in component
-      if TailwindHelper.instance_methods.include?(cls.to_sym)
-        cls_str = instance_eval(cls) # get the component classes
-        meth_classes = cls_str.split(' ')
-        meth_classes.each{|i| klasses << i} # add component classes to klasses
-      else
-        klasses << cls # a normal non-component class
-      end
-    end
-    return(klasses.uniq.to_sentence(words_connector:' ',last_word_connector:' '))
-    # return a sting of classes and any component class
-  end
+  # def to_tw(class_str)
+  #   component = class_str.gsub('.',' ') # allow slim . classes
+  #   arr = class_str.split(' ') # convert to array
+  #   klasses = []
+  #   arr.each do |cls|
+  #     #see if the cls is defined in component
+  #     if TailwindHelper.instance_methods.include?(cls.to_sym)
+  #       cls_str = instance_eval(cls) # get the component classes
+  #       meth_classes = cls_str.split(' ')
+  #       meth_classes.each{|i| klasses << i} # add component classes to klasses
+  #     else
+  #       klasses << cls # a normal non-component class
+  #     end
+  #   end
+  #   return(klasses.uniq.to_sentence(words_connector:' ',last_word_connector:' '))
+  #   # return a sting of classes and any component class
+  # end
 
   def icon(klass, text = '')
     icon_tag = tag.i(class: klass)

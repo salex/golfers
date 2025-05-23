@@ -14,7 +14,8 @@ class Group < ApplicationRecord
   attribute :group_courses
   # lets just set all attributes to settings values 
   # will be cast to class if coming from form update
-  # if you add/remove a setting, add/remove an attribute with class and add to default settings 
+  # if you add/remove a setting, add/remove an attribute with class 
+  #   and add to default settings 
 
   attribute :par_in, :string, default: "444444444"
   attribute :par_out, :string, default: "444444444"
@@ -60,7 +61,8 @@ class Group < ApplicationRecord
       # new record, set settings from default options
       self.settings = self.default_settings
     elsif self.settings.keys != self.default_settings.keys 
-      # sync settings - add new key/value, delete old keys"
+      # something changed in default setting or settings
+      # sync settings - add new key/value or delete old keys"
       self.default_settings.each do |k,v|
         if !self.settings.has_key?(k)
           settings[k] = v
@@ -71,13 +73,16 @@ class Group < ApplicationRecord
           settings.delete(k)
         end
       end
-      self.save
+      # save group because something changed
+      self.save #unless self.new_record?
     end
     self.settings.each do |k,v|
       # set attributes to settings
       self.send("#{k.to_sym}=", v)
+      # equivalent to self.key = v 
+      # ex self.dues = 6
     end
-    # self.parse_courses
+    self.parse_courses #unless self.new_record?
 
   end
 
@@ -129,9 +134,11 @@ class Group < ApplicationRecord
 
   def update_group(params)
     self.assign_attributes(params)
-    # updates record withou saving, just set attributes
+      # updates record without saving, just set attributes
+      # assign_attributes is a rails method
     self.default_settings.each do |k,v|
       # now take the set attributes and update to serialized settings
+      # just using default_setting keys to point to setting key
       self.settings[k] = self.send(k.to_sym) 
     end
     self.save 
@@ -139,26 +146,22 @@ class Group < ApplicationRecord
 
   def parse_courses
     if self.courses.blank?
+      # set a parse_able string with key and values
       self.courses = "Home::par_in=#{self.par_in}:par_out=#{self.par_out}:tees=#{self.tees}"
-      # flash.now[:alert] = "Default course set"
-      # self.save
     end
-    chash = {}
-
-    courses_arr =self.courses.split(',')
-
+    course_hash = {}
+    courses_arr =self.courses.split(',') 
     courses_arr.each do |c|
       # puts "COURSE #{self.name} #{c}"
       kv = c.split("::")
-      chash[kv[0]] = {}
+      course_hash[kv[0]] = {}
       elems = kv[1].split(":")
       elems.each do |e|
         i = e.split("=")
-        chash[kv[0]][i[0]] = i[1]
+        course_hash[kv[0]][i[0]] = i[1]
       end
     end
-
-    self.group_courses = chash
+    self.group_courses = course_hash
   end
 
   def expired_players

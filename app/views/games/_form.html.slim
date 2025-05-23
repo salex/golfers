@@ -6,21 +6,34 @@
         - @game.errors.each do |error|
           li = error.full_message
 
-  div
-    .font-bold= form.label :group_id, style: "display: block"
-    .ml-4= form.text_field :group_id
+  / div.m-1
+  /   .font-bold= form.label :group_id, style: "display: block"
+  /   .ml-4= form.text_field :group_id
 
-  div
-    = form.label :date, style: "display: block"
-    = form.date_field :date
+  div.m-1
+    = form.label "Group:", class: "strong w-30 mr-4 inline-block text-right"
+    = form.text_field :group_id,  disabled: true, class: "border p-0.5"
 
-  div
-    = form.label :status, style: "display: block"
-    = form.text_field :status
 
-  div
-    = form.label :method, style: "display: block"
+  div.m-1
+    = form.label "Date:", class: "strong w-30 mr-4 inline-block text-right"
+    = form.date_field :date, class: "border p-0.5"
+
+  div.m-1
+    = form.label "Status:", class: "strong w-30 mr-4 inline-block text-right"
+    = form.text_field :status, class: "border p-0.5"
+
+  div.m-1
+    = form.label "Method:", class: "strong w-30 mr-4 inline-block text-right"
     = form.select(:method, [["Sides","sides"],["Places","places"]])
+
+  div.m-1
+    = form.label "Course:", class: "strong w-30 mr-4 inline-block text-right"
+    = form.select(:course,Current.group.group_courses.keys)
+
+  / div
+  /   = form.label :course, style: "display: block"
+  /   = form.select(:course, Current.group.group_courses.keys)
 
   / div
   /   = form.label :scoring, style: "display: block"

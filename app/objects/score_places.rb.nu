@@ -1,3 +1,4 @@
+# this was the old scorePlaces, replaced by PgaScorePlaces
 class ScorePlaces
   include GamesHelper
 

@@ -20,9 +20,10 @@ Rails.application.routes.draw do
           get :form_teams
           patch :update_teams
           patch :toggle_pays
+          get :change_course
           get :set
           patch :update_players
-
+          
         end
       end
       resource :about, only:[:show]
@@ -37,6 +38,8 @@ Rails.application.routes.draw do
           patch :update_teams
           get :set
           get :print_score_card
+          get :print_score_cardp
+
           # get :print_sc_p
           get :score_cardp
           get :score_card

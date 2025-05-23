@@ -1,12 +1,15 @@
 source "https://rubygems.org"
 
-ruby "3.1.0"
+ruby "3.2.0"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.1.1"
+gem "rails", "~> 8.0.2"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
-gem "sprockets-rails"
+# gem "sprockets-rails"
+
+# The modern asset pipeline for Rails [https://github.com/rails/propshaft]
+gem "propshaft"
 
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
@@ -87,3 +90,5 @@ gem 'redcarpet', '~> 3.5.1'
 
 # gem 'font-awesome-sass', '~> 5.12.0'
 
+
+gem "tailwindcss-ruby", "~> 4.1"

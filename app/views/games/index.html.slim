@@ -5,7 +5,7 @@ div.w-full
     = render partial:"home/home_events"
  
   #games.flex.gap-2
-    table.golfer.w-3/4
+    table.golfer.w-full
       caption
         .grid.grid-cols-5.mb-1
           div
@@ -13,13 +13,14 @@ div.w-full
 
       thead
         tr
-          th Status
+          th.w-16 Status
           th Date
           th Pay
           th Players
           th Teams
           th Makeup
           th Seed
+          th Course
 
           th Actions
       tbody
@@ -42,12 +43,12 @@ div.w-full
             td = game.formed["teams"] if game.formed.present?
             td = game.formed['makeup'] if game.formed.present?
             td = game.formed["seed_method"] if game.formed.present?
-
+            td = game.course if game.formed.present?
             td 
 
-              = link_to icon('fas fa-eye'), game,class:"icon-show"
+              = link_to icon('fas fa-eye'), game,class:"icon bg-blue-600"
               - if can?(:update,:game)
-                = link_to icon('fas fa-edit'),  edit_game_path(game),class:"icon-edit"
-                = button_to(icon('fas fa-trash'),game, method: :delete, form:{data: { turbo_confirm: 'Are you sure?', turbo_method:'delete' }}, form_class:"icon-destroy")
+                = link_to icon('fas fa-edit'),  edit_game_path(game),class:"icon bg-green-600"
+                = button_to(icon('fas fa-trash'),game, method: :delete, form:{data: { turbo_confirm: 'Are you sure?', turbo_method:'delete' }}, form_class:"icon bg-red-600")
     
-    div hi
+    

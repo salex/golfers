@@ -7,9 +7,12 @@ div.w-full
 
   #groups
     - @groups.each do |group|
-      == render group
-      = link_to icon('fas fa-eye',"Show Group"), group,class:"btn-sm-green"
-      = link_to icon('fas fa-edit',"Edit Group"),  edit_group_path(group),class:"btn-sm-green"
+      .flex.gap-4.p-2.font-bold
+        .w-12 = "Id: #{group.id}"
+
+        .w-36 = "Name: #{group.name}"
+        = link_to icon('fas fa-eye',"Show Group"), group,class:"btn-sm-green"
+        = link_to icon('fas fa-edit',"Edit Group"),  edit_group_path(group),class:"btn-sm-green"
 
       hr.border-1.border-blue-500.my-1
 

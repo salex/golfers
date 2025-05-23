@@ -5,61 +5,61 @@
       ul
         - @user.errors.each do |error|
           li = error.full_message
-  .grid.grid-cols-3
+  .flex.gap-10
     div
       - if current_user && current_user.is_admin?
-        = form.label :group_id, style: "display: block"
-        = form.number_field :group_id
+        = form.label :group_id, class: "inline-block w-30 text-right font-bold m-1 mr-4"
+        = form.number_field :group_id,class:'border p-1 m-1'
       - else
         div
-          = form.label :group_id, style: "display: block"
+          = form.label :group_id, class: "inline-block w-30 text-right font-bold m-1 mr-4"
           = form.hidden_field :group_id
           span.p-2 = @user.group_id
 
       div
-        = form.label :fullname, style: "display: block"
-        = form.text_field :fullname
+        = form.label :fullname, class: "inline-block w-30 text-right font-bold m-1 mr-4"
+        = form.text_field :fullname,class:'border p-1 m-1'
 
       div
-        = form.label :username, style: "display: block"
-        = form.text_field :username
+        = form.label :username, class: "inline-block w-30 text-right font-bold m-1 mr-4"
+        = form.text_field :username,class:'border p-1 m-1'
 
       div
-        = form.label :email, style: "display: block"
-        = form.text_field :email
+        = form.label :email, class: "inline-block w-30 text-right font-bold m-1 mr-4"
+        = form.text_field :email,class:'border p-1 m-1'
 
     div
       div
-        = form.label :password, style: "display: block"
-        = form.password_field :password
+        = form.label :password, class: "inline-block w-48 text-right font-bold m-1 mr-4"
+        = form.password_field :password,class:'border p-1 m-1'
 
       div
-        = form.label :password_confirmation, style: "display: block"
-        = form.password_field :password_confirmation
+        = form.label :password_confirmation, class: "inline-block w-48 text-right font-bold m-1 mr-4"
+        = form.password_field :password_confirmation, class:"border p-1 m-1"
 
-      div
-        label Roles
-        div
-          - if true #current_user.is_super?
-            - roles = DefaultPermits.new.roles
-          - else
-            - roles = DefaultPermits.new.roles[1..-1]
-          - roles.each do |role|
-            div
-              = form.radio_button(:role, role, checked:@user.role.include?(role))
-              span.ml-2.font-bold= role.humanize
     div
-      table.classic
-        tr
-          th Model
-          th Value
-        - if @user.permits.present?
-          - @user.permits.each do |k,v|
-            tr
-              td = k
-              td.w-12 = text_field_tag("user[permits][#{k}]",v,class:"w-24")
+      label.font-bold Roles
+      div
+        - if current_user.is_super?
+          - roles = DefaultPermits.new.roles
         - else
-          tr
-            th Default Permit will be added
-  div[class="btn-submit"]
+          - roles = DefaultPermits.new.roles[1..-1]
+        - roles.each do |role|
+          div
+            = form.radio_button(:role, role, checked:@user.role.include?(role))
+            span.ml-2.font-bold= role.humanize
+    / div
+    /   table.classic
+    /     tr
+    /       th Model
+    /       th Value
+    /     - if @user.permits.present?
+    /       - @user.permits.each do |k,v|
+    /         tr
+    /           td = k
+    /           td.w-12 = text_field_tag("user[permits][#{k}]",v,class:"w-24")
+    /     - else
+    /       tr
+    /         th Default Permit will be added
+  div[class= "btn-submit"]
     = form.submit

@@ -35,9 +35,9 @@ div.grid.grid-cols-1.md:grid-cols-2.gap-8.p-4
             td.p-2.text-center = group.games.last.date
             td.p-2
               - if Current.group && Current.group.id == group.id
-                = linkBtn('Leave',leave_group_path(group),meth:'patch',klass:"btn-sm-green py-0")
+                = linkBtn('Leave',leave_group_path(group),meth:'patch',klass:"btn-md bg-lime-darker py-0")
               - else
-                = linkBtn('Visit',visit_group_path(group),meth:'patch',klass:"btn-sm-green py-0")
+                = linkBtn('Visit',visit_group_path(group),meth:'patch',klass:"btn-md bg-lime-darker w-24 text-center py-0")
   div
     strong.fs2 Welcome to PointGolf (PtGolf.us)
     p.mb-2 A Web tool for managing quotas for your golf groups Low Ball or Dog Fight games.

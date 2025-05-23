@@ -61,6 +61,11 @@ class RoundsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_round
       @round = Round.find(params[:id])
+      group = @round.game.group
+      cant_do_that(' - Round not a Group Game round') unless Current.group == group
+
+      # puts "GROUP #{Current.group == group}"
+
     end
 
     # Only allow a list of trusted parameters through.

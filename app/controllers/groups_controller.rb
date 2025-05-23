@@ -1,7 +1,7 @@
 class GroupsController < ApplicationController
   before_action :require_group, except: %i[visit]
 
-  before_action :require_super, only: %i[index new create]
+  before_action :require_super, only: %i[ new create]
   before_action :require_admin, only: %i[edit update expired_players]
   before_action :require_member, except: %i[show visit leave stats stats_refresh]
 
@@ -82,7 +82,7 @@ class GroupsController < ApplicationController
   end
   
   def visit
-    if is_super?
+    if is_manager?
       @group = Group.find(params[:id])
       session[:group_id] = @group.id
       Current.group = @group

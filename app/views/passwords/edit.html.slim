@@ -20,16 +20,18 @@ hr.border-1.border-blue-500.my-1
      
         div
           div
-            = form.label :password_challenge, style: "display: block"
-            = form.password_field :password_challenge
+            / = form.label :password_challenge, style: "display: block"
+
+            = form.label :current_password, style: "display: block"
+            = form.password_field :password_challenge, class:"border"
 
           div
-            = form.label :password, style: "display: block"
-            = form.password_field :password
+            = form.label :new_password, style: "display: block"
+            = form.password_field :password, class:"border"
 
           div
             = form.label :password_confirmation, style: "display: block"
-            = form.password_field :password_confirmation
+            = form.password_field :password_confirmation, class:"border"
 
   div.mt-4 
     div[class="btn-submit"]

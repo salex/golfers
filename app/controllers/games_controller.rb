@@ -63,7 +63,8 @@ class GamesController < ApplicationController
   end
 
   def new_today
-    @game = current_group.games.build(date:Date.today,method:current_group.pay,status:'Scheduled')
+    @game = current_group.games.build(date:Date.today,method:current_group.pay,
+      status:'Scheduled',course:current_group.default_course)
     respond_to do |format|
       if @game.save
         format.html { redirect_to @game.namespace_url, notice: 'Game for today was successfully created' }

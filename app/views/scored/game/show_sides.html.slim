@@ -43,9 +43,9 @@
           thead
             tr
               th[colspan="4" ] = "Team - #{tm} Q(T/S/H): #{team_stats[:quota]}/#{team_stats[:side_quota]}/#{hole}"
-              th class="#{win[:front].include?(tm) ? 'bg-lime-200' : ''}" = "#{team_stats[:front_net]} (#{team_stats[:front_pm]})"
-              th class="#{win[:back].include?(tm) ? 'bg-lime-200' : ''}" = "#{team_stats[:back_net]} (#{team_stats[:back_pm]})"
-              th class="#{win[:total].include?(tm) ? 'bg-lime-200' : ''}" = "#{team_stats[:total_net]} (#{team_stats[:total_pm]})"
+              th class="#{win[:front].include?(tm) ? 'bg-lime-300' : ''}" = "#{team_stats[:front_net]} (#{team_stats[:front_pm]})"
+              th class="#{win[:back].include?(tm) ? 'bg-lime-300' : ''}" = "#{team_stats[:back_net]} (#{team_stats[:back_pm]})"
+              th class="#{win[:total].include?(tm) ? 'bg-lime-300' : ''}" = "#{team_stats[:total_net]} (#{team_stats[:total_pm]})"
           tbody
             tr
               th.w-56 Name
@@ -66,7 +66,7 @@
                 td= pulled(mate[:back],mate[:back_net],sideq,mate[:limited])
                 td= pulled(mate[:total],mate[:total_net],mate[:quota],mate[:limited]) 
             - if !team_stats[:team_quality].zero?
-              th.bg-lime-200 colspan="7" 
+              th.bg-lime-300 colspan="7" 
                 = "Team won $#{to_nickels(team_stats[:team_quality],true)}, Each Team Mate $#{to_quarters(team_stats[:mate_quality],true)} "
 
 hr.underline

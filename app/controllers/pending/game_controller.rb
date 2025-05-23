@@ -13,6 +13,10 @@ class Pending::GameController < ApplicationController
   def print_score_card
     @teams = @game.scorecard_teams
   end
+  def print_score_cardp
+    @teams = @game.scorecard_teams
+  end
+
 
   def score_card
     if @game.formed['makeup'] == "individuals" || @game.formed['seed_method'] == 'blind_draw'

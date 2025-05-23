@@ -26,9 +26,8 @@ div.m-1
     tbody
       - @players.each do |player|
         tr
-          td
-            => player.name
-            =link_to(icon('fas fa-eye'),player,class:'text-blue-800 hover:text-green-600 font-bold float-right')
+          td = player.name
+            / =link_to(icon('fas fa-eye'),player,class:'text-blue-800 hover:text-green-600 font-bold float-right')
             / = link_to "show",player, class:'text-blue-800 hover:text-green-600 font-bold'
           td.hidden.md:table-cell= player.first_name
           td.hidden.md:table-cell= player.last_name
@@ -38,10 +37,9 @@ div.m-1
           td = player.rquota
           td = player.last_played
           td = player.is_frozen
-          - if current_user && current_user.is_trustee?
-            td 
-              span.icon-show = link_to(icon('fas fa-eye'),player)
-              span.icon-edit = link_to(icon('fas fa-edit'),edit_player_path(player))
-              span = button_to(icon('fas fa-trash'),player, method: :delete, form:{data: { turbo_confirm: 'Are you sure?', turbo_method:'delete' }}, form_class:"icon-destroy")
-
-  
+          td
+            = link_to icon('fas fa-eye'), player,class:"icon bg-blue-600"
+            - if can?(:update,:player)
+              = link_to icon('fas fa-edit'),  edit_player_path(player),class:"icon bg-green-600"
+              = button_to(icon('fas fa-trash'),player, method: :delete, form:{data: { turbo_confirm: 'Are you sure?', turbo_method:'delete' }}, form_class:"icon bg-red-600")
+          

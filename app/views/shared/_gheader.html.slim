@@ -16,6 +16,9 @@ div.flex.flex-wrap.border.border-slate-400.p-1.my-1
   div
     strong.ml-3 Teams:
     - teams = @game.state[:teams].size
+    / compensate for teams set to 1 in set player teams
+    - if teams == 1
+      - teams = rounds
     =< teams
 
   div

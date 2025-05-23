@@ -2,6 +2,7 @@ class Scheduled::GameController < ApplicationController
   before_action :set_game
 
   def show
+
   end
 
   def update_players
@@ -35,18 +36,23 @@ class Scheduled::GameController < ApplicationController
     # redirect_to @game.namespace_url, notice: 'Game pay method changed'
   end
 
+  def change_course
+    if params[:course].present?
+      params.permit!
+      @game.course = params[:course]
+      @game.save
+      redirect_to    scheduled_game_path(@game), notice:"Game Course changed to #{params[:course]}"
+    else
+      redirect_to    scheduled_game_path(@game), alert:"Can't change Course to #{params[:course]}"
+    end
+  end
+
   def form_teams
     # gets the form teams form
     @game = current_group.games.find(params[:id])
     @game.set_state if @game.present?
-
     @teams = ScheduledGame::TeamOptions.new(@game.state[:players])
   end
-
-  # def update_teams
-  #   redirect_to root_path,notice: "update teams called created." 
-
-  # end
 
   def update_teams
     # responds to update teams form
@@ -62,6 +68,7 @@ class Scheduled::GameController < ApplicationController
   private
 
   def set_game
+
     @game = current_group && current_group.games.find_by(id:params[:id])
     if @game.blank?
       cant_do_that(' - Scheduled game not found') 

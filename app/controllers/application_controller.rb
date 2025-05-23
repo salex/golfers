@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
   helper_method :can?
 
   def is_manager?
-    current_user && current_user.is_trustee? # && current_user.group_id == current_group.id
+    current_user && current_user.is_manager? # && current_user.group_id == current_group.id
   end
   helper_method :is_manager?
 

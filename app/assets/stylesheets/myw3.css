@@ -1,3 +1,12 @@
+.btn-sqr-blue{
+  background-color: #273862;
+  color: white;
+}
+
+.btn-sqr-blue:hover{
+    background-color: #4766b2;
+}
+
 table.classic {
   border-collapse: collapse;
 }
@@ -53,7 +62,9 @@ table.golfer th {
 .w3-card-4,.w3-hover-shadow:hover{box-shadow:0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19)}
 .w3-dropdown-click,.w3-dropdown-hover{position:relative;display:inline-block;cursor:pointer}
 .w3-dropdown-content{cursor:auto;color:#000;background-color:#fff;display:none;position:absolute;min-width:160px;margin:0;padding:0;z-index:1}
-.w3-dropdown-hover:first-child,.w3-dropdown-click:hover{background-color:background-color: transparent;color:#000}
+/*.w3-dropdown-hover:first-child,.w3-dropdown-click:hover{background-color:background-color; transparent;color:#000;}*/
+.w3-dropdown-hover:first-child,.w3-dropdown-click:hover{background-color:#fff;color:#000}
+
 .w3-dropdown-hover:hover .w3-dropdown-content{display:block}
 .w3-dropdown-hover:hover > .w3-button:first-child,.w3-dropdown-click:hover > .w3-button:first-child{background-color:#ccc;color:#000}
 .w3-sidebar{height:100%;width:200px;background-color:#fff;position:fixed!important;z-index:1;overflow:auto}
@@ -85,13 +96,18 @@ table.golfer th {
    bottom: 0;
    z-index: 2;
 }
-.btn-sqr-blue{
-  background-color: #273862;
-  color: white;
+.green-btn {
+    background-color: #16A34A;
+    color: #fff;
+    padding:6px 16px;
+    margin-bottom: 2px;
 }
-.btn-sqr-blue:hover{
-    background-color: #4766b2;
+
+.green-btn:hover {
+   color: #000;
+   background-color: #bbb;
 }
+
 
 .small-caps {
    font-variant: small-caps;
@@ -147,6 +163,16 @@ table.golfer th {
    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2), 0 4px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+.bg-warn{ background-color:#ffa500}
+.bg-malt{ background-color:#991A1E}
+.bg-gold{ background-color:#A79055}
+.bg-dark-blue{ background-color:#0F3E61}
+.bg-pt-blue-d{ background-color:#273862}
+.bg-pt-blue-l{ background-color:#4766b2}
+
+
+
+/* used in about pages */
 .lime-btn {
   background-color: #4CCF70 ;
   padding: 6px 8px;
@@ -169,6 +195,23 @@ table.golfer th {
    width: 3.4%;
 }
 
+.w10p{
+   width: 15.0%;
+}
+
+.w-265p {
+  width: 2.66%
+}
+.w-11in{
+  width: 11in;
+}
+.w-8in{
+  width:8.5in;
+}
+.w-375p {
+  width: 3.75%;
+}
+
 input:disabled,
 textarea:disabled,
 select:disabled {
@@ -187,12 +230,6 @@ dd{
 }
 
 
-/*p.slim {
- text-indent:1rem;
- line-height: 1.0rem;
-
-}
-*/
 
 .strong{
   font-weight: bold;
@@ -219,162 +256,4 @@ ul, ul.slim, ul.classic {
    padding-left: 1rem;
    margin-left:  1rem;
 }
-
-/*.gbtn {
-    background-color: #a79055;
-    color: #fff;
-    padding:6px 16px;
-    margin-bottom: 2px;
-}
-
-.gbtn:hover {
-   color: #000;
-   background-color: #b79055;
-}
-
-.bbtn {
-  background-color:rgba(96, 185, 250);
-  color: #000;
-  padding:6px 16px;
-  margin-bottom: 2px;
-}
-
-.bbtn:hover {
-  color: #fff;
-  background-color:rgba(96, 165, 250)
-}
-
-.wbtn {
-  background-color:rgba(255, 185, 0);
-  color: #000;
-  padding:6px 16px;
-  margin-bottom: 2px;
-}
-
-.wbtn:hover {
-  color: #fff;
-  background-color:rgba(255, 165, 0);
-}
-*/
-
-/*.row-box-18 .row-box {
-  height: 1.5rem;
-  font-weight: 200;
-  margin: 0;
-  padding: 0;
-  border-left: solid 1px #aaddaa;
-  border-top: solid 1px #aaddaa;
-  display: inline-block;
-  background-color: white;
-  line-height: 1.5rem;
-  font-size: 0.9rem;
-}
-
-.row-box-18 .row-box.lbl {
-  background-color: #e7ffe7;
-  font-weight: 500;
-}
-
-.row-box-18 .row-box span {
-  width: 2rem;
-  height: inherit;
-  text-align: center;
-  border-right: solid 1px #aaddaa;
-  border-bottom: solid 1px #aaddaa;
-  display: inline-block;
-  overflow: hidden;
-}
-
-.row-box-18 .row-box span.lbl {
-  background-color: #e7ffe7;
-  font-weight: 500;
-}
-
-.row-box-18 .row-box span.err {
-  color: red;
-}
-
-.row-box-18 .row-box span.cut {
-  color: red;
-  background-color: #ffe6e6;
-  font-weight: 700;
-}
-
-.row-box-18 .row-box span.good, .row-box-18 .row-box span.birdie {
-  color: green;
-  background-color: #b3ffb3;
-  font-weight: 700;
-}
-
-.row-box-18 .row-box span.eagle {
-  color: #00f;
-  background-color: #b3b3ff;
-  font-weight: 700;
-}
-
-.row-box-18 .row-box span.albatros {
-  color: yellow;
-  background-color: #999900;
-  font-weight: 700;
-}
-
-.row-box-18 .row-box span.title {
-  width: 4rem;
-  font-weight: 700;
-}
-*/
-/*.btn-sqr-blue{
-  background-color: #273862;
-  color: white;
-  display: inline-block;
-
-}
-.btn-sqr-blue:hover{
-  background-color: #4766b2;
-
-}
-*/
-/*.select {
-  min-width: 3ch;
-  max-width: 30ch;
-  border: 1px solid green;
-  border-radius: 0.25em;
-  padding: 0.25em 0.5em;
-  font-size: 1.1rem;
-  cursor: pointer;
-  -webkit-appearance: menulist;
-  line-height: 1.1;
-  background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
-}
-.select::after {
-  content: "";
-  width: 0.8em;
-  height: 0.5em;
-  background-color: var(--select-arrow);
-  clip-path: polygon(100% 0%, 0 0%, 50% 100%);
-}
-*/
-/* for now, all select uses webkit style */
-
-/*.select select, select {
-  -webkit-appearance: menulist;
-  background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
-
-}
-*/
-/*select :disabled {
-  opacity: 0.;
-  cursor: not-allowed;
-}
-*/
-
-/*.w3-animate-bottom{position:relative;animation:animatebottom 0.4s}@keyframes animatebottom{from{bottom:-300px;opacity:0} to{bottom:0;opacity:1}}
-.w3-animate-fading{animation:fading 10s infinite}@keyframes fading{0%{opacity:0}50%{opacity:1}100%{opacity:0}}
-.w3-animate-input{transition:width 0.4s ease-in-out}.w3-animate-input:focus{width:100%!important}
-.w3-animate-left{position:relative;animation:animateleft 0.4s}@keyframes animateleft{from{left:-300px;opacity:0} to{left:0;opacity:1}}
-.w3-animate-opacity{animation:opac 0.8s}@keyframes opac{from{opacity:0} to{opacity:1}}
-.w3-animate-top{position:relative;animation:animatetop 0.4s}@keyframes animatetop{from{top:-300px;opacity:0} to{top:0;opacity:1}}
-.w3-animate-zoom {animation:animatezoom 0.6s}@keyframes animatezoom{from{transform:scale(0)} to{transform:scale(1)}}
-*/
-
 

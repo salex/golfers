@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   # GET /users or /users.json
   def index
     if current_user.is_super?
-      @users = User.all
+      @users = User.all.order(:fullname)
     else
       @users = current_group.users.where.not(role:'super')
     end
