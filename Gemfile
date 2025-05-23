@@ -92,3 +92,5 @@ gem 'redcarpet', '~> 3.5.1'
 
 
 gem "tailwindcss-ruby", "~> 4.1"
+gem "nokogiri", force_ruby_platform: true
+
