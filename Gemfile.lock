@@ -149,6 +149,7 @@ GEM
     marcel (1.0.4)
     matrix (0.4.2)
     mini_mime (1.1.5)
+    mini_portile2 (2.8.9)
     minitest (5.25.5)
     net-imap (0.5.8)
       date
@@ -165,6 +166,9 @@ GEM
       net-protocol
     net-ssh (7.3.0)
     nio4r (2.7.4)
+    nokogiri (1.18.8)
+      mini_portile2 (~> 2.8.2)
+      racc (~> 1.4)
     nokogiri (1.18.8-aarch64-linux-gnu)
       racc (~> 1.4)
     nokogiri (1.18.8-arm64-darwin)
@@ -274,6 +278,7 @@ GEM
     tailwindcss-rails (4.2.3)
       railties (>= 7.0.0)
       tailwindcss-ruby (~> 4.0)
+    tailwindcss-ruby (4.1.7)
     tailwindcss-ruby (4.1.7-aarch64-linux-gnu)
     tailwindcss-ruby (4.1.7-arm64-darwin)
     tailwindcss-ruby (4.1.7-x86_64-linux-gnu)
@@ -308,6 +313,7 @@ PLATFORMS
   aarch64-linux
   arm64-darwin-20
   arm64-darwin-23
+  ruby
   x86_64-linux
 
 DEPENDENCIES
