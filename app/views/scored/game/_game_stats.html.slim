@@ -1,8 +1,8 @@
 / div.font-bold.text-lg Skins/Birdies
 
 div.flex.flex-wrap.gap-8
-  div.border.p-1
-    - if @game.has_skins?
+  - if @game.has_skins?
+    div.border.p-1
       div.font-bold.text-lg.bg-lime-300.text-center.mb-1 Birdies/Skins
  
       - skins = Skins.new(@game)
@@ -68,8 +68,9 @@ div.flex.flex-wrap.gap-8
               td = k
               td = a[2]
               td = a[1]
-  div.border.p-1
-    - if @game.has_par3?
+  - if @game.has_par3?
+    div.border.p-1
+
       - par3 = Par3.new(@game)
       div.font-bold.text-lg.text-center.bg-lime-300 Par3s
 

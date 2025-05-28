@@ -18,19 +18,18 @@ hr.border-1.border-blue-500.my-1
   .grid.grid-cols-3
     div
       div
-        = form.label :fullname, style: "display: block"
-        = form.text_field :fullname
+        = form.label :fullname, class: "inline-block w-30 text-right font-bold m-1 mr-4"
+        = form.text_field :fullname,class:'border p-1 m-1'
 
       div
-        = form.label :username, style: "display: block"
-        = form.text_field :username
+        = form.label :username, class: "inline-block w-30 text-right font-bold m-1 mr-4"
+        = form.text_field :username,class:'border p-1 m-1'
 
       div
-        = form.label :email, style: "display: block"
-        = form.text_field :email
+        = form.label :email, class: "inline-block w-30 text-right font-bold m-1 mr-4"
+        = form.text_field :email,class:'border p-1 m-1'
 
   div.mt-4 
     div[class="btn-submit"]
       = form.submit
-    / span[class="btn-submit rounded border-2"] = form.submit( "Change Contact")
 

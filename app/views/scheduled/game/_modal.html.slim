@@ -19,20 +19,17 @@
           |RQ
 
         th Tee
-        / th[data-stype="N" data-action="click->sortTable#sortBy"]
-        /   i.fas.fa-sort.noprint
-        /   |TM
 
     -  @game.current_players_name.each do |p|
       tr
         <!-- [data-scheduler-target="players"] -->
         td = check_box_tag "deleted[]", value=p.id,nil,data:{action:'scheduler#update_player'}
-        td = p.player.name
+        td = p.player.name[0..13]
         td = p.player.rquota_limited
         td.bg-green-100.select = select_tag 'tee[]', tee_options(@game.group,p,true), class:"border border-green-500 select",data:{action:'scheduler#update_player'}
-        / td = p.team
-  div.italic Instuctions: If you check a Del checkbox or change a tee, the update button will appear. You can delete the player or change the tee by clicking the update button.
 
-  / = f.submit('Update Game', id:'commit',data:{schedule_target:'submit'},style:'display:none;')
+  div.italic
+    span.font-bold Instructions: 
+    span If you check a Del checkbox or change a tee, the 'Form Teams' button will be replaced by a 'Update Current Players' button. You can then delete a player or change their tee by clicking the Update Current Players button.
   #new_players
 

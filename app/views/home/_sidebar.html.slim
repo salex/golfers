@@ -2,8 +2,9 @@
   div[class="#{sidebar_menu}"] = link_to "Signup/Score Sheet", "score_sheet", target:"_blank"
   div[class="#{sidebar_menu}"] = link_to "Pay Places Payouts", "payouts"
   div[class="#{sidebar_menu} w3-dropdown-hover w-full text-center"]
-    div[class=""] =icon('fa fa-caret-down'," New Signup/Score Sheet")
-    div.w3-dropdown-content.w-full.text-center
+    div = icon('fa fa-caret-down'," New Signup/Score Sheet")
+    / [class="" onclick="myFunction()"]
+    div[id="demo" class="w3-dropdown-content w-full text-center"]
       div.my-1.bg-amber-400.hover:bg-amber-200 = link_to "Score Sheet 2 Columns", "new_score_sheet", class: ""
       div.my-1.bg-amber-400.hover:bg-amber-200 = link_to "Score Sheet 3 Columns", "new_score_sheet?col=3", class: ""
 
@@ -40,4 +41,13 @@
    - appdir = Rails.root.join("app")
    .annotate = "Updated: #{File.mtime(appdir)}"
    .annotate test reload
+/ javascript:
+/   function myFunction() {
+/    var x = document.getElementById("Demo");
+/    if (x.className.indexOf("w3-show") == -1) { 
+/      x.className += " w3-show";
+/    } else {
+/      x.className = x.className.replace(" w3-show", "");
+/    }
+/   }
 

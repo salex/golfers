@@ -11,16 +11,15 @@
 
     div
       = form.label 'Title: ', style: "display: inlineblock;font-weight:bold;"
-      = form.text_field :title, style:'width:30vw;'
+      = form.text_field :title, style:'width:30vw;',class:'border border-zinc-500'
     div = link_to 'Back to articles', articles_path, class: "ml-2 btn-sm-green rounded-lg py-2 px-4 inline-block font-medium"
 
   
   .w3-container[ style="max-height: 90vh;"]
-    h3 Post Content
+    h3.font-bold Post Content
     .grid.md:grid-cols-2.gap-2
       div.marked-buttons
-        = select_tag('headers',options_for_select(%w{h1 h2 h3 h4 h5 h6},nil),
-        include_blank:'Headers', data:{action:"change->marked#header"}, class:'py-0 mr-1 text-white bg-bbtn')
+        = select_tag('headers',options_for_select(%w{h1 h2 h3 h4 h5 h6},nil),include_blank:'Headers', data:{action:"change->marked#header"}, class:' mr-1 bg-blue-800 font-bold text-white',style:'padding:2px;')
         = tag.div('B', data:{action:"click->marked#bold"}, title:"Bold: Insert **** or surround selected text between **text**")
         = tag.div('I', data:{action:"click->marked#italic"})
         = tag.div('BI', data:{action:"click->marked#italicBold"})
@@ -39,9 +38,9 @@
         = tag.div('FC', data:{action:"click->marked#fencedCode"})
         = tag.div('LK', data:{action:"click->marked#anchor"})
         = tag.div('IM', data:{action:"click->marked#image"})
-        = form.text_area(:content, data:{action:"input->marked#convertToMarkdown change->marked#convertToMarkdown",marked_target:"markup"},style:'width:100%;height:50vh;')
+        = form.text_area(:content, data:{action:"input->marked#convertToMarkdown change->marked#convertToMarkdown",marked_target:"markup"},style:'width:100%;height:50vh;',class:'border border-zinc-500 mt-1')
       div
-        strong Rendered Markdown
+        strong.mb-1 Rendered Markdown
         / trap new article, won't have content and slim undefined
         - if @article.content && @article.content.include?('.slim')
           - slim = markdown_text(@article.content)

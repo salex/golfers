@@ -246,7 +246,7 @@ GEM
     rexml (3.4.1)
     rubyzip (2.4.1)
     securerandom (0.4.1)
-    selenium-webdriver (4.32.0)
+    selenium-webdriver (4.33.0)
       base64 (~> 0.2)
       logger (~> 1.4)
       rexml (~> 3.2, >= 3.2.5)
@@ -295,7 +295,7 @@ GEM
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
     websocket (1.2.11)
-    websocket-driver (0.7.7)
+    websocket-driver (0.8.0)
       base64
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -305,6 +305,7 @@ GEM
 
 PLATFORMS
   aarch64-linux
+  arm64-darwin
   arm64-darwin-20
   arm64-darwin-23
   ruby

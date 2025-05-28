@@ -2,16 +2,11 @@
 - links << link_to(icon('fas fa-list', 'List Notices'),  notices_path, class: 'btn btn-success mr-2')
 -  if is_manager?
   - links << link_to( icon('fas fa-edit','Edit Notice'), edit_notice_path(@notice), title: 'Edit it', class: 'btn btn-icon btn-warning mr-2')
-  / - links << destroyTag(@notice,prompt: icon("fas fa-trash","Destroy Notice"))
-/ = render partial:'shared/dashboard', locals:{name:"Show Notice",links:links}
 div.w-full
   h1.font-bold.text-2xl Showing Notice
 
   div.flex.gap-8
     - if current_user.present?
-      / - if current_user.is_admin?
-      /   / = link_to icon('fas fa-edit',"List Courses"), course_path, class:"btn-sm-green"
-
       - if current_user.is_super?
         = link_to icon('fas fa-edit',"Edit Notice"), edit_notice_path(@notice), class:"btn-sm-green"
         = link_to icon('fas fa-list',"List Notices"), notices_path, class:"btn-sm-green"

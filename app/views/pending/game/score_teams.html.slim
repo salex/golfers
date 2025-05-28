@@ -3,9 +3,6 @@
 
 - links << link_to(icon('fas fa-arrow-left', 'Cancel - Show Game'),  @game.namespace_url, class: 'btn-warn')
 
-/ == render partial:'shared/dashboard', locals:{name:"Score Teams",links:links}
-
-/ = render partial:'games/shared/event'
 = form_with(url:update_scores_pending_game_path(@game), method: :patch, data: { type: "html"} )do |f|
   div.md:grid.md:grid-cols-12.m-2.gap-4
     div.md:col-span-3

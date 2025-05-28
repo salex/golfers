@@ -16,7 +16,9 @@ module ApplicationHelper
 
   def markdown_text(text)
     if text.include?(".slim")
-      render inline:text, type: :slim
+      slim_text(text)
+      # render inline:text, type: :slim
+      # puts " I GOT SLIME TEXT AND REDEERE IT"
     else
       options = {
         :autolink => true,

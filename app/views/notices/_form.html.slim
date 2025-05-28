@@ -14,17 +14,17 @@
     = f.hidden_field :stashable_id
     div.flex.gap-8
       .field
-        = f.label "Date", style: "display: block"
-        = f.date_field :date
+        = f.label "Date", style: "display: block",class:'font-bold'
+        = f.date_field :date,class:"border"
       .field
-        = f.label :NoticeType, style: "display: block"
+        = f.label :NoticeType, style: "display: block",class:'font-bold'
         = f.select :status, %w{alert warning success info},include_blank:true,selected:"#{@notice.status.present? ? @notice.status : 'info'}"
       .field
-        = f.label 'Expires', style: "display: block"
-        = f.date_field :due_date
+        = f.label 'Expires', style: "display: block",class:'font-bold'
+        = f.date_field :due_date,class:"border"
     .field
-      = f.label :Slim, style: "display: block"
-      = f.text_area :slim, rows:15, cols:60
+      = f.label :Slim, style: "display: block",class:'font-bold'
+      = f.text_area :slim, rows:20, cols:60,class:"border"
 
 
 

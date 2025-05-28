@@ -35,11 +35,6 @@ div.flex.gap-2.bg-green-200.-mx-2.p-1.border-2.border-green-400
           = link_to "Print Scorecard Landscape", @game.pending_url('print_score_card'), class:"block btn-sqr-blue mb-1 p-1 " 
           = link_to "Print Scorecard Portrait", @game.pending_url('print_score_cardp')+"?rows=3", class:"block btn-sqr-blue mb-1 p-1 " 
 
-          / = link_to "ScoreCard Landscape",@game.pending_url('score_card') , class:"block btn-sqr-blue mb-1 p-1", target:"_blank"
-          / = link_to "ScoreCard Portrait", @game.pending_url('score_cardp'), class:"block btn-sqr-blue mb-1 p-1", target:"_blank"
-
-
-
   div.flex-shrink.text-green-800.p-0.font-bold.mr-3.hover:text-2xl = link_to icon('fas fa-arrow-left'), 'javascript:history.back()'
 div.flex
   - if current_user  && can?(:update,:game) # current_user.is_trustee?
@@ -66,7 +61,6 @@ div.flex
         - side_quota = stats[:side_quota]
 
         table.golfer.w-full.mb-2
-          / caption.noprint = link_to "Score Team", score_teams_games_pending_path(@game,team:tm), class:'blue-link' if current_user.is_trustee? && !@game.state[:indiv_teams] && !zero_team
           thead
             tr
               th[colspan="5" ] = "Team - #{tm} Q(T/S/H): #{stats[:quota]}/#{stats[:side_quota]}/#{hole}"
@@ -82,7 +76,6 @@ div.flex
                   td= mate.player_name
                   td= mate.tee
                   td= mate.quota_limited 
-                  / ? stats.limits.quota_astrick(mate[:quota]) : mate[:quota].to_s 
                   td= mate.quota / 2.0
                   td
                     = check_box_tag( '',nil, (!mate.total.nil?))  

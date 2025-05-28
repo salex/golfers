@@ -156,6 +156,4 @@ class AboutsController < ApplicationController
 
   end
 
-
-
 end

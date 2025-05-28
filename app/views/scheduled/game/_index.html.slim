@@ -12,7 +12,7 @@ div[class="-mx-2"]
         span.font-bold Select Course 
         - course = current_group.default_course
 
-        = select_tag 'stats[course]', options_for_select(current_group.group_courses.keys,@game.course || "Home"),class: "px-2 py-1 m-1 rounded-md bg-green-400  text-black font-bold ",data: { action: "change->selecter#getValue",selecter_target:'tag'}
+        = select_tag 'stats[course]', options_for_select(current_group.group_courses.keys,@game.course || "Home"),class: "px-2 py-1 m-1 rounded-md bg-blue-400  text-black font-bold ",data: { action: "change->selecter#getValue",selecter_target:'tag'}
 
     div.flex-shrink.text-green-800.p-0.font-bold.mr-3.hover:text-2xl = link_to icon('fas fa-arrow-left'), 'javascript:history.back()'
 div.m-1 
@@ -20,7 +20,7 @@ div.m-1
     = link_to('Form Teams',form_teams_scheduled_game_path(@game),
       data: {scheduler_target:"formbtn", turbo_frame: "_top" }, 
       class:"btn btn-submit inline-block text-center ") if can?(:update,:game)
-  = link_to icon('fas fa-arrows-alt-h', 'Add Player(s)'),@game.scheduled_url(:set), class: 'inline-block btn-cancel font-bold w-80' if can?(:update,:game)
+  = link_to icon('fas fa-arrows-alt-h', 'Add/Edit Player(s)'),@game.scheduled_url(:set), class: 'inline-block btn-cancel font-bold w-80' if can?(:update,:game)
   / span There are no new players scheduled.
 
 

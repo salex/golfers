@@ -1,10 +1,3 @@
-/ - name = @game.status == 'Scheduled' ? "Form Teams" : "Reform Teams"
-/ - links = []
-/ - links << link_to(icon('fas fa-arrow-left', 'Cancel - List Games'),  games_path, class: 'btn-warn')
-/ - links << link_to( icon('fas fa-arrow-left', 'Cancel - Show Game'),  @game.namespace_url,class: 'btn-warn ')
-/ - if is_manager? && @game.state[:can_delete]
-/   - links << destroyTag(game_path(@game),prompt:icon('fas fa-trash',"Destroy Incomplete Game"))
-/ = render partial:'shared/dashboard', locals:{name: name,links:links}
 div[class="-mx-2"]
   div.md:flex.gap-2.border-bottom.bg-lime.p-1
     div.ml-2

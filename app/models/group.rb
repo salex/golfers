@@ -187,13 +187,14 @@ class Group < ApplicationRecord
   end
 
   def group_color
-    c = %w{green red blue orange purple}[self.id % 5]
+    c = %w{green red blue purple orange}[self.id % 5]
+    puts "GC = #{c} #{self.id}"
     "bg-#{c}-500"
   end
 
   def auto_search(params)
     # for stimulus-autocomple used in playerSearch controller
-    puts "AUTOSEARCH #{params}"
+    # puts "AUTOSEARCH #{params}"
     k = params.keys.first
     n = params[k]
     t = Player.arel_table

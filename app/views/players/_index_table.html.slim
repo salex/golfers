@@ -27,8 +27,6 @@ div.m-1
       - @players.each do |player|
         tr
           td = player.name
-            / =link_to(icon('fas fa-eye'),player,class:'text-blue-800 hover:text-green-600 font-bold float-right')
-            / = link_to "show",player, class:'text-blue-800 hover:text-green-600 font-bold'
           td.hidden.md:table-cell= player.first_name
           td.hidden.md:table-cell= player.last_name
           td.hidden.md:table-cell = player.use_nickname
