@@ -14,17 +14,12 @@
     = link_to icon('fas fa-pencil-alt', 'ReScore Teams'), @game.pending_url('score_teams'),
       class: "btn-warn"
 
-    / - if is_manager? && @game.state.present? && @game.state[:can_delete]
-    /   - links << destroyTag(game_path(@game),prompt: icon('fas fa-trash','Delete Incomplete Game'))
-
-  / = link_to icon('fas fa-arrow-left', 'Back'), 'javascript:history.back()', class: 'btn btn-secondary float-right'
   div.flex-shrink.text-green-800.p-0.font-bold.mr-3.hover:text-2xl.float-right = link_to icon('fas fa-arrow-left'), 'javascript:history.back()'
 
 = render partial:"shared/gheader"
 
 
 .flex.flex-wrap
-  / 1=>{"quota"=>77, "side_quota"=>38.5, "front_net"=>42.0, "back_net"=>32.0, "total_net"=>74, "front_pm"=>3.5, "back_pm"=>-6.5, "total_pm"=>-3, "mates"=>[15271, 15265, 15264], "team_quality"=>36.0, "mate_quality"=>12.0}
   - team_keys  = teams.keys
   - map = col_map_array(team_keys,2)
   - map.each do |col|

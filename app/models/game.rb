@@ -12,10 +12,6 @@ class Game < ApplicationRecord
 
   attribute :state 
 
-  def pay_methods
-    [["sides",1],["places",2]]
-  end
-
   def game_group
     Current.group || group
   end

@@ -1,7 +1,3 @@
-- links = []
-- links << link_to(icon('fas fa-arrow-left', 'Cancel - List Games'),  games_path, class: 'btn-send')
-
-- links << link_to(icon('fas fa-arrow-left', 'Cancel - Show Game'),  @game.namespace_url, class: 'btn-warn')
 
 = form_with(url:update_scores_pending_game_path(@game), method: :patch, data: { type: "html"} )do |f|
   div.md:grid.md:grid-cols-12.m-2.gap-4
@@ -70,7 +66,6 @@
               tr[data-controller="scoreMate"]
                 td
                   = mate.full_name
-                  / = hidden_field_tag('jsteam',i,data:{scoreMate_target:"jsTeam"})
                 td= mate.tee
                 - if mate.limited.present?
                   - q = "#{mate.quota}  &#177;#{mate.limited }".html_safe
@@ -84,7 +79,6 @@
                   = hidden_field_tag("participant[#{mate.id}][team]",team)
                 - if select_points
                   - opt = pulled_options(mate.quota)
-                  / p.mb-3 " #{mate.full_name} #{mate.quota} #{mate.front} #{mate.back} #{mate.total}"
                   td= select_tag("participant[#{mate.id}][front]", options_for_select(opt[:side],\
                     mate.front.present? && !mate.front.zero? ? mate.front : 'Select')\
                     , data:{scoreMate_target:"mateFront", scoreTeam_target:"mateFront",action:"change->scoreMate#front change->scoreTeam#compute"},class:" select")

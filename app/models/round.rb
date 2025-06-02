@@ -10,7 +10,9 @@ class Round < ApplicationRecord
   def full_name
     self.player.name
   end
+  # referenced by different attributes!
   alias_method :name, :full_name
+  alias_method :player_name, :full_name
 
   def is_scored?
     self.type == 'ScoredRound'

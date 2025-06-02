@@ -20,7 +20,6 @@
 
   div
     = form.label :method, style: "display: block"
-    / = form.select_field :method,@game.pay_methods
     = form.select(:method, [["Sides","sides"],["Places","places"]])
 
   div[class="btn-submit"]
