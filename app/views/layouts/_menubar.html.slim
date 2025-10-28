@@ -27,14 +27,14 @@ div[class="  flex text-lg  bg-black font-bold text-white" data-controller="toggl
 
 
 
-    div
-      .w-full
-        - flash.each do |name, msg|
-          - if msg.is_a?(String)
-            .flash-box.w3-padding.w3-animate-right[
-              data-controller="flashIt" 
-              data-flashIt-target="flashBox" 
-              class="#{name.to_s == 'notice' ? 'p-1 text-green-500 bg-green-100 px-4' : 'p-1 text-red-500 bg-red-100 px-4'}"
-            ]
-              = content_tag :span, content_tag(:strong,msg)
+  div
+    .w-full
+      - flash.each do |name, msg|
+        - if msg.is_a?(String)
+          .flash-box.w3-padding.w3-animate-right[
+            data-controller="flashIt" 
+            data-flashIt-target="flashBox" 
+            class="#{name.to_s == 'notice' ? 'p-1 text-green-500 bg-green-100 px-4' : 'p-1 text-red-500 bg-red-100 px-4'}"
+          ]
+            = content_tag :span, content_tag(:strong,msg)
 

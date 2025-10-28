@@ -99,49 +99,4 @@ module PlacesHelper
     winners
   end
 
-  # def tt
-  #   4.upto(25) do |p|
-  #     pp = pga_percents(p)
-  #     winners = quarterize(pp,p*6)
-  #     # puts "PP #{p*6} #{pp} #{pp.sum}"
-  #     puts "WINNERS #{winners.sum} #{winners}"
-  #   end
-  # end
-
-
-  # def xxxquarterize(winners,pot)
-  #   # quaterize takes an array of floats (winners) and rounds each element
-  #   # convert pot to a quarters 
-  #   pot = pot * 4
-  #   winners.each_with_index{|w,i| winners[i] = (winners[i] * 4).round}
-  #   # the pot is usually a whole number that was equal to the sum of winners
-  #   # now that elements are rounded, the pot may not equal the sum of winners
-  #   if winners.sum != pot
-  #     # get difference if not equal which may be negative or positive 
-  #     diff = (winners.sum - pot).to_i
-  #     # puts "DIFF #{diff}"
-  #     if diff.negative?
-  #       # sum of winners is short, add shortage to low winners
-  #       (diff*-1).times do |i|
-  #         winners[i] += 1
-  #       end
-  #     else
-  #       # sum of winners is over, subtract shortage from high winners
-  #       (diff).times do |i|
-  #         winners[-i - 1] -= 1
-  #       end
-  #     end
-  #     # the sum of the winners is now eqaul to the pot
-  #     # else
-  #     # else fall through, rounding did not change the sum
-  #     # conver back to dollars
-  #   end
-  #   winners.each_with_index{|w,i| winners[i] = (winners[i] / 4.0)}
-
-  #   # puts winners
-  #   # puts winners.sum
-
-  # end
-
-
 end
