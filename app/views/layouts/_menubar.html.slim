@@ -12,7 +12,7 @@ div[class="  flex text-lg  bg-black font-bold text-white" data-controller="toggl
     div.p-1.px-3.hover:bg-green-600.border-r.border-white = link_to "Group", current_group, class:"" 
     div.p-1.px-3.hover:bg-green-600.border-r.border-white= link_to "Games", games_path, class:"" 
     div.p-1.px-3.hover:bg-green-600.border-r.border-white= link_to "Players", players_path, class:"" 
-    - if current_user.present? && current_user.is_manager?
+    - if current_user.present? && current_user.is_super?
       div.w3-dropdown-hover
         / .z-10.p-1.px-3.hover:bg-green-600.border-r.border-white
         button.p-1.px-3.hover:bg-green-600.border-r.border-white

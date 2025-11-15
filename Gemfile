@@ -1,12 +1,9 @@
 source "https://rubygems.org"
 
-ruby "3.2.0"
+# ruby "3.2.0"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 8.0.2"
-
-# The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
-# gem "sprockets-rails"
+gem "rails", "~> 8.1.0"
 
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
@@ -81,14 +78,8 @@ gem 'activerecord_where_assoc', '~> 1.0'
 gem 'pagy', '~> 8.0' # omit patch digit
 gem 'prawn'
 gem 'prawn-table'
-gem 'exonio'
+# gem 'exonio'
 gem 'redcarpet', '~> 3.5.1'
-
-
-
-
-
-# gem 'font-awesome-sass', '~> 5.12.0'
 
 
 gem "tailwindcss-ruby", "~> 4.1"

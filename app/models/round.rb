@@ -26,10 +26,7 @@ class Round < ApplicationRecord
     self.quota / 2.0
   end
 
-  def total_pm
-    self.total - self.quota if self.total.present?
-  end
-
+  # get plus/minus for each side and total
   def front_pm
     self.front - side_quota if self.front.present?
   end
@@ -38,28 +35,34 @@ class Round < ApplicationRecord
     self.back - side_quota if self.back.present?
   end
 
-  def total_net
-    get_net(total,total_pm) if self.total.present?
+  def total_pm
+    self.total - self.quota if self.total.present?
   end
 
-  def total_net_pm
-    total_net - quota if self.total.present?
-  end
-
+  # get net for each side and total
   def front_net
     get_net(front,front_pm) if self.front.present?
-  end
-
-  def front_net_pm
-    front_net - side_quota if self.front.present?
   end
 
   def back_net
     get_net(back,back_pm) if self.back.present?
   end
+  
+  def total_net
+    get_net(total,total_pm) if self.total.present?
+  end
+
+  # get net plus/minus for each side and total
+  def front_net_pm
+    front_net - side_quota if self.front.present?
+  end
 
   def back_net_pm
     back_net - side_quota if self.back.present?
+  end
+
+  def total_net_pm
+    total_net - quota if self.total.present?
   end
 
   def limited?

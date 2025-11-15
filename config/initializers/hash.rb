@@ -6,6 +6,12 @@ class Hash
   end
 end
 
+Hash.class_eval do
+  def to_struct
+    Struct.new(*keys.map(&:to_sym)).new(*values)
+  end
+end
+
 class String
   def to_b
     return true   if self == true   || self =~ (/(true|t|yes|y|1)$/i)

@@ -10,7 +10,8 @@ lock "~> 3.19.2"
 set :application, "golfers"
 # set :repo_url, "developer@stevealex.us:/Users/developer/repo/#{fetch(:application)}.git"
 set :branch, "main"
-set :repo_url,  "ssh://post@stevealex.us:8611/home/post/repo/golfers.git"
+# set :repo_url,  "ssh://post@stevealex.us:8611/home/post/repo/golfers.git"
+set :repo_url, "git@github.com:salex/golfers.git"
 set :rbenv_type, :user # or :system, depends on your rbenv setup
 set :rbenv_ruby, File.read('.ruby-version').strip
 set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"

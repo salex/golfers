@@ -63,6 +63,10 @@
   .btn-sm-blue{
     @apply py-1 rounded font-bold m-1 px-4 bg-blue-400 hover:opacity-70 inline-block;
   }
+  .btn-sm-orange{
+    @apply py-1 rounded font-bold m-1 px-4 bg-orange-400 hover:opacity-70 inline-block;
+  }
+
 
   .btn-submit {
     @apply rounded-lg font-bold py-2 px-5 bg-blue-600 hover:opacity-70 text-white inline-block cursor-pointer;
