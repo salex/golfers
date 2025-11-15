@@ -176,9 +176,6 @@ GEM
     pagy (8.6.3)
     pdf-core (0.10.0)
     pg (1.6.2)
-    pg (1.6.2-aarch64-linux)
-    pg (1.6.2-arm64-darwin)
-    pg (1.6.2-x86_64-linux)
     pp (0.6.3)
       prettyprint
     prawn (2.5.0)
