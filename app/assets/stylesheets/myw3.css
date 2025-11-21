@@ -1,3 +1,4 @@
+
 .btn-sqr-blue{
   background-color: #273862;
   color: white;
@@ -188,6 +189,21 @@ table.golfer th {
   color:#4CCF70;
 }
 
+.wc-5 {
+  width:12.2rem;
+}
+.wc-4 {
+  width:11.1rem; 
+}
+.wc-3 {
+  width:9.3rem; 
+}
+.wc-2 {
+  width:9.5rem; 
+}
+
+
+
 .w08p {
    width: 10%;
 }
@@ -211,6 +227,7 @@ table.golfer th {
 .w-375p {
   width: 3.75%;
 }
+.
 
 /*input:disabled,
 textarea:disabled,

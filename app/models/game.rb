@@ -4,6 +4,8 @@ class Game < ApplicationRecord
   has_many :scored_rounds
   has_many :rounds, dependent: :destroy
   has_many :players, through: :rounds
+  alias_attribute :stats, :formed
+
   serialize :formed, coder: JSON
   serialize :par3, coder: JSON
   serialize :skins, coder: JSON
@@ -11,6 +13,10 @@ class Game < ApplicationRecord
   before_save :set_player_teams
 
   attribute :state 
+
+  # def stats
+  #   self.formed
+  # end
 
   def game_group
     Current.group || group

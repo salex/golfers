@@ -27,8 +27,8 @@ div.m-1
       - @players.each do |player|
         tr
           td = player.name
-          td.hidden.md:table-cell= player.first_name
-          td.hidden.md:table-cell= player.last_name
+          td.hidden.md:table-cell = player.first_name
+          td.hidden.md:table-cell = player.last_name
           td.hidden.md:table-cell = player.use_nickname
           td = player.tee
           td = player.quota

@@ -80,7 +80,7 @@ gem 'activerecord_where_assoc', '~> 1.0'
 gem 'pagy', '~> 8.0' # omit patch digit
 gem 'prawn'
 gem 'prawn-table'
-# gem 'exonio'
+gem 'exonio'
 gem 'redcarpet', '~> 3.5.1'
 
 
