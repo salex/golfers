@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   include Pagy::Backend
 
-  before_action :session_expired
+  # before_action :session_expired
 
   def session_expired
     if current_user.present? && session[:expires].present?

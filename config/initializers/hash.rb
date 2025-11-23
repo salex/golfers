@@ -1,10 +1,10 @@
 # /config/initializers/hash.rb
 
-class Hash
-  def to_o
-    JSON.parse to_json, object_class: OpenStruct
-  end
-end
+# class Hash
+#   def to_o
+#     JSON.parse to_json, object_class: OpenStruct
+#   end
+# end
 
 Hash.class_eval do
   def to_struct

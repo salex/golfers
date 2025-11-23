@@ -46,14 +46,14 @@ class Player < ApplicationRecord
 
   def recompute_quota(game_date = nil)
     # game_date is only set if coming from Games::ScoreRounds, pass on to set_quota
-    quotas = PlayerObjects::Quota.new(self).tee_quota.to_o
+    quotas = PlayerObjects::Quota.new(self).tee_quota.to_struct
     set_quota(quotas, game_date)
   end
 
   def set_quota(quotas, game_date)
     if quotas.totals.blank?
       # get base quota. will set player.quota if there are rounds
-      quotas = PlayerObjects::Quota.new(self).tee_quota('Base').to_o 
+      quotas = PlayerObjects::Quota.new(self).tee_quota('Base').to_struct 
     end
     # remembers there is no tee set, uses primary tee
     #TODO is there any reason for this if statement? If nothing changed should not do anything

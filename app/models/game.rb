@@ -145,7 +145,7 @@ class Game < ApplicationRecord
 
       r = rounds.find_by(id: rid)
       r.tee = ntee
-      nquota =  PlayerObjects::Quota.new(r.player).tee_quota(ntee).to_o
+      nquota =  PlayerObjects::Quota.new(r.player).tee_quota(ntee).to_struct
       r.quota = nquota.quota
       r.limited = nquota.limited
       r.save

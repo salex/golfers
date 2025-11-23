@@ -15,8 +15,8 @@ class User < ApplicationRecord
 
   validates_format_of :username, :with => /[-\w\._@]+/i, :allow_blank => true, :message => "should only contain letters, numbers, or .-_@"
   before_save :downcase_login
-  serialize :permits, coder: JSON
-
+  # serialize :permits, coder: JSON
+  # attribute :permit
   def downcase_login
    self.email.downcase!
    # self.username.downcase!
@@ -51,6 +51,10 @@ class User < ApplicationRecord
 
   # Role checker, from low of guest to high of super
   # MAY NOT NEED WITH can?
+  def level?
+    Can.level(self.role)
+  end
+
   def is_super?
     return has_role?(['super']) || self.username == 'salex'
   end

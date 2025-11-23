@@ -12,6 +12,27 @@ class UsersController < ApplicationController
     end
   end
 
+  # def index
+  #   roles = User::Roles
+  #   puts "ROLES #{roles}"
+  #   role = Can.level(current_user.role)
+  #   excluds = []
+  #   if current_user.is_super?
+  #     excluds << current_user
+  #     @users = User.all.order(:fullname)
+  #   elsif current_user.role = 1
+  #     excluds << current_user
+  #     @users = User.where(role:roles[1..-1]).excluding(excludes).order(:fullname)
+  #   elsif role == 2
+  #     @users = current_group.users.excluding(excludes).order(:fullname)
+  #   else
+  #     @users = User.all.order(:fullname)
+  #   end
+  #   # @users = User.where(role:roles[2..-1]).order(:fullname)
+
+  # end
+
+
   # GET /users/1 or /users/1.json
   def show
   end

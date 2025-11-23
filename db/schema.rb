@@ -10,109 +10,108 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_04_22_231845) do
+ActiveRecord::Schema[8.1].define(version: 2025_11_21_235446) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension "pg_catalog.plpgsql"
 
   create_table "games", force: :cascade do |t|
-    t.bigint "group_id", null: false
+    t.string "course"
+    t.datetime "created_at", null: false
     t.date "date"
-    t.string "status"
-    t.string "method"
     t.text "formed"
+    t.bigint "group_id", null: false
+    t.string "method"
     t.text "par3"
     t.text "skins"
-    t.datetime "created_at", null: false
+    t.string "status"
     t.datetime "updated_at", null: false
-    t.string "course"
     t.index ["group_id"], name: "index_games_on_group_id"
   end
 
   create_table "golfers", force: :cascade do |t|
-    t.string "name"
     t.datetime "created_at", null: false
+    t.string "name"
     t.datetime "updated_at", null: false
   end
 
   create_table "groups", force: :cascade do |t|
-    t.string "name"
-    t.string "tees"
-    t.text "settings"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.text "courses"
+    t.datetime "created_at", null: false
+    t.string "name"
+    t.text "settings"
+    t.string "tees"
+    t.datetime "updated_at", null: false
   end
 
   create_table "players", force: :cascade do |t|
-    t.bigint "group_id", null: false
+    t.datetime "created_at", null: false
     t.string "first_name"
+    t.bigint "group_id", null: false
+    t.boolean "is_frozen"
     t.string "last_name"
-    t.string "nickname"
-    t.boolean "use_nickname"
+    t.date "last_played"
+    t.string "limited"
     t.string "name"
-    t.string "tee"
+    t.string "nickname"
+    t.string "phone"
+    t.integer "pin"
     t.integer "quota"
     t.float "rquota"
-    t.string "phone"
-    t.boolean "is_frozen"
-    t.date "last_played"
-    t.integer "pin"
-    t.string "limited"
-    t.datetime "created_at", null: false
+    t.string "tee"
     t.datetime "updated_at", null: false
+    t.boolean "use_nickname"
     t.index ["group_id"], name: "index_players_on_group_id"
   end
 
   create_table "rounds", force: :cascade do |t|
-    t.bigint "game_id", null: false
-    t.bigint "player_id", null: false
-    t.string "type"
+    t.integer "back"
+    t.datetime "created_at", null: false
     t.date "date"
+    t.integer "front"
+    t.bigint "game_id", null: false
+    t.string "limited"
+    t.float "other"
+    t.float "par3"
+    t.bigint "player_id", null: false
+    t.float "quality"
+    t.integer "quota"
+    t.float "skins"
     t.integer "team"
     t.string "tee"
-    t.integer "quota"
-    t.integer "front"
-    t.integer "back"
     t.integer "total"
-    t.float "quality"
-    t.float "skins"
-    t.float "par3"
-    t.float "other"
-    t.string "limited"
-    t.datetime "created_at", null: false
+    t.string "type"
     t.datetime "updated_at", null: false
     t.index ["game_id"], name: "index_rounds_on_game_id"
     t.index ["player_id"], name: "index_rounds_on_player_id"
   end
 
   create_table "stashes", force: :cascade do |t|
-    t.string "stashable_type"
-    t.bigint "stashable_id"
-    t.string "type"
-    t.bigint "ref_id"
-    t.string "title"
     t.string "content"
-    t.string "slim"
-    t.text "hash_data"
-    t.text "text_data"
-    t.date "date"
-    t.string "status"
     t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.date "date"
     t.date "due_date"
+    t.text "hash_data"
+    t.bigint "ref_id"
     t.string "remarks"
+    t.string "slim"
+    t.bigint "stashable_id"
+    t.string "stashable_type"
+    t.string "status"
+    t.text "text_data"
+    t.string "title"
+    t.string "type"
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.bigint "group_id", null: false
-    t.string "fullname"
-    t.string "username"
-    t.string "email"
-    t.string "role"
-    t.text "permits"
     t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string "email"
+    t.string "fullname"
+    t.bigint "group_id", null: false
     t.string "password_digest"
+    t.string "role"
+    t.datetime "updated_at", null: false
+    t.string "username"
     t.index ["group_id"], name: "index_users_on_group_id"
   end
 

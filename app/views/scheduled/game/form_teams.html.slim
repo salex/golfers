@@ -3,7 +3,11 @@ div[class="-mx-2"]
     div.ml-2
       .text-lg.font-bold Form Teams
     div.flex-grow
-      div = links = link_to( icon('fas fa-arrow-left', 'Cancel - Show Game'), scheduled_game_path, class: "btn-cancel")
+      - if @game.status == 'Pending'
+        div = links = link_to( icon('fas fa-arrow-left', 'Cancel - Show Pending Game'), pending_game_path, class: "btn-cancel")
+
+      -else
+        div = links = link_to( icon('fas fa-arrow-left', 'Cancel - Show Scheduled Game'), scheduled_game_path, class: "btn-cancel")
 
 
 = render partial:"shared/gheader"
@@ -54,10 +58,10 @@ div.grid.grid-cols-12.gap-4.mx-2
          
       div
         = f.submit("Form Teams", class:' btn btn-submit w-full',data:{alert_target:'submit', action: 'click->alert#checkOptions'},id:'submit_form',disabled:true)
-        h4.strong.w3-center - Or Just pick your own teams! -
-        / = button_to  'Assign Teams',  action:'assign_teams', class: 'btn btn-icon btn-info dblock mr-2 w100 w3-center'
+        / h4.strong.w3-center - Or Just pick your own teams! -
+        / / = button_to  'Assign Teams',  action:'assign_teams', class: 'btn btn-icon btn-info dblock mr-2 w100 w3-center'
 
-        .btn.btn-warning.w100.w3-center.w3-padding= link_to "Pick your own teams",@game.namespace_url('assign_teams'),class:'w3-text-white strong fs125 dblock'
+        / .btn.btn-warning.w100.w3-center.w3-padding= link_to "Pick your own teams",@game.namespace_url('adjust_teams'),class:'w3-text-white strong fs125 dblock'
 
   div.col-span-6
     h5

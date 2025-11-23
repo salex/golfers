@@ -5,9 +5,10 @@
       ul
         - @user.errors.each do |error|
           li = error.full_message
+
   .flex.gap-10
     div
-      - if current_user && current_user.is_admin?
+      - if current_user && current_user.is_trustee?
         = form.label :group_id, class: "inline-block w-30 text-right font-bold m-1 mr-4"
         = form.number_field :group_id,class:'border p-1 m-1'
       - else
@@ -29,6 +30,9 @@
         = form.text_field :email,class:'border p-1 m-1'
 
     div
+      div.italic
+        p Leave blank or change
+
       div
         = form.label :password, class: "inline-block w-48 text-right font-bold m-1 mr-4"
         = form.password_field :password,class:'border p-1 m-1'
@@ -38,28 +42,29 @@
         = form.password_field :password_confirmation, class:"border p-1 m-1"
 
     div
-      label.font-bold Roles
-      div
-        - if current_user.is_super?
-          - roles = DefaultPermits.new.roles
-        - else
-          - roles = DefaultPermits.new.roles[1..-1]
-        - roles.each do |role|
+      - roles = {}
+      - Can.roles.each_with_index{|r,i| roles[i] = r}
+
+      - if Current.user.is_trustee?
+        div
+          label.font-bold Role
+          - roles.each do |key,role|
+
+            div
+              = form.radio_button(:role, role, checked: @user.role == role)
+              span.ml-2.font-bold= role.humanize
+      - elsif @user.is_manager? 
           div
-            = form.radio_button(:role, role, checked:@user.role.include?(role))
-            span.ml-2.font-bold= role.humanize
-    / div
-    /   table.classic
-    /     tr
-    /       th Model
-    /       th Value
-    /     - if @user.permits.present?
-    /       - @user.permits.each do |k,v|
-    /         tr
-    /           td = k
-    /           td.w-12 = text_field_tag("user[permits][#{k}]",v,class:"w-24")
-    /     - else
-    /       tr
-    /         th Default Permit will be added
+            label.font-bold Role
+            - (2..(roles.keys.last)).each do |i|
+
+              div
+                = form.radio_button(:role, roles[i], checked: @user.role== roles[i])
+                span.ml-2.font-bold= roles[i].humanize
+
+      - else
+        div
+          label.font-bold Role
+          div = @user.role
   div[class= "btn-submit"]
     = form.submit
