@@ -1,12 +1,12 @@
 class User < ApplicationRecord
-  Roles = %w(super manager admin trustee member)
+  Roles = %w(super trustee manager admin  member)
   has_secure_password
 
   belongs_to :group
-  generates_token_for :password_reset, expires_in: 15.minutes do
-   # Last 10 characters of password salt, which changes when password is updated:
-   password_salt&.last(10)
-  end
+  # generates_token_for :password_reset, expires_in: 15.minutes do
+  #  # Last 10 characters of password salt, which changes when password is updated:
+  #  password_salt&.last(10)
+  # end
 
   normalizes :email, with: -> email { email.strip.downcase }
   validates_presence_of :email
@@ -15,42 +15,39 @@ class User < ApplicationRecord
 
   validates_format_of :username, :with => /[-\w\._@]+/i, :allow_blank => true, :message => "should only contain letters, numbers, or .-_@"
   before_save :downcase_login
-  # serialize :permits, coder: JSON
-  # attribute :permit
+
   def downcase_login
    self.email.downcase!
-   # self.username.downcase!
+  end
+  attribute :permits
+
+  after_initialize :set_attributes
+
+  def set_attributes
+    self.permits = Can.can(self.role) unless self.role.blank?
   end
 
-  def can?(meth,model)
-    meth = meth.to_s.downcase
+  def can?(action, model)
+    return false if self.role.nil? || self.permits.nil?
+    action = action.to_s.downcase
     model = model.to_s.downcase
-    # puts "CRUD TEST #{meth} #{model}"
-    return false if self.role.nil?
-    # puts "CRUD ROLE #{meth} #{model} #{role}"
-    return false unless [:create,:read,:update,:destroy].include?(meth.to_sym)
-    # puts "CRUD METH #{meth} #{model} #{permits.keys} #{permits.keys.include?(model)}"
-    # return false unless permits.keys.include?(model)
-    permit = DefaultPermits.permit(self.role,model)
-    # puts "CRUD PERMIT #{permit}"
-    return false if permit == false 
+    permit = permits[model.to_sym]
+    return false if permit.nil?
 
-    case meth 
-    when 'create'
-      return permit[0] == '1'
-    when 'read' 
-      return permit[1] == '1'
-    when 'update' 
-      return permit[2] == '1'
-    when 'destroy' 
-      return permit[3] == '1'
+    if [ "create", "new" ].include?(action)
+      permit[0] == "1"
+    elsif [ "index", "show", "read" ].include?(action)
+      permit[1] == "1"
+    elsif [ "edit", "update" ].include?(action)
+      permit[2] == "1"
+    elsif [ "delete", "destroy" ].include?(action)
+      permit[3] == "1"
+    else
+      false
     end
-    return false #crud boolean not '1'
-    
   end
 
-  # Role checker, from low of guest to high of super
-  # MAY NOT NEED WITH can?
+  # Role checkers, from low of member to high of super
   def level?
     Can.level(self.role)
   end
@@ -59,37 +56,30 @@ class User < ApplicationRecord
     return has_role?(['super']) || self.username == 'salex'
   end
 
-  def is_manager?
-    return has_role?(%w(super manager))
+  def is_trustee?
+    return has_role?(%w(super trustee))
   end
 
+  def is_manager?
+    return has_role?(%w(super trustee manager))
+  end
 
   def is_admin?
-    return has_role?(%w(super manager admin))
-  end
-
-  def is_trustee?
-    return has_role?(%w(super manager admin trustee))
+    return has_role?(%w(super trustee manager admin))
   end
 
   def is_member?
-    return has_role?(%w(super manager admin trustee member))
+    return has_role?(%w(super trustee manager admin member))
   end
 
-  def is_guest?
-    return has_role?(['guest'])
-  end
-
-
-  # MAY NOT NEED WITH can?
   def has_role?(role_arr)
-    # new simpified role based access. role_arr is always an array
+    # new simplified role based access. role_arr is always an array
     # self.role should be a string with one word but will take more
-    # will work with unserailized haml or json left in roles
+    # will work with underutilized haml or json left in roles
     return false if self.role.blank?
     return false if role_arr.class != Array
     return role_arr.include?(self.role)
   end
-  # scp -r /Users/salex/work/rails/users rails@167.71.240.205:/home/rails/apps/myusers
+  # # scp -r /Users/salex/work/rails/users rails@167.71.240.205:/home/rails/apps/myusers
 
 end

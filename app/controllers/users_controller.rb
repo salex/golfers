@@ -1,37 +1,19 @@
 class UsersController < ApplicationController
-  # before_action :require_super, only: %i[index]
   before_action :require_admin, only: %i[index show edit update destroy ]
   before_action :set_user, only: %i[ show edit update destroy ]
 
   # GET /users or /users.json
   def index
-    if current_user.is_super?
-      @users = User.all.order(:fullname)
+    if is_super?
+      @users = User.all.includes(:group).order(:fullname).order(:fullname)
+    elsif is_trustee?
+      @users = User.all.includes(:group).where.not(role:'super').order(:fullname)
+    elsif is_manager?
+      @users = Current.group.users.where.not(role:'super').where.not(role:'trustee').order(:fullname)
     else
-      @users = current_group.users.where.not(role:'super')
+      cant_do_that
     end
-  end
-
-  # def index
-  #   roles = User::Roles
-  #   puts "ROLES #{roles}"
-  #   role = Can.level(current_user.role)
-  #   excluds = []
-  #   if current_user.is_super?
-  #     excluds << current_user
-  #     @users = User.all.order(:fullname)
-  #   elsif current_user.role = 1
-  #     excluds << current_user
-  #     @users = User.where(role:roles[1..-1]).excluding(excludes).order(:fullname)
-  #   elsif role == 2
-  #     @users = current_group.users.excluding(excludes).order(:fullname)
-  #   else
-  #     @users = User.all.order(:fullname)
-  #   end
-  #   # @users = User.where(role:roles[2..-1]).order(:fullname)
-
-  # end
-
+   end
 
   # GET /users/1 or /users/1.json
   def show
@@ -39,7 +21,7 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
-    @user = current_group.users.new(role:'guest')
+    @user = current_group.users.new(role:User::Roles.last)
   end
 
   # GET /users/1/edit
@@ -49,7 +31,7 @@ class UsersController < ApplicationController
   # POST /users or /users.json
   def create
     @user = User.new(user_params)
-    @user.permits = DefaultPermits::CRUD[@user.role.to_sym]
+    # @user.permits = DefaultPermits::CRUD[@user.role.to_sym]
     respond_to do |format|
       if @user.save
         format.html { redirect_to user_url(@user), notice: "User was successfully created." }
@@ -68,10 +50,10 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update(user_params)
         # puts "CURR ROLE #{curr_role} NEW ROLE #{@user.role} #{@user.role != curr_role}"
-        if @user.role.nil? || @user.permits.blank? || (@user.role != curr_role) # role changed - may be a better way
-          @user.permits = DefaultPermits::CRUD[@user.role.to_sym]
-          @user.save
-        end
+        # if @user.role.nil? || (@user.role != curr_role) # role changed - may be a better way
+        #   @user.permits = DefaultPermits::CRUD[@user.role.to_sym]
+        #   @user.save
+        # end
         format.html { redirect_to user_url(@user), notice: "User was successfully updated." }
         format.json { render :show, status: :ok, location: @user }
       else
@@ -91,16 +73,15 @@ class UsersController < ApplicationController
   end
 
   private
-    def require_super
-      cant_do_that(' - Not Authorized') unless is_super?
-    end
     def require_admin
-      cant_do_that(' - Not Authorized') unless current_user && current_user.is_admin?
+      cant_do_that(' - Not Authorized') unless current_user && current_user.is_manager?
     end
 
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      if is_super?
+      @user = User.find(params[:id])
+
+      if is_trustee?
         @user = User.find(params[:id])
       else
         @user = current_group.users.find(params[:id])

@@ -42,7 +42,7 @@ class DefaultPermits
     },
     trustee:{
       group:'0100',
-      user:'0000',
+      user:'0110',
       player:'1111',
       game:'1111',
       round:'1111',

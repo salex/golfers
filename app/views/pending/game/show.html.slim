@@ -32,8 +32,11 @@ div.flex.gap-2.bg-green-200.-mx-2.p-1.border-2.border-green-400
           i.fa.fa-caret-down
 
         .w3-dropdown-content.w3-card-4.w-56
-          = link_to "Print Scorecard Landscape", @game.pending_url('print_score_card'), class:"block btn-sqr-blue mb-1 p-1 " 
-          = link_to "Print Scorecard Portrait", @game.pending_url('print_score_cardp')+"?rows=3", class:"block btn-sqr-blue mb-1 p-1 " 
+          - if @game.method == 'places'
+            = link_to "Print Scorecard Places", @game.pending_url('print_places_scard'), class:"block btn-sqr-blue mb-1 p-1 " 
+          - else
+            = link_to "Print Scorecard Landscape", @game.pending_url('print_score_card'), class:"block btn-sqr-blue mb-1 p-1 " 
+            = link_to "Print Scorecard Portrait", @game.pending_url('print_score_cardp')+"?rows=3", class:"block btn-sqr-blue mb-1 p-1 " 
 
   div.flex-shrink.text-green-800.p-0.font-bold.mr-3.hover:text-2xl = link_to icon('fas fa-arrow-left'), 'javascript:history.back()'
 div.flex

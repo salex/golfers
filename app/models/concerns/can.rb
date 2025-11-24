@@ -43,7 +43,7 @@ class Can
   end
 
   def self.level(role)
-    # ndex = array.index(30)
+    # index = array.index(30)
     CRUD.keys.index(role.to_sym)
   end
 

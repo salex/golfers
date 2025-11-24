@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   include Pagy::Backend
 
-  # before_action :session_expired
+  before_action :session_expired
 
   def session_expired
     if current_user.present? && session[:expires].present?
@@ -35,6 +35,11 @@ class ApplicationController < ActionController::Base
     current_user && current_user.is_manager? # && current_user.group_id == current_group.id
   end
   helper_method :is_manager?
+
+  def is_trustee?
+    current_user && current_user.is_trustee? # && current_user.group_id == current_group.id
+  end
+  helper_method :is_trustee?
 
   def is_super?
     current_user && current_user.is_super?

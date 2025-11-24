@@ -42,26 +42,23 @@
         = form.password_field :password_confirmation, class:"border p-1 m-1"
 
     div
-      - roles = {}
-      - Can.roles.each_with_index{|r,i| roles[i] = r}
-
+      - roles = {} # define roles
+      - User::Roles.each_with_index{|r,i| roles[i] = r} # set roles
+      - @user.role = User::Roles.last if @user.new_record?
       - if Current.user.is_trustee?
         div
           label.font-bold Role
-          - roles.each do |key,role|
-
+          - (1..(roles.keys.last)).each do |i|
             div
-              = form.radio_button(:role, role, checked: @user.role == role)
-              span.ml-2.font-bold= role.humanize
-      - elsif @user.is_manager? 
+              = form.radio_button(:role, roles[i], selected: @user.role == i)
+              span.ml-2.font-bold= roles[i].humanize
+      - elsif Current.user.is_manager? 
           div
             label.font-bold Role
             - (2..(roles.keys.last)).each do |i|
-
               div
-                = form.radio_button(:role, roles[i], checked: @user.role== roles[i])
+                = form.radio_button(:role, roles[i], selected: @user.role == i, class:"bg-green-200")
                 span.ml-2.font-bold= roles[i].humanize
-
       - else
         div
           label.font-bold Role
