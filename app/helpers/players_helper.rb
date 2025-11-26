@@ -28,9 +28,9 @@ module PlayersHelper
   end
 
   def number_to_col_array(numb,cols)
-    numb_array = (1..numb).to_a
+    numb_array = (0..(numb - 1)).to_a
     arr = []
-    1.upto((numb / cols) + 1){ arr << numb_array.shift(cols) unless numb_array.blank? } 
+    0.upto(((numb - 1) / cols) ){ arr << numb_array.shift(cols) unless numb_array.blank? } 
     arr
   end
   

@@ -57,11 +57,11 @@ class ApplicationController < ActionController::Base
   helper_method :require_login
 
   def require_manager
-    unless current_user && current_user.is_admin?
+    unless current_user && current_user.is_manager?
       redirect_to root_url, alert: "I'm sorry. I can't - or You can't do that."
     end
   end
-  helper_method :is_admin?
+  helper_method :is_manager?
 
   def require_user
     unless current_user

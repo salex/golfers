@@ -7,21 +7,31 @@ div[class="-mx-2"]
       - if current_user && can?(:destroy,:game) && @game.state[:can_delete] 
         = button_to(icon("fas fa-trash","Destroy Incomplete Game"),game_path(@game),method: :delete,form: { data: { turbo_confirm: "Are You Sure?"}},class:"btn-warn inline-block mt-1 "  )
 
-      div.border.px-2.border-green-400[data-controller="selecter"]
-        span[data-selecter-target='gameid' class="hidden"] = @game.id
-        span.font-bold Select Course 
-        - course = current_group.default_course
-
-        = select_tag 'stats[course]', options_for_select(current_group.group_courses.keys,@game.course || "Home"),class: "px-2 py-1 m-1 rounded-md bg-blue-400  text-black font-bold ",data: { action: "change->selecter#getValue",selecter_target:'tag'}
-
     div.flex-shrink.text-green-800.p-0.font-bold.mr-3.hover:text-2xl = link_to icon('fas fa-arrow-left'), 'javascript:history.back()'
-div.m-1 
-  - if @game.state[:can_form] || @game.state[:can_reform]
-    = link_to('Form Teams',form_teams_scheduled_game_path(@game),
-      data: {scheduler_target:"formbtn", turbo_frame: "_top" }, 
-      class:"btn btn-submit inline-block text-center ") if can?(:update,:game)
-  = link_to icon('fas fa-arrows-alt-h', 'Add/Edit Player(s)'),@game.scheduled_url(:set), class: 'inline-block btn-cancel font-bold w-80' if can?(:update,:game)
-  / span There are no new players scheduled.
+div.m-1.flex.gap-8
+  - if can?(:update,:game)
+    - if @game.state[:can_form] || @game.state[:can_reform]
+      = link_to('Form Teams',form_teams_scheduled_game_path(@game),
+        data: {scheduler_target:"formbtn", turbo_frame: "_top" }, 
+        class:"btn btn-submit inline-block text-center ") 
+
+    = link_to icon('fas fa-arrows-alt-h', 'Add/Edit Player(s)'),@game.scheduled_url(:set), class: 'inline-block btn-cancel font-bold'
+    / span There are no new players scheduled.
+    span.px-2.border-green-400.border[data-controller="selecter"]
+      span[data-selecter-target='gameid' class="hidden"] = @game.id
+      span.font-bold Select Course 
+      - course = current_group.default_course
+
+      = select_tag 'stats[course]', options_for_select(current_group.group_courses.keys,@game.course || "Home"),class: "m-2 rounded-md bg-amber-400  text-black font-bold ",data: { action: "change->selecter#getValue",selecter_target:'tag'}
+
+    span.px-2.border-green-400.border[data-controller="selecter"]
+      span[data-selecter-target='gameid' class="hidden"] = @game.id
+      span.font-bold Select Pay Method 
+      - pay = current_group.pay
+
+      = select_tag 'stats[pay]', options_for_select([["Sides","sides"],["Places","places"]],@game.method || "Home"),class: "m-2 rounded-md bg-amber-400  text-black font-bold ",data: { action: "change->selecter#getPay",selecter_target:'tag'}
+
+
 
 
 = render partial:"/shared/theader"  

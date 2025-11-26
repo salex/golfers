@@ -82,7 +82,7 @@ class GroupsController < ApplicationController
   end
   
   def visit
-    if is_manager?
+    if is_trustee?
       @group = Group.find(params[:id])
       session[:group_id] = @group.id
       Current.group = @group

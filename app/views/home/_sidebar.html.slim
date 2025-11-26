@@ -38,7 +38,7 @@
 
   div.p-1
    .annotate=  "Rails Version #{Rails.version}"
-   - appdir = Rails.root.join("app")
+   - appdir = Rails.root.join(".git")
    .annotate = "Updated: #{File.mtime(appdir)}"
    .annotate test reload
 / javascript:

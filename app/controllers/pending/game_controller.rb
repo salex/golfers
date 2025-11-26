@@ -19,6 +19,10 @@ class Pending::GameController < ApplicationController
   def print_places_scard
     @teams = @game.scorecard_teams
   end
+  def print_places_scardh
+    @teams = @game.scorecard_teams
+  end
+
 
 
 

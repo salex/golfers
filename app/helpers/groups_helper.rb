@@ -6,7 +6,7 @@ module GroupsHelper
     if klass.blank?
       klass = "btn-danger"
     end
-    return button_to prompt, model_path, method: meth, form_class:"inline-block py-0 ",class:klass
+    return button_to prompt, model_path, method: meth, form_class:" w-full py-0 ",class:klass
   end
 
 end

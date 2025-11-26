@@ -10,11 +10,11 @@ div[class="font-bold text-lg p-1 pl-4 -mx-2 bg-lime text-2xl flex"]
 
 div.grid.grid-cols-1.md:grid-cols-2.gap-8.p-4
 
-  .card-4.bg-lime-lightest.w-full
+  .card-4.bg-lime-lightest
     span.float-right = link_to "Login", new_session_path,
       class:"bg-green-200 hover:bg-green-400 font-bold text-lg inline-block px-3 mx-3 "
 
-    table.golfer.m-6.bg-white
+    table.golfer.w-11/12.m-6.bg-white
       caption.font-lg.font-bold Current Groups
       thead
         tr
@@ -35,9 +35,9 @@ div.grid.grid-cols-1.md:grid-cols-2.gap-8.p-4
             td.p-2.text-center = group.games.last.date
             td.p-2
               - if Current.group && Current.group.id == group.id
-                = linkBtn('Leave',leave_group_path(group),meth:'patch',klass:"btn-md bg-lime-darker py-0")
+                = linkBtn('Exit and Leave',leave_group_path(group),meth:'patch',klass:"btn-md bg-lime-darker w-full py-0")
               - else
-                = linkBtn('Visit',visit_group_path(group),meth:'patch',klass:"btn-md bg-lime-darker w-24 text-center py-0")
+                = linkBtn('Visit',visit_group_path(group),meth:'patch',klass:"btn-md bg-lime-darker w-full text-center py-0")
   div
     strong.fs2 Welcome to PointGolf (PtGolf.us)
     p.mb-2 A Web tool for managing quotas for your golf groups Low Ball or Dog Fight games.

@@ -36,8 +36,14 @@
         - if team.blank?
           strong Error, Group deleted players for team and scoreing cannot be displayed
           - next
-        table.golfer.w-full.mb-1 class="#{!scoring.is_winner?(tm) ? '' : 'lite-lime'}"
+        table.golfer.w-full.mb-3 class="#{!scoring.is_winner?(tm) ? '' : 'lite-lime'}"
           thead
+            - if !team_stats[:team_quality].zero?
+              tr
+                th.bg-lime-300 colspan="8" 
+                  = "Place won $#{to_quarters(team_stats[:team_quality],true)}, Each Team Mate $#{to_quarters(team_stats[:mate_quality],true)} "
+
+
             tr
               th.w-56 Name
               th.w-12 Tm
@@ -60,10 +66,6 @@
                 td= pulled(mate[:back],mate[:back_net],sideq,mate[:limited])
                 td= pulled(mate[:total],mate[:total_net],mate[:quota],mate[:limited]) 
 
-            - if !team_stats[:team_quality].zero?
-              th.bg-lime-100 colspan="8" 
-                = "Place won $#{to_quarters(team_stats[:team_quality],true)}, Each Team Mate $#{to_quarters(team_stats[:mate_quality],true)} "
-
 hr.underline
 .w3-row-padding 
   - if @game.method == 'sides'
@@ -76,7 +78,7 @@ hr.underline
     .annotate Team Winners (Places)
     .flex.flex-wrap.gap-4
       - scoring.place_winners.each do |k,v|
-        div.border-2.p-1
+        div.border-2.border-black.p-1
           strong = (k+1).ordinalize
           span = v.html_safe
 

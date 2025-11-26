@@ -47,6 +47,18 @@ class Scheduled::GameController < ApplicationController
     end
   end
 
+  def change_pay
+    if params[:pay].present?
+      params.permit!
+      @game.method = params[:pay]
+      @game.save
+      redirect_to    scheduled_game_path(@game), notice:"Game Pay Method changed to #{params[:pay]}"
+    else
+      redirect_to    scheduled_game_path(@game), alert:"Can't change Pay Method to #{params[:pay]}"
+    end
+  end
+
+
   def form_teams
     # gets the form teams form
     @game = current_group.games.find(params[:id])
